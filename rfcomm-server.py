@@ -110,6 +110,7 @@ try:
 	
 			########## End of Creation Logs' File and its directory ##########
 
+			#TODO, implement this block into a function!
 
 			m = subprocess.Popen(["./monitoring.sh",logsFile])
 	
@@ -193,11 +194,11 @@ try:
 				client_sock.send(fileNotFound)
 	
 		except BluetoothError:
+			print "Lost connection of ", client_info 
 			pass
 	
 		except IOError:
 			traceback.print_exc()
-			print "Am I?"
 			pass
 		
 		print "\n\tDisconnected"
