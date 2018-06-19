@@ -6,16 +6,21 @@ import sys
 import traceback
 import time
 import subprocess
+
+import json
+
 from subprocess import PIPE, Popen
 from bluetooth import *
 
 base_directory = "/home/pi/Desktop/TFG"
 pathToResources = "/home/pi/Desktop/TFG/Resources"
+pathToEncrypt = "/home/pi/Desktop/TFG/Encrypt"
 
 class Message:
-	def __init__(self, cipher, body, password, hsm):
+	def __init__(self, cipher, typeFile, nameFile, password, hsm):
 		self.cipher = cipher
-		self.body = body
+		self.typeFile = typeFile
+		self.nameFile = nameFile
 		self.password = password
 		self.hsm = hsm
 	
@@ -37,16 +42,24 @@ advertise_service( server_sock, "SampleServer",
 #                   protocols = [ OBEX_UUID ] 
                     )
 
-wrongFields3 = "400;3"
-wrongFields2 = "400;2"
-wrongFields1 = "400;1"
-fileNotFound = "404;0"
+
 errorHasOccurred = "417;0"
-startEncryption = "200;0"
+
 endEncryption = "200;1"
 startDecryption = "200;2"
 endDecryption = "200;3"
+
+	#Used messages
+startEncryption = "200;0"
+fileNotFound = "404;0"
+
+
+	#Used variables
 cipher = ""
+typeFile = ""
+nameFile = ""
+password = ""
+hsm = ""
 
 
 while True:   
@@ -64,17 +77,31 @@ while True:
 		m = subprocess.Popen(["./monitoring.sh"])
 
 	        print "received [%s]" % data
-		
-		message = data.split(';')
 
-		newMessage = Message(message[0], message[1], message[2], message[3])
-		password = message[2]
-		print newMessage
+		#Data to JSON
+		jsonMessage = json.loads(data)
+		#print "jsonMessage:\n%s" % jsonMessage
+
+		
+		#print "\n%s" % jsonMessage["cipher"]
+		#print "\n%s" % jsonMessage["typeFile"]
+		#print "\n%s" % jsonMessage["nameFile"]
+		#print "\n%s" % jsonMessage["password"]
+		#print "\n%s" % jsonMessage["hsm"]
+
+		cipher = str(jsonMessage["cipher"])
+		typeFile = str(jsonMessage["typeFile"])
+		nameFile = str(jsonMessage["nameFile"])
+		password = str(jsonMessage["password"])
+		hsm = str(jsonMessage["hsm"])
+
+		newMessage = Message(cipher, typeFile, nameFile, password, hsm)
 
 
 		#Checking whether file exists.
-		cipher=message[0]
-		pathToFile = "%s/%s" % (pathToResources, message[1])
+		
+		pathToFile = str("%s/%s/%s" % (pathToResources, typeFile, nameFile))
+		
 		print pathToFile
 
 		if (os.path.isfile(pathToFile)):
@@ -83,9 +110,16 @@ while True:
 
 			#CHECK WHAT KIND OF ENCRYPTION IS WANTED
 			#THEN  CALL THE CORRECT SUBPROCESS
-			action='Encrypt'
 
-			p = subprocess.Popen(["./encrypter.sh",message[1],action,password,message[3],pathToResources,cipher])
+			#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
+			#print newMessage.nameFile
+			#print newMessage.typeFile
+			#print newMessage.password
+			#print newMessage.hsm
+			#print newMessage.cipher
+
+
+			p = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile])
 			#print p.communicate()[0]
 			p.wait()
 			
@@ -96,8 +130,11 @@ while True:
 				time.sleep(5)
 
 				client_sock.send(startDecryption)
-				action='Dencrypt'
-				p = subprocess.Popen(["./decrypter.sh",message[1],action,password,message[3],pathToResources,cipher])
+
+				pathToFile = str("%s/%s" % (pathToEncrypt, typeFile))
+				
+				#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile)
+				p = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile])
 				#print p.communicate()[0]
 				p.wait()
 				
@@ -112,7 +149,7 @@ while True:
 				client_sock.send(errorHasOccurred)
 		else:
 			print "File does not exist!"
-			client_sock.send("404")
+			client_sock.send(fileNotFound)
 
 	except IOError:
 		traceback.print_exc()
