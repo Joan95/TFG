@@ -13,9 +13,9 @@ from subprocess import PIPE, Popen
 from bluetooth import *
 
 base_directory = "/home/pi/Desktop/TFG"
-pathToResources = "$base_directory/Resources"
-pathToEncrypt = "$base_directory/Encrypt"
-pathToDecrypt = "$base_directory/Decrypt"
+pathToResources = str("%s/%s" % (base_directory, "Resources"))
+pathToEncrypt = str("%s/%s" % (base_directory, "Encrypt"))
+pathToDecrypt = str("%s/%s" % (base_directory, "Decrypt"))
 
 class Message:
 	def __init__(self, cipher, typeFile, nameFile, password, hsm):
@@ -62,106 +62,115 @@ nameFile = ""
 password = ""
 hsm = ""
 
-
-while True:   
-	print "Waiting for connection on RFCOMM channel %d " % port
+try:
+	while True:   
+		print "Waiting for connection on RFCOMM channel %d " % port
+		
+		client_sock, client_info = server_sock.accept()
+		print "Accepted connection from ", client_info
+		
+		try:
+		    while True:
+		        data = client_sock.recv(1024)
 	
-	client_sock, client_info = server_sock.accept()
-	print "Accepted connection from ", client_info
+		        if len(data) == 0: break
 	
-	try:
-	    while True:
-	        data = client_sock.recv(1024)
-
-	        if len(data) == 0: break
-
-		m = subprocess.Popen(["./monitoring.sh"])
-
-	        print "received [%s]" % data
-
-		#Data to JSON
-		jsonMessage = json.loads(data)
-		#print "jsonMessage:\n%s" % jsonMessage
-
-		
-		#print "\n%s" % jsonMessage["cipher"]
-		#print "\n%s" % jsonMessage["typeFile"]
-		#print "\n%s" % jsonMessage["nameFile"]
-		#print "\n%s" % jsonMessage["password"]
-		#print "\n%s" % jsonMessage["hsm"]
-
-		cipher = str(jsonMessage["cipher"])
-		typeFile = str(jsonMessage["typeFile"])
-		nameFile = str(jsonMessage["nameFile"])
-		password = str(jsonMessage["password"])
-		hsm = str(jsonMessage["hsm"])
-
-		newMessage = Message(cipher, typeFile, nameFile, password, hsm)
-
-
-		#Checking whether file exists.
-		
-		pathToFile = str("%s/%s/%s" % (pathToResources, newMessage.typeFile, newMessage.nameFile))
-		
-		print pathToFile
-
-		if (os.path.isfile(pathToFile)):
-			#FILE EXISTS
-			client_sock.send(startEncryption)
-
-			#CHECK WHAT KIND OF ENCRYPTION IS WANTED
-			#THEN  CALL THE CORRECT SUBPROCESS
-
-			#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
-			#print newMessage.nameFile
-			#print newMessage.typeFile
-			#print newMessage.password
-			#print newMessage.hsm
-			#print newMessage.cipher
-
-
-			pathToSaveFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
+			m = subprocess.Popen(["./monitoring.sh"])
+	
+		        print "received [%s]" % data
+	
+			#Data to JSON
+			jsonMessage = json.loads(data)
+			#print "jsonMessage:\n%s" % jsonMessage
+	
 			
-			#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
-			p = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
-			#print p.communicate()[0]
-			p.wait()
+			#print "\n%s" % jsonMessage["cipher"]
+			#print "\n%s" % jsonMessage["typeFile"]
+			#print "\n%s" % jsonMessage["nameFile"]
+			#print "\n%s" % jsonMessage["password"]
+			#print "\n%s" % jsonMessage["hsm"]
+	
+			cipher = str(jsonMessage["cipher"])
+			typeFile = str(jsonMessage["typeFile"])
+			nameFile = str(jsonMessage["nameFile"])
+			password = str(jsonMessage["password"])
+			hsm = str(jsonMessage["hsm"])
+	
+			newMessage = Message(cipher, typeFile, nameFile, password, hsm)
+	
+	
+			#Checking whether file exists.
 			
-			if (p.returncode == 0):
-				print "File has been encrypted successfully"
-				client_sock.send(endEncryption)
-
-				time.sleep(5)
-
-				client_sock.send(startDecryption)
-
-				pathToFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
-				pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
+			pathToFile = str("%s/%s/%s" % (pathToResources, newMessage.typeFile, newMessage.nameFile))
+			
+			print pathToFile
+	
+			if (os.path.isfile(pathToFile)):
+				#FILE EXISTS
+				client_sock.send(startEncryption)
+	
+				#CHECK WHAT KIND OF ENCRYPTION IS WANTED
+				#THEN  CALL THE CORRECT SUBPROCESS
+	
+				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
+				#print newMessage.nameFile
+				#print newMessage.typeFile
+				#print newMessage.password
+				#print newMessage.hsm
+				#print newMessage.cipher
+	
+	
+				pathToSaveFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
 				
-				#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile, pathToSaveFile)
-				p = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
+				p = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
 				#print p.communicate()[0]
 				p.wait()
 				
 				if (p.returncode == 0):
-					print "File has been decrypted successfully"
-					client_sock.send(endDecryption)
+					print "File has been encrypted successfully"
+					client_sock.send(endEncryption)
+	
+					time.sleep(5)
+	
+					client_sock.send(startDecryption)
+	
+					pathToFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
+					pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
+					
+					#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile, pathToSaveFile)
+					p = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+					#print p.communicate()[0]
+					p.wait()
+					
+					if (p.returncode == 0):
+						print "File has been decrypted successfully"
+						client_sock.send(endDecryption)
+					else:
+						print "Error during the decryption has ocurred..."
+						client_sock.send(errorHasOccurred)
 				else:
-					print "Error during the decryption has ocurred..."
+					print "Error during the encryption has ocurred..."
 					client_sock.send(errorHasOccurred)
 			else:
-				print "Error during the encryption has ocurred..."
-				client_sock.send(errorHasOccurred)
-		else:
-			print "File does not exist!"
-			client_sock.send(fileNotFound)
+				print "File does not exist!"
+				client_sock.send(fileNotFound)
+	
+		except BluetoothError:
+			pass
+	
+		except IOError:
+			traceback.print_exc()
+			print "Am I?"
+			pass
+		
+		print "\n\tDisconnected"
+		
+		client_sock.close()
+		#server_sock.close()
+	
+		print "\tAll done"
+		print "\tIf you want to stop server's socket, please press \'CTRL + C\'\n\n"
 
-	except IOError:
-		traceback.print_exc()
-		pass	
-	
-	print "disconnected"
-	
-	client_sock.close()
-	server_sock.close()
-	print "all done"
+except KeyboardInterrupt:
+	print "Thank you, goodbye!"
