@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purpleDark"
+    android:label="@string/bluetooth_devices_list">
+
+    <TextView
+        android:id="@+id/textFirstList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteText"
+        android:text="@string/paired_devices_list"
+        android:textColor="@color/purpleDark" />
+
+    <ListView
+        android:id="@+id/pairedDevicesList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textSecondList"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textFirstList">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textSecondList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:background="@color/whiteText"
+        android:text="@string/new_devices_list"
+        android:textColor="@color/purpleDark" />
+
+
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/buttonReScann"
+        android:layout_alignLeft="@+id/buttonReScann"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/buttonReScann"
+        android:layout_alignStart="@+id/buttonReScann"
+        android:layout_marginBottom="33dp"
+        android:text="@string/back" />
+
+    <Button
+        android:id="@+id/buttonReScann"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonBack"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:text="@string/scann" />
+
+    <ListView
+        android:id="@+id/newDevicesList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textSecondList" />
+</RelativeLayout>
+

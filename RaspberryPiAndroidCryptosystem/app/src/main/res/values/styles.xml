@@ -1,0 +1,31 @@
+<resources>
+
+    <color name="greyBKG">#aaaaaa</color>
+    <color name="purpleDark">#4D081B</color>
+    <color name="purpleSoft">#950D33</color>
+    <color name="green">#507209</color>
+    <color name="whiteText">#f5f5f5</color>
+    <color name="orange">#FF8000</color>
+
+    <color name="orangeDegradation0">#DBA901</color>
+    <color name="orangeDegradation1">#D7DF01</color>
+    <color name="orangeDegradation2">#A5DF00</color>
+    <color name="orangeDegradation3">#5FB404</color>
+    <color name="orangeDegradation4">#507209</color>
+
+    <color name="test">#ffbf26</color>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Overwritten styles -->
+        <item name="android:textColorPrimary">@color/green</item>
+        <item name="android:textColor">@color/greyBKG</item>
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/purpleSoft</item>
+        <item name="colorPrimaryDark">@color/purpleDark</item>
+        <item name="colorAccent">@color/green</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
+    </style>
+
+</resources>

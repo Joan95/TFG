@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">TFG Studio</string>
+    <string name="linking_raspberry_pi">Linking Raspberry Pi</string>
+    <string name="brief_explanation">Welcome to this app. Here there is a\nbrief explanation about its functionality.</string>
+    <string name="begin">Let\'s start!</string>
+
+    <string name="bluetooth_devices_list">Bluetooth Devices List</string>
+    <string name="paired_devices_list">Paired Devices List</string>
+    <string name="new_devices_list">New Devices List</string>
+    <string name="back">Back</string>
+    <string name="scann">Scann</string>
+
+    <string name="usage_of_cpu">Usage Of CPU %</string>
+    <string name="usage_of_memory">Usage Of Memory %</string>
+    <string name="send">SEND</string>
+    <string name="disconnect">DISCONNECT</string>
+
+    <string name="selectMethod">Select\ Method</string>
+    <string name="selectTypeFile">Select\ Type\ of\ File</string>
+    <string name="selectFile">Select\ File</string>
+
+    <string name="encrypt">ENCRYPT</string>
+    <string name="decrypt">DECRYPT</string>
+    <string name="hsm_question">Do\ you\ want\ to\ use\ HSM?</string>
+    <string name="waiting_for_value">Waiting\ for\ Value...</string>
+    <string name="password">Password</string>
+
+    <string name="encrypting">Encrypting...</string>
+    <string name="decrypting">Decrypting...</string>
+
+    <string-array name="type_file">
+        <item>Text</item>
+        <item>Audio</item>
+        <item>Video</item>
+    </string-array>
+
+    <string-array name="block_ciphers">
+        <item>Select Cipher</item>
+        <item>AES</item>
+        <item>3DES</item>
+        <item>Camellia</item>
+        <item>Clefia</item>
+        <item>XTEA</item>
+        <item>Present</item>
+    </string-array>
+
+    <string-array name="stream_ciphers">
+        <item>HC128</item>
+        <item>Rabbit</item>
+        <item>Salsa20</item>
+        <item>SOSEMANUK</item>
+        <item>Grain128</item>
+        <item>MICKEYv2</item>
+        <item>Trivium</item>
+        <item>ARC4</item>
+    </string-array>
+
+    <string-array name="video_array">
+        <item>Slash_Anastasia_1080p.mp4</item>
+        <item>Guns_N_Roses_Sweet_Child_O_Mine.mp4</item>
+    </string-array>
+
+    <string-array name="audio_array">
+        <item>Avenged_Sevenfold_So_Far_Away.mp3</item>
+        <item>Eric_Johnson_Cliffs_Of_Dover.mp3</item>
+    </string-array>
+
+    <string-array name="text_array">
+        <item>El_Pirata-Jose_Espronceda.txt</item>
+        <item>El_Cuervo-Edgar_Allan_Poe.txt</item>
+        <item>Sherlock_Holmes-Arthur_Conan_Doyle.txt</item>
+        <item>Complete_Sherlock_Holmes-Arthur_Conan_Doyle.txt</item>
+    </string-array>
+</resources>
