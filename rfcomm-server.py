@@ -85,35 +85,6 @@ try:
 	
 		        if len(data) == 0: break
 
-			########## Creation Logs' File and its directory ##########
-
-			now = datetime.datetime.now()
-
-			#Name format = 'ssmmhh.log'
-			nameLogsFile = str("%s%s%s.log" % (now.hour, now.minute, now.second))
-
-			#Name folder format = 'DD MM YYYY'
-			nameFolder = str("%s %s %s" % (now.day, now.month, now.year))
-
-			directoryLogsPath = str("%s/%s" % (pathToLogs, nameFolder))
-			print directoryLogsPath
-			
-			#Check whether the directory for logs exists or not
-			#If it doesn't exists, create it
-			if not os.path.exists(directoryLogsPath):
-				os.makedirs(directoryLogsPath)
-
-			logsFile = str("%s/%s" % (directoryLogsPath, nameLogsFile))
-			
-			file = open(logsFile, "w+")
-			file.close()
-	
-			########## End of Creation Logs' File and its directory ##########
-
-			#TODO, implement this block into a function!
-
-			m = subprocess.Popen(["./monitoring.sh",logsFile])
-	
 		        print "received [%s]" % data
 	
 			#Data to JSON
@@ -133,6 +104,7 @@ try:
 			password = str(jsonMessage["password"])
 			hsm = str(jsonMessage["hsm"])
 	
+
 			newMessage = Message(cipher, typeFile, nameFile, password, hsm)
 	
 	
@@ -145,7 +117,39 @@ try:
 			if (os.path.isfile(pathToFile)):
 				#FILE EXISTS
 				client_sock.send(startEncryption)
+
+		
+				########## Creation Logs' File and its directory ##########
+
+				now = datetime.datetime.now()
 	
+				#Name format = 'ssmmhh.txt'
+				nameLogsFile = str("%s %s %s.txt" % (now.hour, now.minute, now.second))
+	
+				#Name folder format = 'DD MM YYYY'
+				nameFolder = str("%s %s %s" % (now.day, now.month, now.year))
+	
+				directoryLogsPath = str("%s/%s" % (pathToLogs, nameFolder))
+				print directoryLogsPath
+				
+				#Check whether the directory for logs exists or not
+				#If it doesn't exists, create it
+				if not os.path.exists(directoryLogsPath):
+					os.makedirs(directoryLogsPath)
+	
+				logsFile = str("%s/%s" % (directoryLogsPath, nameLogsFile))
+				
+				file = open(logsFile, "w+")
+				file.close()
+		
+				#TODO, implement this block into a function!
+				########## End of Creation Logs' File and its directory ##########
+				
+	
+				m = subprocess.Popen(["./monitoring.sh",logsFile])
+	
+
+
 				#CHECK WHAT KIND OF ENCRYPTION IS WANTED
 				#THEN  CALL THE CORRECT SUBPROCESS
 	
