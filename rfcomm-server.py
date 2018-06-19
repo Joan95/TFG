@@ -6,6 +6,7 @@ import sys
 import traceback
 import time
 import subprocess
+import datetime
 
 import json
 
@@ -16,6 +17,7 @@ base_directory = "/home/pi/Desktop/TFG"
 pathToResources = str("%s/%s" % (base_directory, "Resources"))
 pathToEncrypt = str("%s/%s" % (base_directory, "Encrypt"))
 pathToDecrypt = str("%s/%s" % (base_directory, "Decrypt"))
+pathToLogs = str("%s/%s" % (base_directory, "Logs"))
 
 class Message:
 	def __init__(self, cipher, typeFile, nameFile, password, hsm):
@@ -62,6 +64,14 @@ nameFile = ""
 password = ""
 hsm = ""
 
+now = ""
+nameFolder = ""
+nameLogsFile = ""
+directoryLogsPath = ""
+pathToLogsFile = ""
+logsFile = ""
+
+
 try:
 	while True:   
 		print "Waiting for connection on RFCOMM channel %d " % port
@@ -74,8 +84,34 @@ try:
 		        data = client_sock.recv(1024)
 	
 		        if len(data) == 0: break
+
+			########## Creation Logs' File and its directory ##########
+
+			now = datetime.datetime.now()
+
+			#Name format = 'ssmmhh.log'
+			nameLogsFile = str("%s%s%s.log" % (now.hour, now.minute, now.second))
+
+			#Name folder format = 'DD MM YYYY'
+			nameFolder = str("%s %s %s" % (now.day, now.month, now.year))
+
+			directoryLogsPath = str("%s/%s" % (pathToLogs, nameFolder))
+			print directoryLogsPath
+			
+			#Check whether the directory for logs exists or not
+			#If it doesn't exists, create it
+			if not os.path.exists(directoryLogsPath):
+				os.makedirs(directoryLogsPath)
+
+			logsFile = str("%s/%s" % (directoryLogsPath, nameLogsFile))
+			
+			file = open(logsFile, "w+")
+			file.close()
 	
-			m = subprocess.Popen(["./monitoring.sh"])
+			########## End of Creation Logs' File and its directory ##########
+
+
+			m = subprocess.Popen(["./monitoring.sh",logsFile])
 	
 		        print "received [%s]" % data
 	
