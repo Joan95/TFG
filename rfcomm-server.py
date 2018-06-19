@@ -13,8 +13,9 @@ from subprocess import PIPE, Popen
 from bluetooth import *
 
 base_directory = "/home/pi/Desktop/TFG"
-pathToResources = "/home/pi/Desktop/TFG/Resources"
-pathToEncrypt = "/home/pi/Desktop/TFG/Encrypt"
+pathToResources = "$base_directory/Resources"
+pathToEncrypt = "$base_directory/Encrypt"
+pathToDecrypt = "$base_directory/Decrypt"
 
 class Message:
 	def __init__(self, cipher, typeFile, nameFile, password, hsm):
@@ -100,7 +101,7 @@ while True:
 
 		#Checking whether file exists.
 		
-		pathToFile = str("%s/%s/%s" % (pathToResources, typeFile, nameFile))
+		pathToFile = str("%s/%s/%s" % (pathToResources, newMessage.typeFile, newMessage.nameFile))
 		
 		print pathToFile
 
@@ -119,7 +120,10 @@ while True:
 			#print newMessage.cipher
 
 
-			p = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile])
+			pathToSaveFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
+			
+			#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
+			p = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
 			#print p.communicate()[0]
 			p.wait()
 			
@@ -131,10 +135,11 @@ while True:
 
 				client_sock.send(startDecryption)
 
-				pathToFile = str("%s/%s" % (pathToEncrypt, typeFile))
+				pathToFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
+				pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
 				
-				#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile)
-				p = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile])
+				#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile, pathToSaveFile)
+				p = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
 				#print p.communicate()[0]
 				p.wait()
 				

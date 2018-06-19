@@ -1,6 +1,10 @@
 #!/bin/bash
 
-#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
+#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
+#WHERE pathToFile	= $pathToResources/$typeFile/$nameFile
+#WHERE pathToEncrypt 	= $base_directory/Encrypt
+#WHERE pathToSaveFile	= $pathToEncrypt/$typeFile
+
 
 #MONITORING METHODS:
 	#CPU: top -bn1
@@ -17,8 +21,7 @@ password=$(echo "$3")
 hsm=$(echo "$4")
 cipher=$(echo "$5")
 pathToFile=$(echo "$6")
-
-pathToEncrypt="/home/pi/Desktop/TFG/Encrypt/$typeFile"
+pathToSaveFile=$(echo "$7")
 
 echo -e "Encrypting..."
 
@@ -27,14 +30,14 @@ echo -e "Encrypting..."
 
 case $cipher in
 "AES")
-	openssl enc -aes-128-cbc -in $pathToFile -out $pathToEncrypt/AES/$nameFile -k password -p
+	openssl enc -aes-128-cbc -in $pathToFile -out $pathToSaveFile/AES/$nameFile -k password -p
 
 	;;
 "3DES")
-	openssl enc -des3 -in $pathToFile -out $pathToEncrypt/3DES/$nameFile -k password -p
+	openssl enc -des3 -in $pathToFile -out $pathToSaveFile/3DES/$nameFile -k password -p
 	;;
 "Camellia")
-	openssl enc -camellia-128-cbc -in $pathToFile -out $pathToEncrypt/Camellia/$nameFile -k password -p
+	openssl enc -camellia-128-cbc -in $pathToFile -out $pathToSaveFile/Camellia/$nameFile -k password -p
 	;;
 esac 
 
