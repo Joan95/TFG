@@ -10,6 +10,7 @@ import datetime
 
 import json
 
+from multiprocessing import Process
 from subprocess import PIPE, Popen
 from bluetooth import *
 
@@ -73,16 +74,17 @@ logsFile = ""
 
 fileRunning = ""
 
+
 ############# Functions ############# 
 
 def createLogsSF():
 	now = datetime.datetime.now()
 
-	#Name format = 'ssmmhh.txt'
-	nameLogsFile = str("%s %s %s.txt" % (now.hour, now.minute, now.second))
+	#Name format = 'ss-mm-hh.txt'
+	nameLogsFile = str("%s-%s-%s.txt" % (now.hour, now.minute, now.second))
 
-	#Name folder format = 'DD MM YYYY'
-	nameFolder = str("%s %s %s" % (now.day, now.month, now.year))
+	#Name folder format = 'DD-MM-YYYY'
+	nameFolder = str("%s-%s-%s" % (now.day, now.month, now.year))
 
 	global directoryLogsPath
 	directoryLogsPath = str("%s/%s" % (pathToLogs, nameFolder))
@@ -151,10 +153,12 @@ try:
 
 				createLogsSF()
 
-				print "Here is where Logs will be saved: ", directoryLogsPath
+				print "Here is where its Log will be saved: ", logsFile
 				
 				fileRunning = "encrypter.sh"
-				startMonitoring(logsFile, fileRunning)
+
+				m = Process(target=startMonitoring, args=(logsFile, fileRunning))
+				m.start()
 	
 				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
 				#print newMessage.nameFile
@@ -162,7 +166,8 @@ try:
 				#print newMessage.password
 				#print newMessage.hsm
 				#print newMessage.cipher
-	
+				
+				break;
 	
 				pathToSaveFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
 				
