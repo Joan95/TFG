@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, directory)
-#WHERE pathToFile	= $pathToEncrypt/$typeFile/$nameFile
+#WHERE pathToFile	= $pathToEncrypt/$typeFile/$cipher/$nameFile
 #WHERE directory	= $pathToDecrypt/$typeFile
 
 echo -e "\n\n\tInside de 'decrypter.sh'"
@@ -21,21 +21,31 @@ password=$(echo "$3")
 hsm=$(echo "$4")
 cipher=$(echo "$5")
 pathToFile=$(echo "$6")
-pathToSaveFile=$(echo "$7")
+directory=$(echo "$7")
 
+echo -e "\n\tPath to file $pathToFile"
+echo -e "\tSave it here: $directory"
 
-echo -e "Decrypting..."
+#Check if $directory exists; if it doesn't, make it
+if [ ! -d "$directory/$cipher" ]; then
+	echo -e "\n\t$directory/$cipher, doesn't exists, creating it"
+	mkdir $directory/$cipher
+fi
+
+echo -e "\n\tStart decryption\n"
 
 case $cipher in
 "AES")
-	openssl enc -aes-128-cbc -d -in $pathToFile/AES/$nameFile -out $pathToSaveFile/AES/$nameFile -k password -p
+	openssl enc -aes-128-cbc -d -in $pathToFile -out $directory/$cipher/$nameFile -k password -p
 	;;
 "3DES")
-	openssl enc -des3 -d -in $pathToFile/3DES/$nameFile -out $pathToSaveFile/3DES/$nameFile -k password -p
+	openssl enc -des3 -d -in $pathToFile -out $directory/$cipher/$nameFile -k password -p
 	;;
 "Camellia")
-	openssl enc -camellia-128-cbc -d -in $pathToFile/Camellia/$nameFile -out $pathToSaveFile/Camellia/$nameFile -k password -p
+	openssl enc -camellia-128-cbc -d -in $pathToFile -out $directory/$cipher/$nameFile -k password -p
 	;;
 esac 
+
+echo -e "\n\tDone, exiting from decrypter.sh...\n\n"
 
 exit 0

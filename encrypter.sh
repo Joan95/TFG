@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
+#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, directory)
 #WHERE pathToFile	= $pathToResources/$typeFile/$nameFile
 #WHERE pathToEncrypt 	= $base_directory/Encrypt
-#WHERE pathToSaveFile	= $pathToEncrypt/$typeFile
+#WHERE directory	= $pathToEncrypt/$typeFile
 
 echo -e "\n\n\tInside de 'encrypter.sh'"
 
@@ -33,7 +33,7 @@ if [ ! -d "$directory/$cipher" ]; then
 	mkdir $directory/$cipher
 fi
 
-echo -e "\n\tStart encryption"
+echo -e "\n\tStart encryption\n"
 
 case $cipher in
 "AES")

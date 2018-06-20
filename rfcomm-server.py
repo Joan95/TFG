@@ -177,7 +177,7 @@ try:
 	
 					client_sock.send(startDecryption)
 	
-					pathToFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
+					pathToFile = str("%s/%s/%s/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.cipher, newMessage.nameFile))
 					pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
 					
 					#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile, pathToSaveFile)
