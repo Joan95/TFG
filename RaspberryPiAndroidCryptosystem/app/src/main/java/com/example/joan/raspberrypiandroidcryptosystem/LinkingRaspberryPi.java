@@ -97,6 +97,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
         final List<String> textList = Arrays.asList(res.getStringArray(R.array.text_array));
         final List<String> videoList = Arrays.asList(res.getStringArray(R.array.video_array));
         final List<String> audioList = Arrays.asList(res.getStringArray(R.array.audio_array));
+        final List<String> binList = Arrays.asList(res.getStringArray(R.array.bin_array));
 
 
         sendButton.setOnClickListener(new View.OnClickListener()
@@ -169,6 +170,12 @@ public class LinkingRaspberryPi extends AppCompatActivity
 
                 if (value.equals("Video")) {
                     auxAdapter = new ArrayAdapter<>(LinkingRaspberryPi.this, android.R.layout.simple_spinner_item, videoList);
+                    auxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerFile.setAdapter(auxAdapter);
+                }
+
+                if (value.equals("Bin")) {
+                    auxAdapter = new ArrayAdapter<String>(LinkingRaspberryPi.this, android.R.layout.simple_spinner_item, binList);
                     auxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerFile.setAdapter(auxAdapter);
                 }

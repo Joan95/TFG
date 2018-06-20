@@ -29,6 +29,7 @@
     <string name="decrypting">Decrypting...</string>
 
     <string-array name="type_file">
+        <item>Bin</item>
         <item>Text</item>
         <item>Audio</item>
         <item>Video</item>
@@ -63,6 +64,11 @@
     <string-array name="audio_array">
         <item>Avenged_Sevenfold_So_Far_Away.mp3</item>
         <item>Eric_Johnson_Cliffs_Of_Dover.mp3</item>
+    </string-array>
+
+    <string-array name="bin_array">
+        <item>1GB.bin</item>
+        <item>10GB.bin</item>
     </string-array>
 
     <string-array name="text_array">
