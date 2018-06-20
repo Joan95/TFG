@@ -23,7 +23,7 @@
     <string name="decrypt">DECRYPT</string>
     <string name="hsm_question">Do\ you\ want\ to\ use\ HSM?</string>
     <string name="waiting_for_value">Waiting\ for\ Value...</string>
-    <string name="password">Password</string>
+    <string name="password">OPTIONAL Password</string>
 
     <string name="encrypting">Encrypting...</string>
     <string name="decrypting">Decrypting...</string>
@@ -68,7 +68,6 @@
     <string-array name="text_array">
         <item>El_Pirata-Jose_Espronceda.txt</item>
         <item>El_Cuervo-Edgar_Allan_Poe.txt</item>
-        <item>Sherlock_Holmes-Arthur_Conan_Doyle.txt</item>
         <item>Complete_Sherlock_Holmes-Arthur_Conan_Doyle.txt</item>
     </string-array>
 </resources>
