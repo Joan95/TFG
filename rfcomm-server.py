@@ -71,6 +71,8 @@ directoryLogsPath = ""
 pathToLogsFile = ""
 logsFile = ""
 
+fileRunning = ""
+
 ############# Functions ############# 
 
 def createLogsSF():
@@ -95,6 +97,8 @@ def createLogsSF():
 	file = open(logsFile, "w+")
 	file.close()
 
+def startMonitoring(logsFile, fileRunning):
+	m = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning])
 
 ############# Main ############# 
 
@@ -148,9 +152,9 @@ try:
 				createLogsSF()
 
 				print "Here is where Logs will be saved: ", directoryLogsPath
-
-				#m = subprocess.Popen(["./monitoring.sh",logsFile])
-
+				
+				fileRunning = "encrypter.sh"
+				startMonitoring(logsFile, fileRunning)
 	
 				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
 				#print newMessage.nameFile
@@ -163,27 +167,29 @@ try:
 				pathToSaveFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
 				
 				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
-				p = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
-				#print p.communicate()[0]
-				p.wait()
+				e = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+				#print e.communicate()[0]
+				e.wait()
 				
-				if (p.returncode == 0):
+				if (e.returncode == 0):
 					print "File has been encrypted successfully"
 					client_sock.send(endEncryption)
 	
 					time.sleep(5)
 	
 					client_sock.send(startDecryption)
-	
+
+					fileRunning = "decrypter.sh"
+
 					pathToFile = str("%s/%s/%s/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.cipher, newMessage.nameFile))
 					pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
 					
 					#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile, pathToSaveFile)
-					p = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
-					#print p.communicate()[0]
-					p.wait()
+					d = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+					#print d.communicate()[0]
+					d.wait()
 					
-					if (p.returncode == 0):
+					if (d.returncode == 0):
 						print "File has been decrypted successfully"
 						client_sock.send(endDecryption)
 					else:
