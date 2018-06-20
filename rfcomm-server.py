@@ -5,13 +5,16 @@ import os.path
 import sys
 import traceback
 import time
-import subprocess
 import datetime
 
 import json
 
+import subprocess
 from multiprocessing import Process
 from subprocess import PIPE, Popen
+
+
+
 from bluetooth import *
 
 base_directory = "/home/pi/Desktop/TFG"
@@ -100,7 +103,8 @@ def createLogsSF():
 	file.close()
 
 def startMonitoring(logsFile, fileRunning):
-	m = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning])
+	subprocess.Popen(["./monitoring.sh", logsFile, fileRunning])
+
 
 ############# Main ############# 
 
@@ -153,12 +157,14 @@ try:
 
 				createLogsSF()
 
-				print "Here is where its Log will be saved: ", logsFile
-				
-				fileRunning = "encrypter.sh"
-
+				fileRunning = "encrypter"
 				m = Process(target=startMonitoring, args=(logsFile, fileRunning))
 				m.start()
+
+				time.sleep(0.5)
+				
+				print "Here is where its Log will be saved: ", logsFile
+
 	
 				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
 				#print newMessage.nameFile
@@ -166,8 +172,6 @@ try:
 				#print newMessage.password
 				#print newMessage.hsm
 				#print newMessage.cipher
-				
-				break;
 	
 				pathToSaveFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
 				
@@ -176,6 +180,11 @@ try:
 				#print e.communicate()[0]
 				e.wait()
 				
+				m.join()
+				
+
+				break;
+
 				if (e.returncode == 0):
 					print "File has been encrypted successfully"
 					client_sock.send(endEncryption)
