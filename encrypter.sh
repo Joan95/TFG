@@ -48,7 +48,7 @@ case $cipher in
 	;;
 "Camellia")
 
-	openssl enc -camellia-128-cbc -in $pathToFile -out $pathToSaveFile/Camellia/$nameFile -k password -p
+	openssl enc -camellia-128-cbc -in $pathToFile -out $directory/$cipher/$nameFile -k password -p
 
 	;;
 esac 

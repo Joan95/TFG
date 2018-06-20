@@ -71,7 +71,32 @@ directoryLogsPath = ""
 pathToLogsFile = ""
 logsFile = ""
 
-#CREATE SYSTEM FILE OF FOLDERS 
+############# Functions ############# 
+
+def createLogsSF():
+	now = datetime.datetime.now()
+
+	#Name format = 'ssmmhh.txt'
+	nameLogsFile = str("%s %s %s.txt" % (now.hour, now.minute, now.second))
+
+	#Name folder format = 'DD MM YYYY'
+	nameFolder = str("%s %s %s" % (now.day, now.month, now.year))
+
+	global directoryLogsPath
+	directoryLogsPath = str("%s/%s" % (pathToLogs, nameFolder))
+	
+	#Check whether the directory for logs exists or not
+	if not os.path.exists(directoryLogsPath):
+		os.makedirs(directoryLogsPath)
+
+	global logsFile
+	logsFile = str("%s/%s" % (directoryLogsPath, nameLogsFile))
+	
+	file = open(logsFile, "w+")
+	file.close()
+
+
+############# Main ############# 
 
 try:
 	while True:   
@@ -79,6 +104,7 @@ try:
 		
 		client_sock, client_info = server_sock.accept()
 		print "Accepted connection from ", client_info
+		print "\n"
 		
 		try:
 		    while True:
@@ -86,7 +112,7 @@ try:
 	
 		        if len(data) == 0: break
 
-		        print "received [%s]" % data
+		        print "Message received [%s]\n" % data
 	
 			#Data to JSON
 			jsonMessage = json.loads(data)
@@ -119,40 +145,12 @@ try:
 				#FILE EXISTS
 				client_sock.send(startEncryption)
 
-		
-				########## Creation Logs' File and its directory ##########
+				createLogsSF()
 
-				now = datetime.datetime.now()
-	
-				#Name format = 'ssmmhh.txt'
-				nameLogsFile = str("%s %s %s.txt" % (now.hour, now.minute, now.second))
-	
-				#Name folder format = 'DD MM YYYY'
-				nameFolder = str("%s %s %s" % (now.day, now.month, now.year))
-	
-				directoryLogsPath = str("%s/%s" % (pathToLogs, nameFolder))
-				print directoryLogsPath
-				
-				#Check whether the directory for logs exists or not
-				#If it doesn't exists, create it
-				if not os.path.exists(directoryLogsPath):
-					os.makedirs(directoryLogsPath)
-	
-				logsFile = str("%s/%s" % (directoryLogsPath, nameLogsFile))
-				
-				file = open(logsFile, "w+")
-				file.close()
-		
-				#TODO, implement this block into a function!
-				########## End of Creation Logs' File and its directory ##########
-				
-	
+				print "Here is where Logs will be saved: ", directoryLogsPath
+
 				#m = subprocess.Popen(["./monitoring.sh",logsFile])
-	
 
-
-				#CHECK WHAT KIND OF ENCRYPTION IS WANTED
-				#THEN  CALL THE CORRECT SUBPROCESS
 	
 				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
 				#print newMessage.nameFile
