@@ -1,16 +1,19 @@
 #!/bin/bash
 
-#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
-#Where pathToFile = pathToEncrypt/typeFile
+#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, directory)
+#WHERE pathToFile	= $pathToEncrypt/$typeFile/$nameFile
+#WHERE directory	= $pathToDecrypt/$typeFile
+
+echo -e "\n\n\tInside de 'decrypter.sh'"
 
 #MONITORING METHODS:
 	#CPU: top -bn1
 	#DISK: df -h
 	#MEMORY: free -m
 
-for i in "$@"; do
-	echo "$i"
-done
+#for i in "$@"; do
+	#echo "$i"
+#done
 
 nameFile=$(echo "$1")
 typeFile=$(echo "$2")

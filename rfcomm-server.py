@@ -71,6 +71,7 @@ directoryLogsPath = ""
 pathToLogsFile = ""
 logsFile = ""
 
+#CREATE SYSTEM FILE OF FOLDERS 
 
 try:
 	while True:   
@@ -146,7 +147,7 @@ try:
 				########## End of Creation Logs' File and its directory ##########
 				
 	
-				m = subprocess.Popen(["./monitoring.sh",logsFile])
+				#m = subprocess.Popen(["./monitoring.sh",logsFile])
 	
 
 
