@@ -13,15 +13,15 @@ echo -e "\n\n\tMonitoring has begun"
 	#DISK: df -h
 	#MEMORY: free -m
 
-for i in "$@"; do
-	echo "- $i"
-done
+#for i in "$@"; do
+	#echo "- $i"
+#done
 
 logsFile=$(echo "$1")
 fileRunning=$(echo "$2")
 
 (top -bn50 -d 0.1 | grep $fileRunning ) >> $logsFile
 
-echo -e "Monitoring has finished"
+echo -e "\tMonitoring has finished"
 
 exit 0

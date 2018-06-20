@@ -182,14 +182,13 @@ try:
 				
 				m.join()
 				
-
-				break;
+				time.sleep(5)
 
 				if (e.returncode == 0):
 					print "File has been encrypted successfully"
-					client_sock.send(endEncryption)
-	
-					time.sleep(5)
+					client_sock.send(endEncryption)	
+
+					time.sleep(1)
 	
 					client_sock.send(startDecryption)
 
