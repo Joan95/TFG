@@ -103,7 +103,8 @@ def createLogsSF():
 	file.close()
 
 def startMonitoring(logsFile, fileRunning):
-	subprocess.Popen(["./monitoring.sh", logsFile, fileRunning])
+	global m
+	m = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning])
 
 
 ############# Main ############# 
@@ -161,7 +162,7 @@ try:
 				createLogsSF()
 
 				fileRunning = "encrypter"
-				m = Process(target=startMonitoring, args=(logsFile, fileRunning))
+				Process(target=startMonitoring, args=(logsFile, fileRunning))
 				m.start()
 
 				time.sleep(0.5)
@@ -183,12 +184,13 @@ try:
 				#print e.communicate()[0]
 				e.wait()
 				
-				m.join()
-				
 				time.sleep(5)
 
 				if (e.returncode == 0):
 					print "File has been encrypted successfully"
+					
+					m.kill()
+					
 					client_sock.send(endEncryption)	
 
 					time.sleep(1)

@@ -20,7 +20,7 @@ echo -e "\n\n\tMonitoring has begun"
 logsFile=$(echo "$1")
 fileRunning=$(echo "$2")
 
-(top -bn50 -d 0.1 | grep $fileRunning ) >> $logsFile
+(top -d 0.1 | grep openssl ) >> $logsFile
 
 echo -e "\tMonitoring has finished"
 
