@@ -13,14 +13,14 @@ import subprocess
 from multiprocessing import Process
 from subprocess import PIPE, Popen
 
-
-
 from bluetooth import *
 
 base_directory = "/home/pi/Desktop/TFG"
-pathToResources = "/media/pi/Transcend/TFG/Resources"
-pathToEncrypt = str("%s/%s" % (base_directory, "Encrypt"))
-pathToDecrypt = str("%s/%s" % (base_directory, "Decrypt"))
+device_directory = "/media/pi/Transcend/TFG"
+
+pathToResources = str("%s/%s" % (device_directory, "Resources"))
+pathToEncrypt = str("%s/%s" % (device_directory, "Encrypt"))
+pathToDecrypt = str("%s/%s" % (device_directory, "Decrypt"))
 pathToLogs = str("%s/%s" % (base_directory, "Logs"))
 
 class Message:
@@ -114,6 +114,9 @@ try:
 		
 		client_sock, client_info = server_sock.accept()
 		print "Accepted connection from ", client_info
+
+		client_sock.send(fileNotFound)
+		
 		print "\n"
 		
 		try:

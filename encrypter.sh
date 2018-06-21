@@ -2,7 +2,7 @@
 
 #ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, directory)
 #WHERE pathToFile	= $pathToResources/$typeFile/$nameFile
-#WHERE pathToEncrypt 	= $base_directory/Encrypt
+#WHERE pathToEncrypt 	= $device_directory/Encrypt
 #WHERE directory	= $pathToEncrypt/$typeFile
 
 echo -e "\n\n\tInside de 'encrypter.sh'"
