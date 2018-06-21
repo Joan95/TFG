@@ -18,7 +18,7 @@ from subprocess import PIPE, Popen
 from bluetooth import *
 
 base_directory = "/home/pi/Desktop/TFG"
-pathToResources = str("%s/%s" % (base_directory, "Resources"))
+pathToResources = "/media/pi/Transcend/TFG/Resources"
 pathToEncrypt = str("%s/%s" % (base_directory, "Encrypt"))
 pathToDecrypt = str("%s/%s" % (base_directory, "Decrypt"))
 pathToLogs = str("%s/%s" % (base_directory, "Logs"))
