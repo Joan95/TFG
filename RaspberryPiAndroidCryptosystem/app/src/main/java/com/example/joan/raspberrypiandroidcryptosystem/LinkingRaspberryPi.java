@@ -222,94 +222,21 @@ public class LinkingRaspberryPi extends AppCompatActivity
                     String readMessage = (String) msg.obj;
                     recDataString.append(readMessage);
 
-                    String[] msg_array = readMessage.split(";");
+                    try {
+                        JSONObject jsonMessage = new JSONObject(readMessage);
 
-                    if (msg_array[0].equals("200"))
-                    {
-                        sendButton.setEnabled(false);
-                        sendButton.setText("WAIT");
-                        //myToasts.show(LinkingRaspberryPi.this, readMessage+" "+recDataString.length());
+                        if (jsonMessage.has("System Files")) {
 
-                        switch (msg_array[1]) {
-                            case "0":
-                                usageCPUEncrypt.setText("Encrypting...");
-                                usageMemoryEncrypt.setText("Encrypting...");
-                                break;
-
-                            case "1":
-                                usageCPUEncrypt.setText("DONE");
-                                usageMemoryEncrypt.setText("DONE");
-                                /*Maybe a counter here... 3 seconds*/
-
-                                break;
-
-                            case "2":
-                                usageCPUDecrypt.setText("Decrypting...");
-                                usageMemoryDecrypt.setText("Decrypting...");
-                                break;
-                            case "3":
-                                if(!sendButton.isEnabled())
-                                {
-                                    sendButton.setEnabled(true);
-                                    sendButton.setText("SEND");
-                                }
-                                usageCPUDecrypt.setText("DONE");
-                                usageMemoryDecrypt.setText("DONE");
-                                break;
+                            usageCPUEncrypt.setText("YAAASSS");
+                        } else {
+                            usageCPUDecrypt.setText("NOPE");
                         }
-                        deleteMessage();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
-                    if (msg_array[0].equals("400"))
-                    {
-                        switch (msg_array[1]) {
-                            case "1":
-                                myToasts.show(LinkingRaspberryPi.this, "Please choose a correct File.");
-                                deleteMessage();
-                                break;
-
-                            case "2":
-                                myToasts.show(LinkingRaspberryPi.this, "Please choose a correct Method.");
-                                deleteMessage();
-                                break;
-
-                            case "3":
-                                myToasts.show(LinkingRaspberryPi.this, "Please choose a correct Method and File.");
-                                deleteMessage();
-                                break;
-                        }
-                    }
-                    if (msg_array[0].equals("404"))
-                    {
-                        //myToasts.show(LinkingRaspberryPi.this, "File " + message.getFile() + " couldn't be found. Please check whether it is in the server.");
-                        if (!sendButton.isEnabled())
-                        {
-                            sendButton.setEnabled(true);
-                            sendButton.setText("SEND");
-                        }
-                        usageCPUEncrypt.setText("File not found.");
-                        usageMemoryEncrypt.setText("File not found.");
-                        usageCPUDecrypt.setText("File not found.");
-                        usageMemoryDecrypt.setText("File not found.");
-                        deleteMessage();
-                    }
-
-                    if (msg_array[0].equals("417"))
-                    {
-                        //myToasts.show(LinkingRaspberryPi.this, "Fatal error has occurred inside encrypting file.");
-                        if (!sendButton.isEnabled())
-                        {
-                            sendButton.setEnabled(true);
-                            sendButton.setText("SEND");
-                        }
-
-                        if (usageCPUEncrypt.getText().equals("Encrypting..."))
-                        {
-                            usageCPUEncrypt.setText("Fatal error during encryption.");
-                            usageMemoryEncrypt.setText("Fatal error during encryption.");
-                        }
-                        deleteMessage();
-                    }
+                    deleteMessage();
                 }
             }
             void deleteMessage() {
