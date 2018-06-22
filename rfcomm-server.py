@@ -1,7 +1,10 @@
 #!/usr/bin/python
 
 import os
+from os import listdir
 import os.path
+from os.path import isfile, join 
+
 import sys
 import traceback
 import time
@@ -34,6 +37,7 @@ class Message:
 	def __repr__(self):
 		return str(self.__dict__)
 
+
 server_sock=BluetoothSocket( RFCOMM )
 server_sock.bind(("",PORT_ANY))
 server_sock.listen(1)
@@ -60,7 +64,6 @@ endDecryption = "200;3"
 startEncryption = "200;0"
 fileNotFound = "404;0"
 
-
 	#Used variables
 cipher = ""
 typeFile = ""
@@ -77,6 +80,8 @@ logsFile = ""
 
 fileRunning = ""
 
+SFDevice = {}
+FDevice = {}
 
 ############# Functions ############# 
 
@@ -115,7 +120,32 @@ try:
 		print "Accepted connection from ", client_info
 
 		####### Get device files here! #######
+		print "\tCollecting information of files from: ", pathToResources
+
+		deviceDirectories = os.listdir(pathToResources)
+		print deviceDirectories
 		
+
+		for directory in deviceDirectories:
+			deviceFilePath = str("%s/%s" % (pathToResources, directory))
+			
+
+			for file in listdir(deviceFilePath):
+				if isfile:
+					fileName = file
+					fileSizeMB = os.path.getsize(str("%s/%s" % (deviceFilePath, file))) >> 20
+					FDevice["name"] = file
+					FDevice["size"] = fileSizeMB
+					SFDevice[directory] = FDevice
+
+			SFDevice = json.dumps(SFDevice)
+			SFDevice = str("{\"System Files\": %s}" % (SFDevice))
+			print "\n"
+			print SFDevice
+			client_sock.send(SFDevice)
+			FDevice = {}
+			SFDevice = {}
+
 		print "\n"
 		
 		try:
@@ -163,8 +193,7 @@ try:
 				#m = Process(target=startMonitoring, args=(logsFile, fileRunning))
 				#m.start()
 
-				m = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
-				
+				me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
 				print "Here is where its Log will be saved: ", logsFile
 
 	
@@ -186,17 +215,18 @@ try:
 
 				if (e.returncode == 0):
 					#Stop monitoring
-					m.kill()
+					me.kill()
 					
 					print "File has been encrypted successfully"
-					
 					client_sock.send(endEncryption)	
+					
+					fileRunning = "decrypter"
+					md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
+					print "Here is where its Log will be saved: ", logsFile
 
 					time.sleep(1)
 	
 					client_sock.send(startDecryption)
-
-					fileRunning = "decrypter.sh"
 
 					pathToFile = str("%s/%s/%s/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.cipher, newMessage.nameFile))
 					pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
@@ -207,6 +237,9 @@ try:
 					d.wait()
 					
 					if (d.returncode == 0):
+						#Stop monitoring
+						md.kill()
+						
 						print "File has been decrypted successfully"
 						client_sock.send(endDecryption)
 					else:

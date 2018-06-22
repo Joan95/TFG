@@ -22,6 +22,8 @@ echo -e "\n\n\tMonitoring has begun for type $typeFile"
 logsFile=$(echo "$1")
 fileRunning=$(echo "$2")
 
+echo -e "$fileRunning" >> $logsFile
+
 if [ $typeFile == "Text" ] || [ $typeFile == "Audio" ]; then
 
 	(top -bn 50 -d 0.01 | grep openssl ) >> $logsFile
