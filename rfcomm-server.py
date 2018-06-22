@@ -80,7 +80,7 @@ fileRunning = ""
 
 ############# Functions ############# 
 
-def createLogsSF():
+def createLogsSF(typeFile, cipher, nameFile):
 	now = datetime.datetime.now()
 
 	#Name format = 'ss-mm-hh.txt'
@@ -99,7 +99,9 @@ def createLogsSF():
 	global logsFile
 	logsFile = str("%s/%s" % (directoryLogsPath, nameLogsFile))
 	
+	toWrite = str("type:%s, cipher:%s, nameFile:%s\n" % (typeFile, cipher, nameFile))
 	file = open(logsFile, "w+")
+	file.write(toWrite)
 	file.close()
 
 
@@ -155,15 +157,13 @@ try:
 				#FILE EXISTS
 				client_sock.send(startEncryption)
 
-				createLogsSF()
+				createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile)
 
 				fileRunning = "encrypter"
 				#m = Process(target=startMonitoring, args=(logsFile, fileRunning))
 				#m.start()
 
 				m = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
-
-				time.sleep(5)
 				
 				print "Here is where its Log will be saved: ", logsFile
 
@@ -182,7 +182,7 @@ try:
 				#print e.communicate()[0]
 				e.wait()
 				
-				time.sleep(1)
+				time.sleep(3)
 
 				if (e.returncode == 0):
 					#Stop monitoring
