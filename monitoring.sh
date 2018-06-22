@@ -1,12 +1,14 @@
 #!/bin/bash 
 
-#ARGS: (logsFile, fileRunning)
+#ARGS: (logsFile, fileRunning, typeFile)
 #WHERE 	logsFile		= $directoryLogsPath/$nameLogsFile
 #WHERE 	directoryLogsPath	= $pathToLogs/$nameFolder
 #WHERE 	pathToLogs 		= $base_directory/logs
 #WHERE 	fileRunning 		= whether encrypter.sh or decrypter.sh
 
-echo -e "\n\n\tMonitoring has begun"
+typeFile=$(echo "$3")
+
+echo -e "\n\n\tMonitoring has begun for type $typeFile"
 
 #MONITORING METHODS:
 	#CPU: top -bn1

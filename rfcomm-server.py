@@ -102,10 +102,6 @@ def createLogsSF():
 	file = open(logsFile, "w+")
 	file.close()
 
-def startMonitoring(logsFile, fileRunning):
-	global m
-	m = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning])
-
 
 ############# Main ############# 
 
@@ -116,7 +112,7 @@ try:
 		client_sock, client_info = server_sock.accept()
 		print "Accepted connection from ", client_info
 
-		client_sock.send(fileNotFound)
+		####### Get device files here! #######
 		
 		print "\n"
 		
@@ -162,10 +158,12 @@ try:
 				createLogsSF()
 
 				fileRunning = "encrypter"
-				Process(target=startMonitoring, args=(logsFile, fileRunning))
-				m.start()
+				#m = Process(target=startMonitoring, args=(logsFile, fileRunning))
+				#m.start()
 
-				time.sleep(0.5)
+				m = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
+
+				time.sleep(5)
 				
 				print "Here is where its Log will be saved: ", logsFile
 
@@ -184,12 +182,13 @@ try:
 				#print e.communicate()[0]
 				e.wait()
 				
-				time.sleep(5)
+				time.sleep(1)
 
 				if (e.returncode == 0):
-					print "File has been encrypted successfully"
-					
+					#Stop monitoring
 					m.kill()
+					
+					print "File has been encrypted successfully"
 					
 					client_sock.send(endEncryption)	
 
