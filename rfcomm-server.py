@@ -128,7 +128,7 @@ try:
 
 		for directory in deviceDirectories:
 			deviceFilePath = str("%s/%s" % (pathToResources, directory))
-			
+			listFDevice = []
 
 			for file in listdir(deviceFilePath):
 				if isfile:
@@ -136,10 +136,14 @@ try:
 					fileSizeMB = os.path.getsize(str("%s/%s" % (deviceFilePath, file))) >> 20
 					FDevice["name"] = file
 					FDevice["size"] = fileSizeMB
-					SFDevice[directory] = FDevice
+				listFDevice.append(FDevice.copy())
 
+			SFDevice["type"] = directory
+			SFDevice["files"] = listFDevice			
+			
+			SFDevice = str("{System Files: %s}" % (SFDevice))
 			SFDevice = json.dumps(SFDevice)
-			SFDevice = str("{\"System Files\": %s}" % (SFDevice))
+
 			print "\n"
 			print SFDevice
 			client_sock.send(SFDevice)
