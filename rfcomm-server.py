@@ -268,6 +268,9 @@ try:
 						print "\n"
 
 						client_sock.send(SendMessage)
+
+						#Calculate %CPU & %MEM used
+						
 					else:
 						SendMessage = {}
 						SendMessage["message"] = "decryption"
