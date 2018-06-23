@@ -26,7 +26,7 @@ echo -e "$fileRunning" >> $logsFile
 
 if [ $typeFile == "Text" ] || [ $typeFile == "Audio" ]; then
 
-	(top -bn 50 -d 0.01 | grep openssl ) >> $logsFile
+	(top -bn 70 -d 0.01 | grep openssl ) >> $logsFile
 
 else 
 

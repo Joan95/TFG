@@ -54,15 +54,6 @@ advertise_service( server_sock, "SampleServer",
                     )
 
 
-errorHasOccurred = "417;0"
-
-endEncryption = "200;1"
-startDecryption = "200;2"
-endDecryption = "200;3"
-
-	#Used messages
-startEncryption = "200;0"
-fileNotFound = "404;0"
 
 	#Used variables
 cipher = ""
@@ -82,6 +73,7 @@ fileRunning = ""
 
 SFDevice = {}
 FDevice = {}
+SendMessage = {}
 
 ############# Functions ############# 
 
@@ -142,14 +134,13 @@ try:
 			SFDevice["files"] = listFDevice			
 			
 			SFDevice = json.dumps(SFDevice)
-			SFDevice = str("{\"System Files\": %s}" % (SFDevice))
-			
+			SFDevice = str("{'System Files': %s}" % (SFDevice))
 
-			print "\n"
 			print SFDevice
 			client_sock.send(SFDevice)
 			FDevice = {}
 			SFDevice = {}
+			
 
 		print "\n"
 		
@@ -190,7 +181,13 @@ try:
 	
 			if (os.path.isfile(pathToFile)):
 				#FILE EXISTS
-				client_sock.send(startEncryption)
+				SendMessage["message"] = "encryption"
+				SendMessage["action"] = "start"
+				SendMessage = json.dumps(SendMessage)
+				print SendMessage
+				print "\n"
+				
+				client_sock.send(SendMessage)
 
 				createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile)
 
@@ -223,15 +220,30 @@ try:
 					me.kill()
 					
 					print "File has been encrypted successfully"
-					client_sock.send(endEncryption)	
+
+					SendMessage = {}
+					SendMessage["message"] = "encryption"
+					SendMessage["action"] = "end"
+					SendMessage = json.dumps(SendMessage)
+					print SendMessage
+					print "\n"
+
+					client_sock.send(SendMessage)	
 					
 					fileRunning = "decrypter"
 					md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
 					print "Here is where its Log will be saved: ", logsFile
 
 					time.sleep(1)
-	
-					client_sock.send(startDecryption)
+
+					SendMessage = {}
+					SendMessage["message"] = "decryption"
+					SendMessage["action"] = "start"
+					SendMessage = json.dumps(SendMessage)
+					print SendMessage
+					print "\n"
+
+					client_sock.send(SendMessage)
 
 					pathToFile = str("%s/%s/%s/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.cipher, newMessage.nameFile))
 					pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
@@ -246,16 +258,48 @@ try:
 						md.kill()
 						
 						print "File has been decrypted successfully"
-						client_sock.send(endDecryption)
+
+						SendMessage = {}
+						SendMessage["message"] = "decryption"
+						SendMessage["action"] = "end"
+						SendMessage = json.dumps(SendMessage)
+						print SendMessage
+						print "\n"
+
+						client_sock.send(SendMessage)
 					else:
+						SendMessage = {}
+						SendMessage["message"] = "decryption"
+						SendMessage["error"] = "error"
+						SendMessage["body"] = "Error during the decryption."
+						SendMessage = json.dumps(SendMessage)
+						print SendMessage
+						print "\n"
+
 						print "Error during the decryption has ocurred..."
-						client_sock.send(errorHasOccurred)
+						client_sock.send(SendMessage)
 				else:
+					SendMessage = {}
+					SendMessage["message"] = "encryption"
+					SendMessage["error"] = "error"
+					SendMessage["body"] = "Error during the encryption."
+					SendMessage = json.dumps(SendMessage)
+					print SendMessage
+					print "\n"
+
 					print "Error during the encryption has ocurred..."
-					client_sock.send(errorHasOccurred)
+					client_sock.send(SendMessage)
 			else:
+				SendMessage = {}
+				SendMessage["message"] = "encryption"
+				SendMessage["error"] = "error"
+				SendMessage["body"] = "File not found."
+				SendMessage = json.dumps(SendMessage)
+				print SendMessage
+				print "\n"
+
 				print "File does not exist!"
-				client_sock.send(fileNotFound)
+				client_sock.send(SendMessage)
 	
 		except BluetoothError:
 			print "Lost connection of ", client_info 
@@ -266,7 +310,7 @@ try:
 			pass
 		
 		print "\n\tDisconnected"
-		
+
 		client_sock.close()
 		#server_sock.close()
 	
