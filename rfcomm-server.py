@@ -198,6 +198,7 @@ try:
 				me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
 				print "Here is where its Log will be saved: ", logsFile
 
+				time.sleep(1)
 	
 				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
 				#print newMessage.nameFile
