@@ -54,7 +54,6 @@ advertise_service( server_sock, "SampleServer",
                     )
 
 
-
 	#Used variables
 cipher = ""
 typeFile = ""
@@ -192,8 +191,6 @@ try:
 				createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile)
 
 				fileRunning = "encrypter"
-				#m = Process(target=startMonitoring, args=(logsFile, fileRunning))
-				#m.start()
 
 				me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
 				print "Here is where its Log will be saved: ", logsFile
@@ -270,6 +267,8 @@ try:
 						client_sock.send(SendMessage)
 
 						#Calculate %CPU & %MEM used
+						calc = subprocess.Popen(["./calculator.sh", logsFile])
+						calc.wait()
 						
 					else:
 						SendMessage = {}
