@@ -216,7 +216,6 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/selectTypeFile"
         android:layout_toRightOf="@id/selectTypeFile"
-        android:entries="@array/type_file"
         android:layout_alignTop="@+id/selectTypeFile"
         android:layout_marginTop="8dp"
         android:minWidth="100dp"></Spinner>

@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,12 +22,14 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -69,6 +72,9 @@ public class LinkingRaspberryPi extends AppCompatActivity
         }
     };
 
+
+    private SystemFile systemFile = new SystemFile();
+
     @SuppressLint("HandlerLeak")
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -78,7 +84,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
         final Button sendButton = findViewById(R.id.sendButton);
         Button disconnectButton = findViewById(R.id.disconnectButton);
         Spinner spinnerMethod = findViewById(R.id.spinnerSelectMethod);
-        Spinner spinnerTypeFile = findViewById(R.id.spinnerSelectTypeFile);
+        final Spinner spinnerTypeFile = findViewById(R.id.spinnerSelectTypeFile);
         final Spinner spinnerFile = findViewById(R.id.spinnerSelectFile);
         final TextView usageCPUEncrypt = findViewById(R.id.valueCPUEncrypt);
         final TextView usageCPUDecrypt = findViewById(R.id.valueCPUDecrypt);
@@ -91,14 +97,6 @@ public class LinkingRaspberryPi extends AppCompatActivity
         raspberryMac = lastInt.getStringExtra(ShowDevices.BLUETOOTH_MAC_DEVICE);
 
         myToasts.show(LinkingRaspberryPi.this, raspberryMac);
-
-        /* Convertion to String[] to List<String>, getting resources from 'strings.xml'*/
-        Resources res = getResources();
-        final List<String> textList = Arrays.asList(res.getStringArray(R.array.text_array));
-        final List<String> videoList = Arrays.asList(res.getStringArray(R.array.video_array));
-        final List<String> audioList = Arrays.asList(res.getStringArray(R.array.audio_array));
-        final List<String> binList = Arrays.asList(res.getStringArray(R.array.bin_array));
-
 
         sendButton.setOnClickListener(new View.OnClickListener()
         {
@@ -138,7 +136,12 @@ public class LinkingRaspberryPi extends AppCompatActivity
                     onNothingSelected(parent);
                 } else {
                     message.setCipher(parent.getItemAtPosition(position).toString());
-                    sendButton.setEnabled(true);
+
+                    ArrayAdapter<String> auxAdapter;
+
+                    auxAdapter = new ArrayAdapter<>(LinkingRaspberryPi.this, android.R.layout.simple_spinner_item, systemFile.getListKeys());
+                    auxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerTypeFile.setAdapter(auxAdapter);
                 }
             }
 
@@ -151,34 +154,16 @@ public class LinkingRaspberryPi extends AppCompatActivity
         spinnerTypeFile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ArrayAdapter<String> auxAdapter;
 
                 String value = parent.getItemAtPosition(position).toString();
                 message.setTypeFile(value);
 
-                if (value.equals("Text")) {
-                    auxAdapter = new ArrayAdapter<>(LinkingRaspberryPi.this, android.R.layout.simple_spinner_item, textList);
-                    auxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerFile.setAdapter(auxAdapter);
-                }
+                ArrayAdapter<String> auxAdapter;
 
-                if (value.equals("Audio")) {
-                    auxAdapter = new ArrayAdapter<>(LinkingRaspberryPi.this, android.R.layout.simple_spinner_item, audioList);
-                    auxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerFile.setAdapter(auxAdapter);
-                }
+                auxAdapter = new ArrayAdapter<>(LinkingRaspberryPi.this, android.R.layout.simple_spinner_item, systemFile.getListValues(value));
+                auxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerFile.setAdapter(auxAdapter);
 
-                if (value.equals("Video")) {
-                    auxAdapter = new ArrayAdapter<>(LinkingRaspberryPi.this, android.R.layout.simple_spinner_item, videoList);
-                    auxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerFile.setAdapter(auxAdapter);
-                }
-
-                if (value.equals("Bin")) {
-                    auxAdapter = new ArrayAdapter<String>(LinkingRaspberryPi.this, android.R.layout.simple_spinner_item, binList);
-                    auxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerFile.setAdapter(auxAdapter);
-                }
             }
 
             @Override
@@ -191,6 +176,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 message.setNameFile(parent.getItemAtPosition(position).toString());
+                sendButton.setEnabled(true);
             }
 
             @Override
@@ -225,18 +211,44 @@ public class LinkingRaspberryPi extends AppCompatActivity
                     try {
                         JSONObject jsonMessage = new JSONObject(readMessage);
 
+                        Log.d("JSON", jsonMessage.toString());
+
+                        /*If it is SYSTEM FILES stuff.*/
                         if (jsonMessage.has("System Files")) {
 
-                            usageCPUEncrypt.setText("YAAASSS");
+                            JSONObject content = jsonMessage.getJSONObject("System Files");
+                            Log.d("Content", content.toString());
+
+                            if (content.has("type")) {
+                                String typeFile = content.getString("type");
+                                Log.d("type", typeFile);
+
+                                if (content.has("files")) {
+                                    List<File> files = new ArrayList<>();
+
+                                    JSONArray jsonFiles = content.getJSONArray("files");
+                                    for (int i = 0; i < jsonFiles.length(); i++) {
+                                        JSONObject jsonFile = jsonFiles.getJSONObject(i);
+                                        File file = new File(jsonFile.getString("name"),jsonFile.getInt("size"));
+                                        files.add(file);
+                                        Log.d("file", file.toString());
+                                    }
+
+                                    systemFile.putValues(typeFile, new ArrayList<>(files));
+
+                                    Log.d("jsonFiles", jsonFiles.toString());
+                                    Log.d("systemFile", systemFile.toString());
+                                }
+                            }
+
                         } else {
-                            usageCPUDecrypt.setText("NOPE");
+
                         }
 
+                        deleteMessage();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    deleteMessage();
                 }
             }
             void deleteMessage() {

@@ -28,13 +28,6 @@
     <string name="encrypting">Encrypting...</string>
     <string name="decrypting">Decrypting...</string>
 
-    <string-array name="type_file">
-        <item>Bin</item>
-        <item>Text</item>
-        <item>Audio</item>
-        <item>Video</item>
-    </string-array>
-
     <string-array name="block_ciphers">
         <item>Select Cipher</item>
         <item>AES</item>
@@ -56,24 +49,4 @@
         <item>ARC4</item>
     </string-array>
 
-    <string-array name="video_array">
-        <item>Slash_Anastasia_1080p.mp4</item>
-        <item>Guns_N_Roses_Sweet_Child_O_Mine.mp4</item>
-    </string-array>
-
-    <string-array name="audio_array">
-        <item>Avenged_Sevenfold_So_Far_Away.mp3</item>
-        <item>Eric_Johnson_Cliffs_Of_Dover.mp3</item>
-    </string-array>
-
-    <string-array name="bin_array">
-        <item>1GB.bin</item>
-        <item>10GB.bin</item>
-    </string-array>
-
-    <string-array name="text_array">
-        <item>El_Pirata-Jose_Espronceda.txt</item>
-        <item>El_Cuervo-Edgar_Allan_Poe.txt</item>
-        <item>Complete_Sherlock_Holmes-Arthur_Conan_Doyle.txt</item>
-    </string-array>
 </resources>
