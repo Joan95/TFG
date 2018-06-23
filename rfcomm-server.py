@@ -141,8 +141,9 @@ try:
 			SFDevice["type"] = directory
 			SFDevice["files"] = listFDevice			
 			
-			SFDevice = str("{System Files: %s}" % (SFDevice))
 			SFDevice = json.dumps(SFDevice)
+			SFDevice = str("{\"System Files\": %s}" % (SFDevice))
+			
 
 			print "\n"
 			print SFDevice
