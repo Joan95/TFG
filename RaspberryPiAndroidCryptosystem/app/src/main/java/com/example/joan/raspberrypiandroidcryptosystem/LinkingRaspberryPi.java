@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -243,15 +241,56 @@ public class LinkingRaspberryPi extends AppCompatActivity
 
                         }
 
-                        if (jsonMessage.has("message")) {
-                            String action = jsonMessage.getString("message");
+                        if (jsonMessage.has("message") && jsonMessage.has("action")) {
+                            String messageJson = jsonMessage.getString("message");
+                            String actionJson = jsonMessage.getString("action");
 
-                            if (action.equals("encryption")) {
-                                
+                            if (messageJson.equals("encryption")) {
+                                if (actionJson.equals("start")){
+                                    usageCPUEncrypt.setText("Start encryption");
+                                    usageMemoryEncrypt.setText("Start encryption");
+                                    sendButton.setEnabled(false);
+                                }
+
+                                if (actionJson.equals("end")) {
+                                    usageCPUEncrypt.setText("Encryption has finished");
+                                    usageMemoryEncrypt.setText("Waiting for results");
+                                }
                             }
 
-                            if (action.equals("decryption")) {
+                            if (messageJson.equals("decryption")) {
+                                if (actionJson.equals("start")) {
+                                    usageCPUDecrypt.setText("Start decryption");
+                                    usageMemoryDecrypt.setText("Start decryption");
+                                }
 
+                                if (actionJson.equals("end")) {
+                                    usageCPUDecrypt.setText("Decryption has finished");
+                                    usageMemoryDecrypt.setText("Waiting for results");
+                                    sendButton.setEnabled(true);
+                                }
+                            }
+
+                        } else {
+                            /*It's an error if there is not field 'action'. */
+                            String messageJson = jsonMessage.getString("message");
+                            String errorJson = jsonMessage.getString("error");
+                            String bodyJson = jsonMessage.getString("body");
+
+                            if (messageJson.equals("encryption")) {
+                                if (errorJson.equals("error")){
+                                    usageCPUEncrypt.setText(bodyJson);
+                                    usageMemoryEncrypt.setText(bodyJson);
+                                    sendButton.setEnabled(true);
+                                }
+                            }
+
+                            if (messageJson.equals("decryption")) {
+                                if (errorJson.equals("error")) {
+                                    usageCPUDecrypt.setText(bodyJson);
+                                    usageMemoryDecrypt.setText(bodyJson);
+                                    sendButton.setEnabled(true);
+                                }
                             }
                         }
 
