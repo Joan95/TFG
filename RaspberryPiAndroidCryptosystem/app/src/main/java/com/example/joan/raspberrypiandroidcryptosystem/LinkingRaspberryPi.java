@@ -241,8 +241,18 @@ public class LinkingRaspberryPi extends AppCompatActivity
                                 }
                             }
 
-                        } else {
+                        }
 
+                        if (jsonMessage.has("message")) {
+                            String action = jsonMessage.getString("message");
+
+                            if (action.equals("encryption")) {
+                                
+                            }
+
+                            if (action.equals("decryption")) {
+
+                            }
                         }
 
                         deleteMessage();
