@@ -101,6 +101,49 @@ echo -e "Maximum %MEM consumption: \t$encryptMaxMEM%"
 cntCPU=0
 cntMEM=0
 
+for j in $decryptLogs; do 
+	auxCPUValue=$(echo -e "$j" | awk ' { print $9 } ') #CPU value
+	auxMEMValue=$(echo -e "$j" | awk ' { print $10 } ') #MEM value
+
+	#echo -e "$decryptMaxCPU < $auxCPUValue"
+	comparation=$(awk ' BEGIN{ print ("'$decryptMaxCPU'"<"'$auxCPUValue'")} ')
+	#echo -e "isIt: $comparation"
+
+	if [ $comparation == '1' ]; then 
+		decryptMaxCPU=$auxCPUValue
+	fi
+
+	#echo -e "$decryptMaxMEM < $auxMEMValue"
+	comparation=$(awk ' BEGIN{ print ("'$decryptMaxMEM'"<"'$auxMEMValue'")} ')
+	#echo -e "isIt: $comparation"
+	
+	if [ $comparation == '1' ]; then
+		decryptMaxMEM=$auxMEMValue
+	fi
+
+	decryptCPUUsage=$(echo $decryptCPUUsage $auxCPUValue | awk '{print $1 + $2}') #Due to sum of float an integer
+	decryptMEMUsage=$(echo $decryptMEMUsage $auxMEMValue | awk '{print $1 + $2}') 
+	
+	if [ ! $auxCPUValue ==  "0.0" ]; then
+		cntCPU=$((cntCPU+1))
+	fi  
+
+	if [ ! $auxMEMValue == "0.0" ]; then 
+		cntMEM=$((cntMEM+1))
+	fi
+done
+
+echo -e "CPU decrypt usage: \t\t$decryptCPUUsage"
+echo -e "Total trustly values: \t\t$cntCPU"
+decryptCPUUsage=$(echo $decryptCPUUsage $cntCPU | awk '{print $1 / $2}')
+
+echo -e "Average of %CPU consumption: \t$decryptCPUUsage%"
+echo -e "Maximum %CPU consumption: \t$decryptMaxCPU%"
+
+echo -e "Total trustly values: \t\t$cntMEM"
+decryptMEMUsage=$(echo $decryptMEMUsage $cntMEM | awk '{print $1 / $2}')
+echo -e "Average of %MEM consumption: \t$decryptMEMUsage%"
+echo -e "Maximum %MEM consumption: \t$decryptMaxMEM%"
 
 
 echo -e "\n\tDone, exiting from calculator.sh...\n\n"
