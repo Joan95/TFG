@@ -25,7 +25,7 @@ logsFile=$(echo "$1")
 lastLine=$(cat $logsFile | tail -n1)
 lastLine=$(echo $lastLine | tail -c 4)
 
-echo -e "Last line is: $lastLine"
+#echo -e "Last line is: $lastLine"
 
 #Print a delimiter inside the file
 
@@ -85,6 +85,7 @@ for j in $encryptLogs; do
 	fi
 done
 
+echo -e "\tEncryption monitoring: "
 echo -e "CPU encrypt usage: \t\t$encryptCPUUsage"
 echo -e "Total trustly values: \t\t$cntCPU"
 encryptCPUUsage=$(echo $encryptCPUUsage $cntCPU | awk '{print $1 / $2}')
@@ -133,6 +134,7 @@ for j in $decryptLogs; do
 	fi
 done
 
+echo -e "\n\tDecryption monitoring: "
 echo -e "CPU decrypt usage: \t\t$decryptCPUUsage"
 echo -e "Total trustly values: \t\t$cntCPU"
 decryptCPUUsage=$(echo $decryptCPUUsage $cntCPU | awk '{print $1 / $2}')
