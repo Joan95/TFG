@@ -1,14 +1,14 @@
 #!/bin/bash 
 
-#ARGS: (logsFile, fileRunning, typeFile)
+#ARGS: (logsFile, fileRunning, sizeOfFileMB)
 #WHERE 	logsFile		= $directoryLogsPath/$nameLogsFile
 #WHERE 	directoryLogsPath	= $pathToLogs/$nameFolder
 #WHERE 	pathToLogs 		= $base_directory/logs
 #WHERE 	fileRunning 		= whether encrypter.sh or decrypter.sh
 
-typeFile=$(echo "$3")
+sizeOfFileMB=$(echo "$3")
 
-echo -e "\n\n\tMonitoring has begun for type $typeFile"
+echo -e "\n\n\tMonitoring has begun for file of size $sizeOfFileMB"
 
 #MONITORING METHODS:
 	#CPU: top -bn1
@@ -24,15 +24,29 @@ fileRunning=$(echo "$2")
 
 echo -e "$fileRunning" >> $logsFile
 
-if [ $typeFile == "Text" ] || [ $typeFile == "Audio" ]; then
+#As bigger is the file, it should increase the value of -d
+#As smaller is the file, it should reduce the value of -d
+#1GB = 1000MB aprox 40 sec
+#Standard of 80 times in 50 sec for 1GB,
+#it means that it will take a top every
+#1,5 seconds, so, the factor will be:
 
-	(top -bn 100 -d 0.01 | grep openssl ) >> $logsFile
+#	 1000 	-	1,6
+#sizeOfFileMB	- 	X
 
-else 
+frecOfTop=$(echo $sizeOfFileMB  | awk '{print $1 * "1.6" / "1000"}')
 
-	(top -d 0.1 | grep openssl ) >> $logsFile
+comparation=$(awk ' BEGIN{ print ("'$frecOfTop'"<"0.001")} ')
+#echo -e "isIt: $comparation"
 
+if [ $comparation == '1' ]; then
+	frecOfTop=0.001
 fi
+
+echo -e "Frequency will be of: $frecOfTop for file of $sizeOfFileMB MB"
+
+(top -bn 70 -d $frecOfTop | grep openssl ) >> $logsFile
+
 
 echo -e "\tMonitoring has finished"
 

@@ -16,9 +16,9 @@
 
 echo -e "\n\n\tInside de 'calculator.sh'"
 
-#for i in "$@"; do
-	#echo "$i"
-#done
+for i in "$@"; do
+	echo "$i"
+done
 
 logsFile=$(echo "$1")
 
@@ -28,6 +28,14 @@ lastLine=$(echo $lastLine | tail -c 4)
 #echo -e "Last line is: $lastLine"
 
 #Print a delimiter inside the file
+
+isThereDec=$(echo $(cat $logsFile | grep "decrypter"))
+#echo -e "isThereDec = $isThereDec"
+
+while [ ! "$isThereDec" == "decrypter" ]; do
+	echo -e "Waiting for 'decrypter' to be wrote into the file."
+	sleep 1
+done
 
 if [ ! $lastLine == "end" ]; then 
 	echo -e "end" >> $logsFile
@@ -48,14 +56,18 @@ encryptTime=0		#Time it took to the Server to do the task
 
 decryptCPUUsage=0
 decryptMEMUsage=0
+decryptMaxMEM=0
+decryptTime=0
 cntCPU=0
 cntMEM=0
 
 #Change the value from Internal Field Separator to a '\n'
 IFS=$'\n'
 for j in $encryptLogs; do 
+	#echo -e "$j"
 	auxCPUValue=$(echo -e "$j" | awk ' { print $9 } ') #CPU value
 	auxMEMValue=$(echo -e "$j" | awk ' { print $10 } ') #MEM value
+	encryptTime=$(echo -e "$j" | awk ' { print $11 } ') #Time value
 
 	#echo -e "$encryptMaxCPU < $auxCPUValue"
 	comparation=$(awk ' BEGIN{ print ("'$encryptMaxCPU'"<"'$auxCPUValue'")} ')
@@ -97,6 +109,7 @@ echo -e "Total trustly values: \t\t$cntMEM"
 encryptMEMUsage=$(echo $encryptMEMUsage $cntMEM | awk '{print $1 / $2}')
 echo -e "Average of %MEM consumption: \t$encryptMEMUsage%"
 echo -e "Maximum %MEM consumption: \t$encryptMaxMEM%"
+echo -e "Encryption time duration: \t$encryptTime"
 
 
 cntCPU=0
@@ -105,6 +118,7 @@ cntMEM=0
 for j in $decryptLogs; do 
 	auxCPUValue=$(echo -e "$j" | awk ' { print $9 } ') #CPU value
 	auxMEMValue=$(echo -e "$j" | awk ' { print $10 } ') #MEM value
+	decryptTime=$(echo -e "$j" | awk ' { print $11 } ') #Time value
 
 	#echo -e "$decryptMaxCPU < $auxCPUValue"
 	comparation=$(awk ' BEGIN{ print ("'$decryptMaxCPU'"<"'$auxCPUValue'")} ')
@@ -146,7 +160,25 @@ echo -e "Total trustly values: \t\t$cntMEM"
 decryptMEMUsage=$(echo $decryptMEMUsage $cntMEM | awk '{print $1 / $2}')
 echo -e "Average of %MEM consumption: \t$decryptMEMUsage%"
 echo -e "Maximum %MEM consumption: \t$decryptMaxMEM%"
+echo -e "Decryption time duration: \t$decryptTime"
 
+#ReturnValue 
+	#e => Encrypt
+	#encryptCPUUSage	#Average of % of CPU
+	#encryptMEMUsage	#Average of % of MEM
+	#encryptMaxCPU		#Maximum CPU usage
+	#encryptMaxMEM		#Maximum MEM consumption
+	#encryptTime		#Time it took to the Server to do the task
+	#d => Decrypt
+	#decryptCPUUSage	#Average of % of CPU
+	#decryptMEMUsage	#Average of % of MEM
+	#decryptMaxCPU		#Maximum CPU usage
+	#decryptMaxMEM		#Maximum MEM consumption
+	#decryptTime		#Time it took to the Server to do the task
+
+returnValue="type=encryption;\nCPUUsage=$encryptCPUUsage;\nMEMUsage=$encryptMEMUsage;\nmaxCPU=$encryptMaxCPU;\nmaxMEM=$encryptMaxMEM;\ntimeUsed=$encryptTime;\ntype=decryption;\nCPUUsage=$decryptCPUUsage;\nMEMUsage=$decryptMEMUsage;\nmaxCPU=$decryptMaxCPU;\nmaxMEM=$decryptMaxMEM;\ntimeUsed=$decryptTime"
+
+echo -e "$returnValue" >> temporal.txt
 
 echo -e "\n\tDone, exiting from calculator.sh...\n\n"
 

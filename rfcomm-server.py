@@ -110,12 +110,14 @@ try:
 		client_sock, client_info = server_sock.accept()
 		print "Accepted connection from ", client_info
 
+		
 		####### Get device files here! #######
 		print "\tCollecting information of files from: ", pathToResources
 
 		deviceDirectories = os.listdir(pathToResources)
-		print deviceDirectories
-		
+
+		print "\n\tSending all the System Files routes..."
+		print "\tDirectories:\n\t\t%s" % (deviceDirectories)
 
 		for directory in deviceDirectories:
 			deviceFilePath = str("%s/%s" % (pathToResources, directory))
@@ -135,21 +137,25 @@ try:
 			SFDevice = json.dumps(SFDevice)
 			SFDevice = str("{'System Files': %s}" % (SFDevice))
 
-			print SFDevice
+			#print SFDevice
 			client_sock.send(SFDevice)
 			FDevice = {}
 			SFDevice = {}
 			
-
+		print "\tThe whole System File information has sent."
 		print "\n"
 		
 		try:
 		    while True:
 		        data = client_sock.recv(1024)
+			
+			#Clean SendMessage collection due to 'str' object does not support item assignment in python
+			del SendMessage
+			SendMessage = {}
 	
 		        if len(data) == 0: break
 
-		        print "Message received [%s]\n" % data
+		        print "Message received from %s\n\t[%s]\n" % (client_info, data)
 	
 			#Data to JSON
 			jsonMessage = json.loads(data)
@@ -175,8 +181,10 @@ try:
 			#Checking whether file exists.
 			
 			pathToFile = str("%s/%s/%s" % (pathToResources, newMessage.typeFile, newMessage.nameFile))
-			
-			print pathToFile
+
+			sizeOfFileMB = str("%s" % (os.path.getsize(pathToFile) >> 20))
+
+			print "\tPath:\n\t\t%s\n\tSize:\n\t\t%s" % (pathToFile, sizeOfFileMB)
 	
 			if (os.path.isfile(pathToFile)):
 				#FILE EXISTS
@@ -192,7 +200,7 @@ try:
 
 				fileRunning = "encrypter"
 
-				me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
+				me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
 				print "Here is where its Log will be saved: ", logsFile
 
 				time.sleep(1)
@@ -215,7 +223,7 @@ try:
 
 				if (e.returncode == 0):
 					#Stop monitoring
-					me.kill()
+					me.wait()
 					
 					print "File has been encrypted successfully"
 
@@ -229,8 +237,8 @@ try:
 					client_sock.send(SendMessage)	
 					
 					fileRunning = "decrypter"
-					md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.typeFile])
-					print "Here is where its Log will be saved: ", logsFile
+					md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
+					#print "Here is where its Log will be saved: ", logsFile
 
 					time.sleep(1)
 
@@ -238,8 +246,8 @@ try:
 					SendMessage["message"] = "decryption"
 					SendMessage["action"] = "start"
 					SendMessage = json.dumps(SendMessage)
-					print SendMessage
-					print "\n"
+					#print SendMessage
+					#print "\n"
 
 					client_sock.send(SendMessage)
 
@@ -253,7 +261,7 @@ try:
 					
 					if (d.returncode == 0):
 						#Stop monitoring
-						md.kill()
+						md.wait()
 						
 						print "File has been decrypted successfully"
 
@@ -261,8 +269,8 @@ try:
 						SendMessage["message"] = "decryption"
 						SendMessage["action"] = "end"
 						SendMessage = json.dumps(SendMessage)
-						print SendMessage
-						print "\n"
+						#print SendMessage
+						#print "\n"
 
 						client_sock.send(SendMessage)
 
@@ -276,8 +284,8 @@ try:
 						SendMessage["error"] = "error"
 						SendMessage["body"] = "Error during the decryption."
 						SendMessage = json.dumps(SendMessage)
-						print SendMessage
-						print "\n"
+						#print SendMessage
+						#print "\n"
 
 						print "Error during the decryption has ocurred..."
 						client_sock.send(SendMessage)
@@ -287,8 +295,8 @@ try:
 					SendMessage["error"] = "error"
 					SendMessage["body"] = "Error during the encryption."
 					SendMessage = json.dumps(SendMessage)
-					print SendMessage
-					print "\n"
+					#print SendMessage
+					#print "\n"
 
 					print "Error during the encryption has ocurred..."
 					client_sock.send(SendMessage)
@@ -298,8 +306,8 @@ try:
 				SendMessage["error"] = "error"
 				SendMessage["body"] = "File not found."
 				SendMessage = json.dumps(SendMessage)
-				print SendMessage
-				print "\n"
+				#print SendMessage
+				#print "\n"
 
 				print "File does not exist!"
 				client_sock.send(SendMessage)
