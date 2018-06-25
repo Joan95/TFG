@@ -104,7 +104,8 @@ def createLogsSF(typeFile, cipher, nameFile):
 ############# Main ############# 
 
 try:
-	while True:   
+	while True:
+		print "Welcome to my TFG!"
 		print "Waiting for connection on RFCOMM channel %d " % port
 		
 		client_sock, client_info = server_sock.accept()
@@ -142,7 +143,7 @@ try:
 			FDevice = {}
 			SFDevice = {}
 			
-		print "\tThe whole System File information has sent."
+		print "\tThe whole System File information has sent to ", client_info
 		print "\n"
 		
 		try:
@@ -191,8 +192,8 @@ try:
 				SendMessage["message"] = "encryption"
 				SendMessage["action"] = "start"
 				SendMessage = json.dumps(SendMessage)
-				print SendMessage
-				print "\n"
+				#print SendMessage
+				#print "\n"
 				
 				client_sock.send(SendMessage)
 
@@ -231,8 +232,8 @@ try:
 					SendMessage["message"] = "encryption"
 					SendMessage["action"] = "end"
 					SendMessage = json.dumps(SendMessage)
-					print SendMessage
-					print "\n"
+					#print SendMessage
+					#print "\n"
 
 					client_sock.send(SendMessage)	
 					
