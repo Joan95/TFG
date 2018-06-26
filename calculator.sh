@@ -176,7 +176,7 @@ echo -e "Decryption time duration: \t$decryptTime"
 	#decryptMaxMEM		#Maximum MEM consumption
 	#decryptTime		#Time it took to the Server to do the task
 
-returnValue="type=encryption;\nCPUUsage=$encryptCPUUsage;\nMEMUsage=$encryptMEMUsage;\nmaxCPU=$encryptMaxCPU;\nmaxMEM=$encryptMaxMEM;\ntimeUsed=$encryptTime;\ntype=decryption;\nCPUUsage=$decryptCPUUsage;\nMEMUsage=$decryptMEMUsage;\nmaxCPU=$decryptMaxCPU;\nmaxMEM=$decryptMaxMEM;\ntimeUsed=$decryptTime"
+returnValue="type=encryption;\nCPUUsage=$encryptCPUUsage;\nMEMUsage=$encryptMEMUsage;\nmaxCPU=$encryptMaxCPU;\nmaxMEM=$encryptMaxMEM;\ntimeUsed=$encryptTime;\n\ntype=decryption;\nCPUUsage=$decryptCPUUsage;\nMEMUsage=$decryptMEMUsage;\nmaxCPU=$decryptMaxCPU;\nmaxMEM=$decryptMaxMEM;\ntimeUsed=$decryptTime"
 
 echo -e "$returnValue" >> temporal.txt
 

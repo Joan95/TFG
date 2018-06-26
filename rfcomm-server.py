@@ -74,6 +74,8 @@ SFDevice = {}
 FDevice = {}
 SendMessage = {}
 
+timesUsed = 0
+
 ############# Functions ############# 
 
 def createLogsSF(typeFile, cipher, nameFile):
@@ -103,9 +105,10 @@ def createLogsSF(typeFile, cipher, nameFile):
 
 ############# Main ############# 
 
+print "\n\n\t\tWelcome to my TFG!\n\n"
+
 try:
-	while True:
-		print "Welcome to my TFG!"
+	while True:		
 		print "Waiting for connection on RFCOMM channel %d " % port
 		
 		client_sock, client_info = server_sock.accept()
@@ -162,156 +165,181 @@ try:
 			jsonMessage = json.loads(data)
 			#print "jsonMessage:\n%s" % jsonMessage
 	
-			
-			#print "\n%s" % jsonMessage["cipher"]
-			#print "\n%s" % jsonMessage["typeFile"]
-			#print "\n%s" % jsonMessage["nameFile"]
-			#print "\n%s" % jsonMessage["password"]
-			#print "\n%s" % jsonMessage["hsm"]
-	
-			cipher = str(jsonMessage["cipher"])
-			typeFile = str(jsonMessage["typeFile"])
-			nameFile = str(jsonMessage["nameFile"])
-			password = str(jsonMessage["password"])
-			hsm = str(jsonMessage["hsm"])
-	
+			if (jsonMessage.get("message")):
+				print "Resending System Files"
 
-			newMessage = Message(cipher, typeFile, nameFile, password, hsm)
-	
-	
-			#Checking whether file exists.
-			
-			pathToFile = str("%s/%s/%s" % (pathToResources, newMessage.typeFile, newMessage.nameFile))
-
-			sizeOfFileMB = str("%s" % (os.path.getsize(pathToFile) >> 20))
-
-			print "\tPath:\n\t\t%s\n\tSize:\n\t\t%s" % (pathToFile, sizeOfFileMB)
-	
-			if (os.path.isfile(pathToFile)):
-				#FILE EXISTS
-				SendMessage["message"] = "encryption"
-				SendMessage["action"] = "start"
-				SendMessage = json.dumps(SendMessage)
-				#print SendMessage
-				#print "\n"
+			else:
+				#print "\ncipher: %s" % jsonMessage["cipher"]
+				#print "typeFile: %s" % jsonMessage["typeFile"]
+				#print "nameFile: %s" % jsonMessage["nameFile"]
+				#print "password: %s" % jsonMessage["password"]
+				#print "hsm: %s" % jsonMessage["hsm"]
+		
+				cipher = str(jsonMessage["cipher"])
+				typeFile = str(jsonMessage["typeFile"])
+				nameFile = str(jsonMessage["nameFile"])
+				password = str(jsonMessage["password"])
+				hsm = str(jsonMessage["hsm"])
+		
+		
+				newMessage = Message(cipher, typeFile, nameFile, password, hsm)
+		
+		
+				#Checking whether file exists.
 				
-				client_sock.send(SendMessage)
-
-				createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile)
-
-				fileRunning = "encrypter"
-
-				me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
-				print "Here is where its Log will be saved: ", logsFile
-
-				time.sleep(1)
-	
-				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
-				#print newMessage.nameFile
-				#print newMessage.typeFile
-				#print newMessage.password
-				#print newMessage.hsm
-				#print newMessage.cipher
-	
-				pathToSaveFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
-				
-				#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
-				e = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
-				#print e.communicate()[0]
-				e.wait()
-				
-				time.sleep(3)
-
-				if (e.returncode == 0):
-					#Stop monitoring
-					me.wait()
-					
-					print "File has been encrypted successfully"
-
-					SendMessage = {}
+				pathToFile = str("%s/%s/%s" % (pathToResources, newMessage.typeFile, newMessage.nameFile))
+		
+				sizeOfFileMB = str("%s" % (os.path.getsize(pathToFile) >> 20))
+		
+				print "\tPath:\n\t\t%s\n\tSize:\n\t\t%s" % (pathToFile, sizeOfFileMB)
+		
+				if (os.path.isfile(pathToFile)):
+					#FILE EXISTS
 					SendMessage["message"] = "encryption"
-					SendMessage["action"] = "end"
-					SendMessage = json.dumps(SendMessage)
-					#print SendMessage
-					#print "\n"
-
-					client_sock.send(SendMessage)	
-					
-					fileRunning = "decrypter"
-					md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
-					#print "Here is where its Log will be saved: ", logsFile
-
-					time.sleep(1)
-
-					SendMessage = {}
-					SendMessage["message"] = "decryption"
 					SendMessage["action"] = "start"
 					SendMessage = json.dumps(SendMessage)
 					#print SendMessage
 					#print "\n"
-
+					
 					client_sock.send(SendMessage)
-
-					pathToFile = str("%s/%s/%s/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.cipher, newMessage.nameFile))
-					pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
+		
+					createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile)
+		
+					fileRunning = "encrypter"
+		
+					me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
+					print "Here is where its Log will be saved: ", logsFile
+		
+					time.sleep(1)
+		
+					#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
+					#print newMessage.nameFile
+					#print newMessage.typeFile
+					#print newMessage.password
+					#print newMessage.hsm
+					#print newMessage.cipher
+		
+					pathToSaveFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
 					
-					#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile, pathToSaveFile)
-					d = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
-					#print d.communicate()[0]
-					d.wait()
+					#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
+					e = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+					#print e.communicate()[0]
+					e.wait()
 					
-					if (d.returncode == 0):
+					time.sleep(3)
+		
+					if (e.returncode == 0):
 						#Stop monitoring
-						md.wait()
+						me.wait()
 						
-						print "File has been decrypted successfully"
-
+						print "File has been encrypted successfully"
+		
 						SendMessage = {}
-						SendMessage["message"] = "decryption"
+						SendMessage["message"] = "encryption"
 						SendMessage["action"] = "end"
 						SendMessage = json.dumps(SendMessage)
 						#print SendMessage
 						#print "\n"
-
-						client_sock.send(SendMessage)
-
-						#Calculate %CPU & %MEM used
-						calc = subprocess.Popen(["./calculator.sh", logsFile])
-						calc.wait()
+		
+						client_sock.send(SendMessage)	
 						
-					else:
+						fileRunning = "decrypter"
+						md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
+						#print "Here is where its Log will be saved: ", logsFile
+		
+						time.sleep(1)
+		
 						SendMessage = {}
 						SendMessage["message"] = "decryption"
-						SendMessage["error"] = "error"
-						SendMessage["body"] = "Error during the decryption."
+						SendMessage["action"] = "start"
 						SendMessage = json.dumps(SendMessage)
 						#print SendMessage
 						#print "\n"
-
-						print "Error during the decryption has ocurred..."
+		
+						client_sock.send(SendMessage)
+		
+						pathToFile = str("%s/%s/%s/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.cipher, newMessage.nameFile))
+						pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
+						
+						#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile, pathToSaveFile)
+						d = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+						#print d.communicate()[0]
+						d.wait()
+						
+						if (d.returncode == 0):
+							#Stop monitoring
+							md.wait()
+							
+							print "File has been decrypted successfully"
+		
+							SendMessage = {}
+							SendMessage["message"] = "decryption"
+							SendMessage["action"] = "end"
+							SendMessage = json.dumps(SendMessage)
+							#print SendMessage
+							#print "\n"
+		
+							client_sock.send(SendMessage)
+		
+							#Calculate %CPU & %MEM used
+							calc = subprocess.Popen(["./calculator.sh", logsFile])
+							calc.wait()
+		
+							time.sleep(1)
+		
+							fileTemporal = open("temporal.txt", "r")
+							dataTemporal = fileTemporal.read()
+		
+							print dataTemporal
+		
+							dataTemporal = dataTemporal.replace("'\n'", "")
+							print dataTemporal.split(';')
+		
+							fileTemporal.close()
+		
+							if os.path.isfile("temporal.txt"):
+								os.remove("temporal.txt")
+							else:
+								print "Error: 'temporal.txt' not found"
+		
+							timesUsed = timesUsed + 1 
+							
+						else:
+							SendMessage = {}
+							SendMessage["message"] = "decryption"
+							SendMessage["error"] = "error"
+							SendMessage["body"] = "Error during the decryption."
+							SendMessage = json.dumps(SendMessage)
+							#print SendMessage
+							#print "\n"
+		
+							print "Error during the decryption has ocurred..."
+							client_sock.send(SendMessage)
+					else:
+						SendMessage = {}
+						SendMessage["message"] = "encryption"
+						SendMessage["error"] = "error"
+						SendMessage["body"] = "Error during the encryption."
+						SendMessage = json.dumps(SendMessage)
+						#print SendMessage
+						#print "\n"
+		
+						print "Error during the encryption has ocurred..."
 						client_sock.send(SendMessage)
 				else:
 					SendMessage = {}
 					SendMessage["message"] = "encryption"
 					SendMessage["error"] = "error"
-					SendMessage["body"] = "Error during the encryption."
+					SendMessage["body"] = "File not found."
 					SendMessage = json.dumps(SendMessage)
 					#print SendMessage
 					#print "\n"
-
-					print "Error during the encryption has ocurred..."
+		
+					print "File does not exist!"
 					client_sock.send(SendMessage)
-			else:
-				SendMessage = {}
-				SendMessage["message"] = "encryption"
-				SendMessage["error"] = "error"
-				SendMessage["body"] = "File not found."
-				SendMessage = json.dumps(SendMessage)
-				#print SendMessage
-				#print "\n"
-
-				print "File does not exist!"
-				client_sock.send(SendMessage)
+		
+		
+				print "Application has been used %s times" % (timesUsed)
 	
 		except BluetoothError:
 			print "Lost connection of ", client_info 
