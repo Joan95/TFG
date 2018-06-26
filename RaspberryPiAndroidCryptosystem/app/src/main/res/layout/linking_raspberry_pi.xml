@@ -141,7 +141,7 @@
         android:width="100dp"
         android:textColor="@color/greyBKG"
         android:inputType="textPassword"
-        android:hint="@string/password"
+        android:hint="@string/hint_password"
         android:layout_toEndOf="@+id/passwordText"
         android:layout_toRightOf="@+id/passwordText"
         android:layout_alignBaseline="@+id/passwordText"/>
@@ -239,9 +239,10 @@
         android:id="@+id/spinnerSelectFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/selectFile"
         android:layout_toEndOf="@+id/selectFile"
         android:layout_toRightOf="@+id/selectFile"
+        android:layout_alignTop="@+id/selectFile"
+        android:layout_marginTop="30px"
         android:minWidth="150dp"></Spinner>
 
     <Button
@@ -264,5 +265,26 @@
         android:layout_marginLeft="30dp"
         android:text="@string/disconnect"
         android:layout_marginStart="30dp" />
+
+    <TextView
+        android:id="@+id/refreshSF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textStyle="italic"
+        android:layout_alignLeft="@+id/decrypt"
+        android:layout_alignStart="@+id/decrypt"
+        android:layout_alignBottom="@+id/selectFile"
+        android:text="@string/refreshSF"/>
+
+    <Button
+        android:id="@+id/refreshButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/refresh"
+        android:layout_alignLeft="@+id/sendButton"
+        android:layout_alignStart="@+id/sendButton"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="160px"/>
 
 </RelativeLayout>

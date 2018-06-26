@@ -15,6 +15,9 @@
     <string name="send">SEND</string>
     <string name="disconnect">DISCONNECT</string>
 
+    <string name="refreshSF">Refresh\ System\ Files</string>
+    <string name="refresh">REFRESH</string>
+
     <string name="selectMethod">Select\ Method</string>
     <string name="selectTypeFile">Select\ Type\ of\ File</string>
     <string name="selectFile">Select\ File</string>
@@ -24,6 +27,7 @@
     <string name="hsm_question">Do\ you\ want\ to\ use\ HSM?</string>
     <string name="waiting_for_value">Waiting\ for\ Value...</string>
     <string name="password">OPTIONAL Password</string>
+    <string name="hint_password">Password</string>
 
     <string name="encrypting">Encrypting...</string>
     <string name="decrypting">Decrypting...</string>

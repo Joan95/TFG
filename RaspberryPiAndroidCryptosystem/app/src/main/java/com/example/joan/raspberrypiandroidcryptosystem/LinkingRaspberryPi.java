@@ -80,6 +80,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.linking_raspberry_pi);
         final Button sendButton = findViewById(R.id.sendButton);
+        Button refreshButton = findViewById(R.id.refreshButton);
         Button disconnectButton = findViewById(R.id.disconnectButton);
         Spinner spinnerMethod = findViewById(R.id.spinnerSelectMethod);
         final Spinner spinnerTypeFile = findViewById(R.id.spinnerSelectTypeFile);
@@ -95,6 +96,21 @@ public class LinkingRaspberryPi extends AppCompatActivity
         raspberryMac = lastInt.getStringExtra(ShowDevices.BLUETOOTH_MAC_DEVICE);
 
         myToasts.show(LinkingRaspberryPi.this, raspberryMac);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*Send refresh message to Server to upload the files. */
+
+                JSONObject jsonMessage = new JSONObject();
+                try {
+                    jsonMessage.put("message","refresh");
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+                connectedThread.write(jsonMessage);
+            }
+        });
 
         sendButton.setOnClickListener(new View.OnClickListener()
         {
