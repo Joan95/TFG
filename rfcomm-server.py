@@ -78,7 +78,7 @@ timesUsed = 0
 
 ############# Functions ############# 
 
-def createLogsSF(typeFile, cipher, nameFile):
+def createLogsSF(typeFile, cipher, nameFile, sizeOfFileMB):
 	now = datetime.datetime.now()
 
 	#Name format = 'ss-mm-hh.txt'
@@ -97,7 +97,7 @@ def createLogsSF(typeFile, cipher, nameFile):
 	global logsFile
 	logsFile = str("%s/%s" % (directoryLogsPath, nameLogsFile))
 	
-	toWrite = str("type:%s, cipher:%s, nameFile:%s\n" % (typeFile, cipher, nameFile))
+	toWrite = str("type:%s, cipher:%s, nameFile:%s, sizeOfFileMB:%s\n" % (typeFile, cipher, nameFile, sizeOfFileMB))
 	file = open(logsFile, "w+")
 	file.write(toWrite)
 	file.close()
@@ -211,7 +211,7 @@ try:
 					
 					client_sock.send(SendMessage)
 		
-					createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile)
+					createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile, sizeOfFileMB)
 		
 					fileRunning = "encrypter"
 		
@@ -300,10 +300,37 @@ try:
 		
 							print dataTemporal
 		
-							dataTemporal = dataTemporal.replace("'\n'", "")
-							print dataTemporal.split(';')
-		
+							dataTemporal = dataTemporal.replace("\n", "").split(';')
+							#print dataTemporal
+
+							infoForType = {}							
+
+							for info in dataTemporal:
+								aux = info.split("=")
+
+								#print aux
+								if (aux[0] == "type"):
+									auxType = aux[1]
+
+								if (aux[0] == "new"):
+									SendMessage = {}
+									SendMessage["message"] = auxType
+									SendMessage["result"] = infoForType
+									SendMessage = json.dumps(SendMessage)
+									print SendMessage
+									print "\n"
+									
+									client_sock.send(SendMessage)
+
+								else:
+									#print "%s %s" % (aux[0], aux[1])
+									infoForType[aux[0]] = aux[1]
+
 							fileTemporal.close()
+
+							
+							#Delete collections after send them
+							del infoForType
 		
 							if os.path.isfile("temporal.txt"):
 								os.remove("temporal.txt")

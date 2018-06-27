@@ -1,4 +1,0 @@
-type:Video, cipher:AES, nameFile:Guns_N_Roses_Sweet_Child_O_Mine.mp4
-encrypter
-decrypter
-end
