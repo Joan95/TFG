@@ -275,8 +275,7 @@
         android:layout_alignLeft="@+id/selectTypeFile"
         android:layout_alignStart="@+id/selectTypeFile"
         android:layout_alignBottom="@+id/selectFile"
-        android:text="@string/refreshSF"
-        android:layout_marginVertical="-2dp"/>
+        android:text="@string/refreshSF"/>
 
     <Button
         android:id="@+id/refreshButton"

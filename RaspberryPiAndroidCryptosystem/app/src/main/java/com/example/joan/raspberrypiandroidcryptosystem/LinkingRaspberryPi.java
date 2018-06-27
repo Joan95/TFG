@@ -82,7 +82,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
         final Button sendButton = findViewById(R.id.sendButton);
         Button refreshButton = findViewById(R.id.refreshButton);
         Button disconnectButton = findViewById(R.id.disconnectButton);
-        Spinner spinnerMethod = findViewById(R.id.spinnerSelectMethod);
+        final Spinner spinnerMethod = findViewById(R.id.spinnerSelectMethod);
         final Spinner spinnerTypeFile = findViewById(R.id.spinnerSelectTypeFile);
         final Spinner spinnerFile = findViewById(R.id.spinnerSelectFile);
         final TextView usageCPUEncrypt = findViewById(R.id.valueCPUEncrypt);
@@ -254,58 +254,60 @@ public class LinkingRaspberryPi extends AppCompatActivity
                                     Log.d("systemFile", systemFile.toString());
                                 }
                             }
-
-                        }
-
-                        if (jsonMessage.has("message") && jsonMessage.has("action")) {
-                            String messageJson = jsonMessage.getString("message");
-                            String actionJson = jsonMessage.getString("action");
-
-                            if (messageJson.equals("encryption")) {
-                                if (actionJson.equals("start")){
-                                    usageCPUEncrypt.setText("Start encryption");
-                                    usageMemoryEncrypt.setText("Start encryption");
-                                    sendButton.setEnabled(false);
-                                }
-
-                                if (actionJson.equals("end")) {
-                                    usageCPUEncrypt.setText("Encryption has finished");
-                                    usageMemoryEncrypt.setText("Waiting for results");
-                                }
-                            }
-
-                            if (messageJson.equals("decryption")) {
-                                if (actionJson.equals("start")) {
-                                    usageCPUDecrypt.setText("Start decryption");
-                                    usageMemoryDecrypt.setText("Start decryption");
-                                }
-
-                                if (actionJson.equals("end")) {
-                                    usageCPUDecrypt.setText("Decryption has finished");
-                                    usageMemoryDecrypt.setText("Waiting for results");
-                                    sendButton.setEnabled(true);
-                                }
-                            }
-
+                            spinnerMethod.setSelection(0);
+                            spinnerTypeFile.setAdapter(null);
+                            spinnerFile.setAdapter(null);
                         } else {
-                            /*It's an error if there is not field 'action'. */
-                            String messageJson = jsonMessage.getString("message");
-                            String errorJson = jsonMessage.getString("error");
-                            String bodyJson = jsonMessage.getString("body");
+                            if (jsonMessage.has("message") && jsonMessage.has("action")) {
+                                String messageJson = jsonMessage.getString("message");
+                                String actionJson = jsonMessage.getString("action");
 
-                            if (messageJson.equals("encryption")) {
-                                if (errorJson.equals("error")){
-                                    usageCPUEncrypt.setText(bodyJson);
-                                    usageMemoryEncrypt.setText(bodyJson);
-                                    sendButton.setEnabled(true);
+                                if (messageJson.equals("encryption")) {
+                                    if (actionJson.equals("start")){
+                                        usageCPUEncrypt.setText("Start encryption");
+                                        usageMemoryEncrypt.setText("Start encryption");
+                                        sendButton.setEnabled(false);
+                                    }
+
+                                    if (actionJson.equals("end")) {
+                                        usageCPUEncrypt.setText("Encryption has finished");
+                                        usageMemoryEncrypt.setText("Waiting for results");
+                                    }
                                 }
-                            }
 
-                            if (messageJson.equals("decryption")) {
-                                if (errorJson.equals("error")) {
-                                    usageCPUDecrypt.setText(bodyJson);
-                                    usageMemoryDecrypt.setText(bodyJson);
-                                    sendButton.setEnabled(true);
+                                if (messageJson.equals("decryption")) {
+                                    if (actionJson.equals("start")) {
+                                        usageCPUDecrypt.setText("Start decryption");
+                                        usageMemoryDecrypt.setText("Start decryption");
+                                    }
+
+                                    if (actionJson.equals("end")) {
+                                        usageCPUDecrypt.setText("Decryption has finished");
+                                        usageMemoryDecrypt.setText("Waiting for results");
+                                        sendButton.setEnabled(true);
+                                    }
+                                }
+
+                            } else {
+                            /*It's an error if there is not field 'action'. */
+                                String messageJson = jsonMessage.getString("message");
+                                String errorJson = jsonMessage.getString("error");
+                                String bodyJson = jsonMessage.getString("body");
+
+                                if (messageJson.equals("encryption")) {
+                                    if (errorJson.equals("error")){
+                                        usageCPUEncrypt.setText(bodyJson);
+                                        usageMemoryEncrypt.setText(bodyJson);
+                                        sendButton.setEnabled(true);
+                                    }
+                                }
+
+                                if (messageJson.equals("decryption")) {
+                                    if (errorJson.equals("error")) {
+                                        usageCPUDecrypt.setText(bodyJson);
+                                        usageMemoryDecrypt.setText(bodyJson);
+                                        sendButton.setEnabled(true);
+                                    }
                                 }
                             }
                         }
