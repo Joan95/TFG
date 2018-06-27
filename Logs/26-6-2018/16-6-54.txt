@@ -1,0 +1,25 @@
+type:Text, cipher:AES, nameFile:Complete_Sherlock_Holmes-Arthur_Conan_Doyle.txt
+encrypter
+10310 root      20   0    4216   2904   2624 R  60.5  0.3   0:00.02 openssl
+10310 root      20   0    4216   2904   2624 R  96.3  0.3   0:00.05 openssl
+10310 root      20   0    4216   2904   2624 R  94.8  0.3   0:00.08 openssl
+10310 root      20   0    4216   2904   2624 R  98.0  0.3   0:00.11 openssl
+10310 root      20   0    4216   2904   2624 R  98.6  0.3   0:00.14 openssl
+10310 root      20   0    4216   2904   2624 R  98.1  0.3   0:00.17 openssl
+10310 root      20   0    4200   3148   2824 D  97.5  0.3   0:00.20 openssl
+10310 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.20 openssl
+10310 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.20 openssl
+10310 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.20 openssl
+decrypter
+10373 root      20   0    4180    892    704 R   0.0  0.1   0:00.00 openssl
+10373 root      20   0    4216   2904   2624 R  94.2  0.3   0:00.03 openssl
+10373 root      20   0    4216   2904   2624 R  63.1  0.3   0:00.05 openssl
+10373 root      20   0    4216   2904   2624 R 100.0  0.3   0:00.09 openssl
+10373 root      20   0    4216   2904   2624 R  97.5  0.3   0:00.12 openssl
+10373 root      20   0    4216   2904   2624 R  98.1  0.3   0:00.15 openssl
+10373 root      20   0    4216   2904   2624 R  97.6  0.3   0:00.18 openssl
+10373 root      20   0    4200   3024   2700 D  97.6  0.3   0:00.21 openssl
+10373 root      20   0    4200   3024   2700 D   0.0  0.3   0:00.21 openssl
+10373 root      20   0    4200   3024   2700 D   0.0  0.3   0:00.21 openssl
+10373 root      20   0    4200   3024   2700 D   0.0  0.3   0:00.21 openssl
+end

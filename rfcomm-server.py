@@ -102,6 +102,34 @@ def createLogsSF(typeFile, cipher, nameFile):
 	file.write(toWrite)
 	file.close()
 
+def sendSF(pathToResources,FDevice,SFDevice):
+	deviceDirectories = os.listdir(pathToResources)
+
+	print "\n\tSending all the System Files routes..."
+	print "\tDirectories:\n\t\t%s" % (deviceDirectories)
+
+	for directory in deviceDirectories:
+		deviceFilePath = str("%s/%s" % (pathToResources, directory))
+		listFDevice = []
+
+		for file in listdir(deviceFilePath):
+			if isfile:
+				fileName = file
+				fileSizeMB = os.path.getsize(str("%s/%s" % (deviceFilePath, file))) >> 20
+				FDevice["name"] = file
+				FDevice["size"] = fileSizeMB
+			listFDevice.append(FDevice.copy())
+
+		SFDevice["type"] = directory
+		SFDevice["files"] = listFDevice			
+		
+		SFDevice = json.dumps(SFDevice)
+		SFDevice = str("{'System Files': %s}" % (SFDevice))
+
+		#print SFDevice
+		client_sock.send(SFDevice)
+		FDevice = {}
+		SFDevice = {}
 
 ############# Main ############# 
 
@@ -114,37 +142,9 @@ try:
 		client_sock, client_info = server_sock.accept()
 		print "Accepted connection from ", client_info
 
-		
-		####### Get device files here! #######
 		print "\tCollecting information of files from: ", pathToResources
-
-		deviceDirectories = os.listdir(pathToResources)
-
-		print "\n\tSending all the System Files routes..."
-		print "\tDirectories:\n\t\t%s" % (deviceDirectories)
-
-		for directory in deviceDirectories:
-			deviceFilePath = str("%s/%s" % (pathToResources, directory))
-			listFDevice = []
-
-			for file in listdir(deviceFilePath):
-				if isfile:
-					fileName = file
-					fileSizeMB = os.path.getsize(str("%s/%s" % (deviceFilePath, file))) >> 20
-					FDevice["name"] = file
-					FDevice["size"] = fileSizeMB
-				listFDevice.append(FDevice.copy())
-
-			SFDevice["type"] = directory
-			SFDevice["files"] = listFDevice			
-			
-			SFDevice = json.dumps(SFDevice)
-			SFDevice = str("{'System Files': %s}" % (SFDevice))
-
-			#print SFDevice
-			client_sock.send(SFDevice)
-			FDevice = {}
-			SFDevice = {}
+		
+		sendSF(pathToResources,FDevice,SFDevice)
 			
 		print "\tThe whole System File information has sent to ", client_info
 		print "\n"
@@ -167,6 +167,14 @@ try:
 	
 			if (jsonMessage.get("message")):
 				print "Resending System Files"
+				print "\tCollecting information of files from: ", pathToResources
+				FDevice = {}
+				SFDevice = {}
+
+				sendSF(pathToResources,FDevice,SFDevice)
+					
+				print "\tThe whole System File information has sent to ", client_info
+				print "\n"
 
 			else:
 				#print "\ncipher: %s" % jsonMessage["cipher"]

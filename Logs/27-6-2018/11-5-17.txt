@@ -1,0 +1,28 @@
+type:Text, cipher:AES, nameFile:Complete_Sherlock_Holmes-Arthur_Conan_Doyle.txt
+encrypter
+22273 root      20   0    4180    844    656 R   0.0  0.1   0:00.00 openssl
+22273 root      20   0    4216   2760   2480 D  31.6  0.3   0:00.01 openssl
+22273 root      20   0    4216   2760   2480 D  64.0  0.3   0:00.03 openssl
+22273 root      20   0    4216   2760   2480 R  63.8  0.3   0:00.05 openssl
+22273 root      20   0    4216   2760   2480 D  64.0  0.3   0:00.07 openssl
+22273 root      20   0    4216   2760   2480 R  63.9  0.3   0:00.09 openssl
+22273 root      20   0    4216   2760   2480 R  96.5  0.3   0:00.12 openssl
+22273 root      20   0    4216   2760   2480 R  64.0  0.3   0:00.14 openssl
+22273 root      20   0    4216   2760   2480 R  63.9  0.3   0:00.16 openssl
+22273 root      20   0    4216   2760   2480 R  64.1  0.3   0:00.18 openssl
+22273 root      20   0    4200   3004   2680 R  60.5  0.3   0:00.20 openssl
+22273 root      20   0    4200   3004   2680 D  29.8  0.3   0:00.21 openssl
+22273 root      20   0    4200   3004   2680 D   0.0  0.3   0:00.21 openssl
+22273 root      20   0    4200   3004   2680 D   0.0  0.3   0:00.21 openssl
+decrypter
+22337 root      20   0    4180    828    640 R   0.0  0.1   0:00.00 openssl
+22337 root      20   0    4216   2804   2524 R  94.2  0.3   0:00.03 openssl
+22337 root      20   0    4216   2804   2524 R  94.1  0.3   0:00.06 openssl
+22337 root      20   0    4216   2804   2524 R 100.0  0.3   0:00.10 openssl
+22337 root      20   0    4216   2804   2524 R  97.1  0.3   0:00.13 openssl
+22337 root      20   0    4216   2804   2524 R  97.3  0.3   0:00.16 openssl
+22337 root      20   0    4216   2804   2524 R  97.8  0.3   0:00.19 openssl
+22337 root      20   0    4200   2984   2660 D  32.4  0.3   0:00.20 openssl
+22337 root      20   0    4200   2984   2660 D   0.0  0.3   0:00.20 openssl
+22337 root      20   0    4200   2984   2660 D   0.0  0.3   0:00.20 openssl
+end
