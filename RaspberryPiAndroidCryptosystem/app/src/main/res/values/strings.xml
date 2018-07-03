@@ -12,6 +12,8 @@
 
     <string name="usage_of_cpu">Usage Of CPU %</string>
     <string name="usage_of_memory">Usage Of Memory %</string>
+
+    <string name="details">DETAILS</string>
     <string name="send">SEND</string>
     <string name="disconnect">DISCONNECT</string>
 

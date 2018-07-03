@@ -2,6 +2,7 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purpleDark"
@@ -26,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/orange"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:text="@string/decrypt"
         android:gravity="center"
         android:width="100dp"
@@ -34,7 +35,9 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
-        android:layout_alignParentEnd="true"/>
+        android:layout_marginEnd="30dp"
+        android:layout_alignParentEnd="true"
+        tools:ignore="RelativeOverlap" />
 
     <TextView
         android:id="@+id/usageOfCPU"
@@ -57,6 +60,7 @@
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15sp"
         android:layout_alignBaseline="@+id/usageOfCPU"
         android:layout_alignBottom="@+id/usageOfCPU"
         android:layout_toEndOf="@+id/usageOfCPU"
@@ -71,6 +75,7 @@
         android:textColor="@color/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15sp"
         android:layout_alignBaseline="@+id/usageOfCPU"
         android:layout_alignBottom="@+id/usageOfCPU"
         android:layout_alignLeft="@+id/decrypt"
@@ -86,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/usageOfCPU"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="130dp"
         android:width="80dp"
         android:height="50dp"
         android:gravity="center"
@@ -98,6 +103,7 @@
         android:textColor="@color/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15sp"
         android:text="@string/waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/encrypt"
@@ -111,6 +117,7 @@
         android:textColor="@color/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15sp"
         android:text="@string/waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@+id/decrypt"
@@ -118,6 +125,17 @@
         android:width="100dp"
         android:height="50dp"
         android:layout_alignStart="@+id/decrypt" />
+
+    <Button
+        android:id="@+id/Details"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/details"
+        android:layout_alignLeft="@+id/decrypt"
+        android:layout_alignStart="@+id/decrypt"
+        android:layout_marginTop="190dp"
+        />
 
     <TextView
         android:id="@+id/passwordText"
@@ -193,9 +211,10 @@
         android:layout_toEndOf="@+id/selectMethod"
         android:layout_toRightOf="@+id/selectMethod"
         android:layout_alignRight="@+id/encrypt"
+        android:layout_alignEnd="@+id/encrypt"
         android:entries="@array/block_ciphers"
         android:maxWidth="90dp"
-        android:minWidth="90dp"></Spinner>
+        android:minWidth="90dp" />
 
     <TextView
         android:id="@+id/selectTypeFile"
@@ -218,7 +237,7 @@
         android:layout_toRightOf="@id/selectTypeFile"
         android:layout_alignTop="@+id/selectTypeFile"
         android:layout_marginTop="8dp"
-        android:minWidth="100dp"></Spinner>
+        android:minWidth="100dp" />
 
     <TextView
         android:id="@+id/selectFile"
@@ -242,8 +261,8 @@
         android:layout_toEndOf="@+id/selectFile"
         android:layout_toRightOf="@+id/selectFile"
         android:layout_alignTop="@+id/selectFile"
-        android:layout_marginTop="35px"
-        android:minWidth="150dp"></Spinner>
+        android:layout_marginTop="35dp"
+        android:minWidth="150dp" />
 
     <Button
         android:id="@+id/sendButton"
@@ -255,13 +274,15 @@
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
-        android:text="@string/send" />
+        android:text="@string/send"
+        tools:ignore="RelativeOverlap" />
 
     <Button
         android:id="@+id/disconnectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/sendButton"
+        android:background="@color/red"
         android:layout_marginLeft="30dp"
         android:text="@string/disconnect"
         android:layout_marginStart="30dp" />
@@ -275,8 +296,7 @@
         android:layout_alignLeft="@+id/selectTypeFile"
         android:layout_alignStart="@+id/selectTypeFile"
         android:layout_alignBottom="@+id/selectFile"
-        android:text="@string/refreshSF"
-        android:layout_marginVertical="-2dp"/>
+        android:text="@string/refreshSF"/>
 
     <Button
         android:id="@+id/refreshButton"
@@ -286,6 +306,6 @@
         android:layout_alignLeft="@+id/sendButton"
         android:layout_alignStart="@+id/sendButton"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="160px"/>
+        android:layout_marginBottom="160dp"/>
 
 </RelativeLayout>
