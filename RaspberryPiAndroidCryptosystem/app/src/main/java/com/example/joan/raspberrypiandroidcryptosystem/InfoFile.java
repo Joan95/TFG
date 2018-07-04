@@ -7,11 +7,15 @@ public class InfoFile {
     private float encryptMEMUsage = 0;
     private float encryptMaxCPU = 0;
     private float encryptMaxMEM = 0;
+    private int encryptTrustlyCPU = 0;
+    private int encryptTrustlyMEM = 0;
     private String encryptTime = null;
     private float decryptCPUUsage = 0;
     private float decryptMEMUsage = 0;
     private float decryptMaxCPU = 0;
     private float decryptMaxMEM = 0;
+    private int decryptTrustlyCPU = 0;
+    private int decryptTrustlyMEM = 0;
     private String decryptTime = null;
 
     public InfoFile() {
@@ -106,4 +110,43 @@ public class InfoFile {
         this.decryptTime = decryptTime;
     }
 
+    public static int getNumber() {
+        return number;
+    }
+
+    public static void setNumber(int number) {
+        InfoFile.number = number;
+    }
+
+    public int getEncryptTrustlyCPU() {
+        return encryptTrustlyCPU;
+    }
+
+    public void setEncryptTrustlyCPU(int encryptTrustlyCPU) {
+        this.encryptTrustlyCPU = encryptTrustlyCPU;
+    }
+
+    public int getEncryptTrustlyMEM() {
+        return encryptTrustlyMEM;
+    }
+
+    public void setEncryptTrustlyMEM(int encryptTrustlyMEM) {
+        this.encryptTrustlyMEM = encryptTrustlyMEM;
+    }
+
+    public int getDecryptTrustlyCPU() {
+        return decryptTrustlyCPU;
+    }
+
+    public void setDecryptTrustlyCPU(int decryptTrustlyCPU) {
+        this.decryptTrustlyCPU = decryptTrustlyCPU;
+    }
+
+    public int getDecryptTrustlyMEM() {
+        return decryptTrustlyMEM;
+    }
+
+    public void setDecryptTrustlyMEM(int decryptTrustlyMEM) {
+        this.decryptTrustlyMEM = decryptTrustlyMEM;
+    }
 }

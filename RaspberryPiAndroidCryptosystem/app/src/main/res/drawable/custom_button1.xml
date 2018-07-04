@@ -41,11 +41,30 @@
         </shape>
     </item>
 
+    <item android:state_enabled="false">
+        <shape>
+            <gradient
+                android:endColor="@color/purpleDark"
+                android:startColor="@color/purpleDark"
+                android:angle="270" />
+            <stroke
+                android:width="10dp"
+                android:color="@android:color/transparent" />
+            <corners
+                android:radius="3dp" />
+            <padding
+                android:left="10dp"
+                android:top="10dp"
+                android:right="10dp"
+                android:bottom="10dp" />
+        </shape>
+    </item>
+
     <item>
         <shape>
             <gradient
-                android:endColor="@color/orange"
-                android:startColor="@color/purpleSoft"
+                android:endColor="@color/green"
+                android:startColor="@color/green"
                 android:angle="270" />
             <stroke
                 android:width="10dp"

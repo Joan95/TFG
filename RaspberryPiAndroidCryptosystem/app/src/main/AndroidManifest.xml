@@ -35,6 +35,11 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".AccuratedInformation"
+            android:label="Accurated Information" >
+        </activity>
+
     </application>
 
 </manifest>

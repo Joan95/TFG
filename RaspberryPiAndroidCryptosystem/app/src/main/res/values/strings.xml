@@ -5,13 +5,22 @@
     <string name="begin">Let\'s start!</string>
 
     <string name="bluetooth_devices_list">Bluetooth Devices List</string>
+    <string name="accurated_information">Accurated Information</string>
     <string name="paired_devices_list">Paired Devices List</string>
     <string name="new_devices_list">New Devices List</string>
     <string name="back">Back</string>
     <string name="scann">Scann</string>
 
-    <string name="usage_of_cpu">Usage Of CPU %</string>
-    <string name="usage_of_memory">Usage Of Memory %</string>
+    <string name="cpu">CPU</string>
+    <string name="mem">MEMORY</string>
+
+    <string name="usage_of_cpu">Average Of CPU Used %</string>
+    <string name="usage_of_memory">Average Of Memory Used %</string>
+    <string name="maxCPU">Maximum CPU Used %</string>
+    <string name="maxMEM">Maximum Memory Used %</string>
+    <string name="time">Time Needed</string>
+    <string name="trustly_cpu_values">Amount Of CPU Operations Considered</string>
+    <string name="trustly_mem_values">Amount Of Memory Operations Considered</string>
 
     <string name="details">DETAILS</string>
     <string name="send">SEND</string>
