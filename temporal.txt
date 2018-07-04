@@ -1,0 +1,17 @@
+type=encryption;
+CPUUsage=76.175;
+MEMUsage=0.3;
+maxCPU=97.9;
+maxMEM=0.3;
+timeUsed=0:00.20;
+cntCPU=8;
+cntMEM=10;new;
+
+type=decryption;
+CPUUsage=90.2429;
+MEMUsage=0.3;
+maxCPU=98.0;
+maxMEM=0.3;
+timeUsed=0:00.21;
+cntCPU=7;
+cntMEM=10;new

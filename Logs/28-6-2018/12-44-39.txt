@@ -1,0 +1,27 @@
+type:Text, cipher:AES, nameFile:Complete_Sherlock_Holmes-Arthur_Conan_Doyle.txt, sizeOfFileMB:6
+encrypter
+ 1734 root      20   0    4216   2836   2556 D  26.1  0.3   0:00.01 openssl
+ 1734 root      20   0    4216   2836   2556 R  30.6  0.3   0:00.02 openssl
+ 1734 root      20   0    4216   2836   2556 R  59.5  0.3   0:00.04 openssl
+ 1734 root      20   0    4216   2836   2556 R  59.0  0.3   0:00.06 openssl
+ 1734 root      20   0    4216   2836   2556 R  90.2  0.3   0:00.09 openssl
+ 1734 root      20   0    4216   2836   2556 R  60.0  0.3   0:00.11 openssl
+ 1734 root      20   0    4216   2836   2556 R  59.5  0.3   0:00.13 openssl
+ 1734 root      20   0    4216   2836   2556 R  61.1  0.3   0:00.15 openssl
+ 1734 root      20   0    4216   2836   2556 R  87.8  0.3   0:00.18 openssl
+ 1734 root      20   0    4200   3080   2756 D  60.4  0.3   0:00.20 openssl
+ 1734 root      20   0    4200   3080   2756 D   0.0  0.3   0:00.20 openssl
+ 1734 root      20   0    4200   3080   2756 D   0.0  0.3   0:00.20 openssl
+ 1734 root      20   0    4200   3080   2756 D   0.0  0.3   0:00.20 openssl
+decrypter
+ 1754 root      20   0    4216   2904   2624 R  58.7  0.3   0:00.02 openssl
+ 1754 root      20   0    4216   2904   2624 R  94.5  0.3   0:00.05 openssl
+ 1754 root      20   0    4216   2904   2624 R  92.5  0.3   0:00.08 openssl
+ 1754 root      20   0    4216   2904   2624 R  96.7  0.3   0:00.11 openssl
+ 1754 root      20   0    4216   2904   2624 R  97.2  0.3   0:00.14 openssl
+ 1754 root      20   0    4216   2904   2624 R 100.0  0.3   0:00.18 openssl
+ 1754 root      20   0    4200   3024   2700 D  64.3  0.3   0:00.20 openssl
+ 1754 root      20   0    4200   3024   2700 D   0.0  0.3   0:00.20 openssl
+ 1754 root      20   0    4200   3024   2700 D   0.0  0.3   0:00.20 openssl
+ 1754 root      20   0    4200   3024   2700 D   0.0  0.3   0:00.20 openssl
+end

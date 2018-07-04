@@ -53,12 +53,14 @@ encryptMEMUsage=0	#Average of % of MEM
 encryptMaxCPU=0		#Maximum CPU usage
 encryptMaxMEM=0		#Maximum MEM consumption
 encryptTime=0		#Time it took to the Server to do the task
+encryptCntCPU=0
+encryptCntMEM=0
 
 decryptCPUUsage=0
 decryptMEMUsage=0
 decryptMaxMEM=0
 decryptTime=0
-cntCPU=0
+decryptCntCPU=0
 cntMEM=0
 
 #Change the value from Internal Field Separator to a '\n'
@@ -89,30 +91,30 @@ for j in $encryptLogs; do
 	encryptMEMUsage=$(echo $encryptMEMUsage $auxMEMValue | awk '{print $1 + $2}') 
 	
 	if [ ! $auxCPUValue ==  "0.0" ]; then
-		cntCPU=$((cntCPU+1))
+		encryptCntCPU=$((encryptCntCPU+1))
 	fi  
 
 	if [ ! $auxMEMValue == "0.0" ]; then 
-		cntMEM=$((cntMEM+1))
+		encryptCntMEM=$((encryptCntMEM+1))
 	fi
 done
 
 echo -e "\tEncryption monitoring: "
 echo -e "CPU encrypt usage: \t\t$encryptCPUUsage"
-echo -e "Total trustly values: \t\t$cntCPU"
-encryptCPUUsage=$(echo $encryptCPUUsage $cntCPU | awk '{print $1 / $2}')
+echo -e "Total trustly values: \t\t$encryptCntCPU"
+encryptCPUUsage=$(echo $encryptCPUUsage $encryptCntCPU | awk '{print $1 / $2}')
 
 echo -e "Average of %CPU consumption: \t$encryptCPUUsage%"
 echo -e "Maximum %CPU consumption: \t$encryptMaxCPU%"
 
-echo -e "Total trustly values: \t\t$cntMEM"
-encryptMEMUsage=$(echo $encryptMEMUsage $cntMEM | awk '{print $1 / $2}')
+echo -e "Total trustly values: \t\t$encryptCntMEM"
+encryptMEMUsage=$(echo $encryptMEMUsage $encryptCntMEM | awk '{print $1 / $2}')
 echo -e "Average of %MEM consumption: \t$encryptMEMUsage%"
 echo -e "Maximum %MEM consumption: \t$encryptMaxMEM%"
 echo -e "Encryption time duration: \t$encryptTime"
 
 
-cntCPU=0
+decryptCntCPU=0
 cntMEM=0
 
 for j in $decryptLogs; do 
@@ -140,24 +142,24 @@ for j in $decryptLogs; do
 	decryptMEMUsage=$(echo $decryptMEMUsage $auxMEMValue | awk '{print $1 + $2}') 
 	
 	if [ ! $auxCPUValue ==  "0.0" ]; then
-		cntCPU=$((cntCPU+1))
+		decryptCntCPU=$((decryptCntCPU+1))
 	fi  
 
 	if [ ! $auxMEMValue == "0.0" ]; then 
-		cntMEM=$((cntMEM+1))
+		decryptCntMEM=$((decryptCntMEM+1))
 	fi
 done
 
 echo -e "\n\tDecryption monitoring: "
 echo -e "CPU decrypt usage: \t\t$decryptCPUUsage"
-echo -e "Total trustly values: \t\t$cntCPU"
-decryptCPUUsage=$(echo $decryptCPUUsage $cntCPU | awk '{print $1 / $2}')
+echo -e "Total trustly values: \t\t$decryptCntCPU"
+decryptCPUUsage=$(echo $decryptCPUUsage $decryptCntCPU | awk '{print $1 / $2}')
 
 echo -e "Average of %CPU consumption: \t$decryptCPUUsage%"
 echo -e "Maximum %CPU consumption: \t$decryptMaxCPU%"
 
-echo -e "Total trustly values: \t\t$cntMEM"
-decryptMEMUsage=$(echo $decryptMEMUsage $cntMEM | awk '{print $1 / $2}')
+echo -e "Total trustly values: \t\t$decryptCntMEM"
+decryptMEMUsage=$(echo $decryptMEMUsage $decryptCntMEM | awk '{print $1 / $2}')
 echo -e "Average of %MEM consumption: \t$decryptMEMUsage%"
 echo -e "Maximum %MEM consumption: \t$decryptMaxMEM%"
 echo -e "Decryption time duration: \t$decryptTime"
@@ -169,14 +171,18 @@ echo -e "Decryption time duration: \t$decryptTime"
 	#encryptMaxCPU		#Maximum CPU usage
 	#encryptMaxMEM		#Maximum MEM consumption
 	#encryptTime		#Time it took to the Server to do the task
+	#encryptCntCPU		#Number of Trustly values of CPU
+	#encryptCntMEM		#Number of Trustly values of MEM
 	#d => Decrypt
 	#decryptCPUUSage	#Average of % of CPU
 	#decryptMEMUsage	#Average of % of MEM
 	#decryptMaxCPU		#Maximum CPU usage
 	#decryptMaxMEM		#Maximum MEM consumption
 	#decryptTime		#Time it took to the Server to do the task
+	#decryptCntCPU		#Number of Trustly values of CPU
+	#decryptCntMEM		#Number of Trustly values of MEM
 
-returnValue="type=encryption;\nCPUUsage=$encryptCPUUsage;\nMEMUsage=$encryptMEMUsage;\nmaxCPU=$encryptMaxCPU;\nmaxMEM=$encryptMaxMEM;\ntimeUsed=$encryptTime;new;\n\ntype=decryption;\nCPUUsage=$decryptCPUUsage;\nMEMUsage=$decryptMEMUsage;\nmaxCPU=$decryptMaxCPU;\nmaxMEM=$decryptMaxMEM;\ntimeUsed=$decryptTime;new"
+returnValue="type=encryption;\nCPUUsage=$encryptCPUUsage;\nMEMUsage=$encryptMEMUsage;\nmaxCPU=$encryptMaxCPU;\nmaxMEM=$encryptMaxMEM;\ntimeUsed=$encryptTime;\ncntCPU=$encryptCntCPU;\ncntMEM=$encryptCntMEM;new;\n\ntype=decryption;\nCPUUsage=$decryptCPUUsage;\nMEMUsage=$decryptMEMUsage;\nmaxCPU=$decryptMaxCPU;\nmaxMEM=$decryptMaxMEM;\ntimeUsed=$decryptTime;\ncntCPU=$decryptCntCPU;\ncntMEM=$decryptCntMEM;new"
 
 echo -e "$returnValue" >> temporal.txt
 
