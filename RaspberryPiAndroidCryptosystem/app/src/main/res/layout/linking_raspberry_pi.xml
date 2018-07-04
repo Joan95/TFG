@@ -127,7 +127,7 @@
         android:layout_alignStart="@+id/decrypt" />
 
     <Button
-        android:id="@+id/Details"
+        android:id="@+id/details"
         android:background="@drawable/custom_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -135,6 +135,7 @@
         android:layout_alignLeft="@+id/decrypt"
         android:layout_alignStart="@+id/decrypt"
         android:layout_marginTop="190dp"
+        android:enabled="false"
         />
 
     <TextView
@@ -261,7 +262,7 @@
         android:layout_toEndOf="@+id/selectFile"
         android:layout_toRightOf="@+id/selectFile"
         android:layout_alignTop="@+id/selectFile"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="10dp"
         android:minWidth="150dp" />
 
     <Button
@@ -282,7 +283,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/sendButton"
-        android:background="@color/red"
+        android:background="@drawable/custom_button2"
         android:layout_marginLeft="30dp"
         android:text="@string/disconnect"
         android:layout_marginStart="30dp" />
@@ -306,6 +307,6 @@
         android:layout_alignLeft="@+id/sendButton"
         android:layout_alignStart="@+id/sendButton"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="160dp"/>
+        android:layout_marginBottom="60dp"/>
 
 </RelativeLayout>

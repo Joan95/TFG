@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -83,6 +82,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
         final Button sendButton = findViewById(R.id.sendButton);
         Button refreshButton = findViewById(R.id.refreshButton);
         Button disconnectButton = findViewById(R.id.disconnectButton);
+        final Button detailsButton = findViewById(R.id.details);
         final Spinner spinnerMethod = findViewById(R.id.spinnerSelectMethod);
         final Spinner spinnerTypeFile = findViewById(R.id.spinnerSelectTypeFile);
         final Spinner spinnerFile = findViewById(R.id.spinnerSelectFile);
@@ -97,6 +97,14 @@ public class LinkingRaspberryPi extends AppCompatActivity
         raspberryMac = lastInt.getStringExtra(ShowDevices.BLUETOOTH_MAC_DEVICE);
 
         myToasts.show(LinkingRaspberryPi.this, raspberryMac);
+
+        detailsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -317,8 +325,11 @@ public class LinkingRaspberryPi extends AppCompatActivity
 
                                 if (jsonMessage.has("result")) {
 
+                                    InfoFile infoFile = new InfoFile();
+
                                     if (messageJson.equals("encryption")) {
                                         JSONObject jsonObjectE = jsonMessage.getJSONObject("result");
+
 
                                         usageCPUEncrypt.setText(jsonObjectE.getString("CPUUsage")+'%');
                                         usageMemoryEncrypt.setText(jsonObjectE.getString("MEMUsage")+'%');
@@ -330,6 +341,8 @@ public class LinkingRaspberryPi extends AppCompatActivity
                                         usageCPUDecrypt.setText(jsonObjectD.getString("CPUUsage")+'%');
                                         usageMemoryDecrypt.setText(jsonObjectD.getString("MEMUsage")+'%');
                                     }
+
+                                    detailsButton.setEnabled(true);
                                 }
                             }
                         }

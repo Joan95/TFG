@@ -44,7 +44,7 @@
     <item>
         <shape>
             <gradient
-                android:endColor="@color/orange"
+                android:endColor="@color/red"
                 android:startColor="@color/purpleSoft"
                 android:angle="270" />
             <stroke
