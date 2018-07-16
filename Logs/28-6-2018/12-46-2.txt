@@ -1,6 +1,0 @@
-type:Text, cipher:AES, nameFile:El_Pirata-Jose_Espronceda.txt, sizeOfFileMB:0
-encrypter
- 2197 root      20   0    4200   3120   2816 D  31.4  0.3   0:00.01 openssl
-decrypter
- 2217 root      20   0    4200   2964   2660 D  43.3  0.3   0:00.01 openssl
-end

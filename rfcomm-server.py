@@ -212,11 +212,15 @@ try:
 					client_sock.send(SendMessage)
 		
 					createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile, sizeOfFileMB)
-		
-					fileRunning = "encrypter"
+					print "Here is where its Log will be saved: ", logsFile
+					
+					if (newMessage.hsm == "True"):
+						fileRunning = "hsmEncrypter"
+					else:
+						fileRunning = "encrypter"
 		
 					me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
-					print "Here is where its Log will be saved: ", logsFile
+					
 		
 					time.sleep(1)
 		
@@ -228,11 +232,17 @@ try:
 					#print newMessage.cipher
 		
 					pathToSaveFile = str("%s/%s" % (pathToEncrypt, newMessage.typeFile))
-					
-					#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
-					e = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
-					#print e.communicate()[0]
-					e.wait()
+
+					if (newMessage.hsm == "True"):
+						#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
+						eh = subprocess.Popen(["hsmEncrypter.py",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+						#print eh.communicate()[0]
+						eh.wait()
+					else:
+						#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
+						e = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+						#print e.communicate()[0]
+						e.wait()
 					
 					time.sleep(3)
 		
@@ -251,7 +261,11 @@ try:
 		
 						client_sock.send(SendMessage)	
 						
-						fileRunning = "decrypter"
+						if (newMessage.hsm == "True"):
+							fileRunning = "hsmDecrypter"
+						else:
+							fileRunning = "decrypter"
+
 						md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
 						#print "Here is where its Log will be saved: ", logsFile
 		

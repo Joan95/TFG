@@ -1,0 +1,10 @@
+type:Random, cipher:AES, nameFile:1MB, sizeOfFileMB:1
+encrypter
+14224 root      20   0    4216   2968   2688 R  65.8  0.3   0:00.02 openssl
+14224 root      20   0    4200   3212   2888 D  88.1  0.3   0:00.04 openssl
+14224 root      20   0    4200   3212   2888 D   0.0  0.3   0:00.04 openssl
+decrypter
+14287 root      20   0    4216   2840   2560 R  77.8  0.3   0:00.02 openssl
+14287 root      20   0    4200   3020   2696 D  82.2  0.3   0:00.04 openssl
+14287 root      20   0    4200   3020   2696 D   0.0  0.3   0:00.04 openssl
+end

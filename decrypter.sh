@@ -27,8 +27,13 @@ echo -e "\n\tPath to file $pathToFile"
 echo -e "\tSave it here: $directory"
 
 #Check if $directory exists; if it doesn't, make it
+if [ ! -d "$directory" ]; then 
+	echo -e "\n\t$directory, doesn't exists, creating it"
+	mkdir $directory
+fi
+
 if [ ! -d "$directory/$cipher" ]; then
-	echo -e "\n\t$directory/$cipher, doesn't exists, creating it"
+	echo -e "\t$directory/$cipher, doesn't exists, creating it"
 	mkdir $directory/$cipher
 fi
 
