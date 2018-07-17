@@ -52,6 +52,6 @@ case $cipher in
 esac 
 
 echo -e "\n\t\t---------- End of decryption ----------"
-echo -e "\n\t\tDone, exiting from decrypter.sh"
+echo -e "\n\t\tDone, exiting from 'decrypter.sh'"
 
 exit 0
