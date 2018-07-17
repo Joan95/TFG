@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-#ARGS: (logsFile, fileRunning, sizeOfFileMB)
+#ARGS: (logsFile, fileRunning, sizeOfFileMB, hsm)
 #WHERE 	logsFile		= $directoryLogsPath/$nameLogsFile
 #WHERE 	directoryLogsPath	= $pathToLogs/$nameFolder
 #WHERE 	pathToLogs 		= $base_directory/logs
@@ -8,7 +8,8 @@
 
 sizeOfFileMB=$(echo "$3")
 
-echo -e "\n\n\tMonitoring has begun for file of $sizeOfFileMB MBytes"
+echo -e "\n\n\tInside of 'monitoring.sh'"
+echo -e "\n\tMonitoring has begun for file of $sizeOfFileMB MBytes"
 
 #MONITORING METHODS:
 	#CPU: top -bn1
@@ -21,6 +22,7 @@ echo -e "\n\n\tMonitoring has begun for file of $sizeOfFileMB MBytes"
 
 logsFile=$(echo "$1")
 fileRunning=$(echo "$2")
+hsm=$(echo "$4")
 
 echo -e "$fileRunning" >> $logsFile
 
@@ -43,10 +45,14 @@ if [ $comparation == '1' ]; then
 	frecOfTop=0.001
 fi
 
-echo -e "Frequency will be of: $frecOfTop seconds for file of $sizeOfFileMB MB"
+echo -e "\tFrequency will be of: $frecOfTop seconds for file of $sizeOfFileMB MB"
 
-(top -bn 70 -d $frecOfTop | grep openssl ) >> $logsFile
+if [ $hsm == 'True' ]; then 
+	(top -bn 70 -d $frecOfTop | grep sudo ) >> $logsFile
+else 
+	(top -bn 70 -d $frecOfTop | grep openssl ) >> $logsFile
+fi
 
-echo -e "\tMonitoring has finished"
+echo -e "\n\tMonitoring has finished\n"
 
 exit 0

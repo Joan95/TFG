@@ -1,0 +1,8 @@
+type:Random, cipher:AES, nameFile:1MB, sizeOfFileMB:1
+encrypter
+decrypter
+29869 root      20   0    4216   2908   2628 R  42.5  0.3   0:00.01 openssl
+29869 root      20   0    4216   2908   2628 R  88.6  0.3   0:00.03 openssl
+29869 root      20   0    4200   3028   2704 D  43.9  0.3   0:00.04 openssl
+29869 root      20   0       0      0      0 R   0.0  0.0   0:00.04 openssl
+end

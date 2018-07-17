@@ -5,7 +5,7 @@
 #WHERE pathToEncrypt 	= $device_directory/Encrypt
 #WHERE directory	= $pathToEncrypt/$typeFile
 
-echo -e "\n\n\tInside de 'encrypter.sh'"
+echo -e "\n\n\t\tInside of 'encrypter.sh'"
 
 #MONITORING METHODS:
 	#CPU: top -bn1
@@ -24,21 +24,21 @@ cipher=$(echo "$5")
 pathToFile=$(echo "$6")
 directory=$(echo "$7")
 
-echo -e "\n\tPath to file $pathToFile"
-echo -e "\tSave it here: $directory"
+echo -e "\n\t\tPath to file $pathToFile"
+echo -e "\t\tSave it here: $directory"
 
 #Check if $directory exists; if it doesn't, make it
 if [ ! -d "$directory" ]; then 
-	echo -e "\n\t$directory, doesn't exists, creating it"
+	echo -e "\n\t\t$directory, doesn't exists, creating it"
 	mkdir $directory
 fi
 
 if [ ! -d "$directory/$cipher" ]; then
-	echo -e "\t$directory/$cipher, doesn't exists, creating it"
+	echo -e "\t\t$directory/$cipher, doesn't exists, creating it"
 	mkdir $directory/$cipher
 fi
 
-echo -e "\n\tStart encryption\n"
+echo -e "\n\t\t---------- Start of encryption ----------\n"
 
 case $cipher in
 "AES")
@@ -58,6 +58,7 @@ case $cipher in
 	;;
 esac 
 
-echo -e "\n\tDone, exiting from encrypter.sh...\n\n"
+echo -e "\n\t\t---------- End of encryption ----------"
+echo -e "\n\t\tDone, exiting from encrypter.sh"
 
 exit 0

@@ -1,0 +1,2 @@
+type:Random, cipher:AES, nameFile:5MB, sizeOfFileMB:5
+encrypter

@@ -33,6 +33,7 @@ class Message:
 		self.nameFile = nameFile
 		self.password = password
 		self.hsm = hsm
+		self.size = None
 	
 	def __repr__(self):
 		return str(self.__dict__)
@@ -78,7 +79,7 @@ timesUsed = 0
 
 ############# Functions ############# 
 
-def createLogsSF(typeFile, cipher, nameFile, sizeOfFileMB):
+def createLogsSF(typeFile, cipher, nameFile, sizeOfFileMB, hsm):
 	now = datetime.datetime.now()
 
 	#Name format = 'ss-mm-hh.txt'
@@ -97,7 +98,7 @@ def createLogsSF(typeFile, cipher, nameFile, sizeOfFileMB):
 	global logsFile
 	logsFile = str("%s/%s" % (directoryLogsPath, nameLogsFile))
 	
-	toWrite = str("type:%s, cipher:%s, nameFile:%s, sizeOfFileMB:%s\n" % (typeFile, cipher, nameFile, sizeOfFileMB))
+	toWrite = str("type:%s, cipher:%s, nameFile:%s, sizeOfFileMB:%s, hsm:%s\n" % (typeFile, cipher, nameFile, sizeOfFileMB, hsm))
 	file = open(logsFile, "w+")
 	file.write(toWrite)
 	file.close()
@@ -142,11 +143,14 @@ try:
 		client_sock, client_info = server_sock.accept()
 		print "Accepted connection from ", client_info
 
-		print "\tCollecting information of files from: ", pathToResources
+		#print "\tCollecting information of files from: ", pathToResources
 		
 		sendSF(pathToResources,FDevice,SFDevice)
 			
-		print "\tThe whole System File information has sent to ", client_info
+		print "\tThe whole System File information has sent to: ", client_info
+		print "\n"
+		print "Please press \'REFRESH\' if there are some files you haven't received"
+		print "Waiting to recieve the message from device ", client_info
 		print "\n"
 		
 		try:
@@ -159,15 +163,15 @@ try:
 	
 		        if len(data) == 0: break
 
-		        print "Message received from %s\n\t[%s]\n" % (client_info, data)
+		        print "Message received from %s:\n\t[%s]\n" % (client_info, data)
 	
 			#Data to JSON
 			jsonMessage = json.loads(data)
 			#print "jsonMessage:\n%s" % jsonMessage
 	
 			if (jsonMessage.get("message")):
-				print "Resending System Files"
-				print "\tCollecting information of files from: ", pathToResources
+				#print "Resending System Files"
+				#print "\tCollecting information of files from: ", pathToResources
 				FDevice = {}
 				SFDevice = {}
 
@@ -198,8 +202,9 @@ try:
 				pathToFile = str("%s/%s/%s" % (pathToResources, newMessage.typeFile, newMessage.nameFile))
 		
 				sizeOfFileMB = str("%s" % (os.path.getsize(pathToFile) >> 20))
+				newMessage.size = sizeOfFileMB
 		
-				print "\tPath:\n\t\t%s\n\tSize:\n\t\t%s" % (pathToFile, sizeOfFileMB)
+				print "Path to File:\n\t\t%s\nSize of File:\n\t\t%sMB" % (pathToFile, newMessage.size)
 		
 				if (os.path.isfile(pathToFile)):
 					#FILE EXISTS
@@ -211,15 +216,12 @@ try:
 					
 					client_sock.send(SendMessage)
 		
-					createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile, sizeOfFileMB)
-					print "Here is where its Log will be saved: ", logsFile
+					createLogsSF(newMessage.typeFile, newMessage.cipher, newMessage.nameFile, newMessage.size, newMessage.hsm)
+					#print "Here is where its Log will be saved: ", logsFile
 					
-					if (newMessage.hsm == "True"):
-						fileRunning = "hsmEncrypter"
-					else:
-						fileRunning = "encrypter"
+					fileRunning = "encrypter"
 		
-					me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
+					me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.size, newMessage.hsm])
 					
 		
 					time.sleep(1)
@@ -235,18 +237,20 @@ try:
 
 					if (newMessage.hsm == "True"):
 						#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
-						eh = subprocess.Popen(["hsmEncrypter.py",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+						eh = subprocess.Popen(["python","hsmEncrypter.py", newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
 						#print eh.communicate()[0]
 						eh.wait()
+						returncode = eh.returncode
 					else:
 						#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
 						e = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
 						#print e.communicate()[0]
 						e.wait()
+						returncode = e.returncode
 					
 					time.sleep(3)
 		
-					if (e.returncode == 0):
+					if (returncode == 0):
 						#Stop monitoring
 						me.wait()
 						
@@ -261,12 +265,9 @@ try:
 		
 						client_sock.send(SendMessage)	
 						
-						if (newMessage.hsm == "True"):
-							fileRunning = "hsmDecrypter"
-						else:
-							fileRunning = "decrypter"
+						fileRunning = "decrypter"
 
-						md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, sizeOfFileMB])
+						md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.size, newMessage.hsm])
 						#print "Here is where its Log will be saved: ", logsFile
 		
 						time.sleep(1)
@@ -388,7 +389,8 @@ try:
 					client_sock.send(SendMessage)
 		
 		
-				print "Application has been used %s times" % (timesUsed)
+				print "Application has been used %s time(s)\n" % (timesUsed)
+				print "---------- Ready for the %s Measurement ----------" % (timesUsed+1)
 	
 		except BluetoothError:
 			print "Lost connection of ", client_info 

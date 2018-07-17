@@ -14,11 +14,11 @@
 	#'T' = traced or stopped
 	#'Z' = zombie
 
-echo -e "\n\n\tInside de 'calculator.sh'"
+echo -e "\n\n\tInside de 'calculator.sh'\n"
 
-for i in "$@"; do
-	echo "$i"
-done
+#for i in "$@"; do
+	#echo "$i"
+#done
 
 logsFile=$(echo "$1")
 
@@ -99,19 +99,21 @@ for j in $encryptLogs; do
 	fi
 done
 
-echo -e "\tEncryption monitoring: "
-echo -e "CPU encrypt usage: \t\t$encryptCPUUsage"
-echo -e "Total trustly values: \t\t$encryptCntCPU"
+echo -e "\tEncryption process (Duration: $encryptTime):"
+echo -e "\t\tCPU"
+echo -e "\t\t\tCPU encrypt usage: \t\t$encryptCPUUsage"
+echo -e "\t\t\tTotal trustly values: \t\t$encryptCntCPU"
 encryptCPUUsage=$(echo $encryptCPUUsage $encryptCntCPU | awk '{print $1 / $2}')
 
-echo -e "Average of %CPU consumption: \t$encryptCPUUsage%"
-echo -e "Maximum %CPU consumption: \t$encryptMaxCPU%"
+echo -e "\t\t\tAverage of %CPU consumption: \t$encryptCPUUsage%"
+echo -e "\t\t\tMaximum %CPU consumption: \t$encryptMaxCPU%"
 
-echo -e "Total trustly values: \t\t$encryptCntMEM"
+echo -e "\t\tMEM"
+
+echo -e "\t\t\tTotal trustly values: \t\t$encryptCntMEM"
 encryptMEMUsage=$(echo $encryptMEMUsage $encryptCntMEM | awk '{print $1 / $2}')
-echo -e "Average of %MEM consumption: \t$encryptMEMUsage%"
-echo -e "Maximum %MEM consumption: \t$encryptMaxMEM%"
-echo -e "Encryption time duration: \t$encryptTime"
+echo -e "\t\t\tAverage of %MEM consumption: \t$encryptMEMUsage%"
+echo -e "\t\t\tMaximum %MEM consumption: \t$encryptMaxMEM%"
 
 
 decryptCntCPU=0
@@ -150,19 +152,20 @@ for j in $decryptLogs; do
 	fi
 done
 
-echo -e "\n\tDecryption monitoring: "
-echo -e "CPU decrypt usage: \t\t$decryptCPUUsage"
-echo -e "Total trustly values: \t\t$decryptCntCPU"
+echo -e "\n\tDecryption process (Duration $decryptTime):"
+echo -e "\t\tCPU"
+echo -e "\t\t\tCPU decrypt usage: \t\t$decryptCPUUsage"
+echo -e "\t\t\tTotal trustly values: \t\t$decryptCntCPU"
 decryptCPUUsage=$(echo $decryptCPUUsage $decryptCntCPU | awk '{print $1 / $2}')
 
-echo -e "Average of %CPU consumption: \t$decryptCPUUsage%"
-echo -e "Maximum %CPU consumption: \t$decryptMaxCPU%"
+echo -e "\t\t\tAverage of %CPU consumption: \t$decryptCPUUsage%"
+echo -e "\t\t\tMaximum %CPU consumption: \t$decryptMaxCPU%"
 
-echo -e "Total trustly values: \t\t$decryptCntMEM"
+echo -e "\t\tMEM"
+echo -e "\t\t\tTotal trustly values: \t\t$decryptCntMEM"
 decryptMEMUsage=$(echo $decryptMEMUsage $decryptCntMEM | awk '{print $1 / $2}')
-echo -e "Average of %MEM consumption: \t$decryptMEMUsage%"
-echo -e "Maximum %MEM consumption: \t$decryptMaxMEM%"
-echo -e "Decryption time duration: \t$decryptTime"
+echo -e "\t\t\tAverage of %MEM consumption: \t$decryptMEMUsage%"
+echo -e "\t\t\tMaximum %MEM consumption: \t$decryptMaxMEM%"
 
 #ReturnValue 
 	#e => Encrypt
