@@ -39,6 +39,7 @@ zymkey.client.led_off()
 
 print "\n\n\t---------- Start of encryption ----------"
 
+#encrypted = zymkey.client.lock(
 
 print "\n\t\t---------- End of encryption ----------"
 print "\n\t\tDone, exiting from 'hsmEncrypter.py'"
