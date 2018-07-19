@@ -222,7 +222,6 @@ try:
 					fileRunning = "encrypter"
 		
 					me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.size, newMessage.hsm])
-					
 		
 					time.sleep(1)
 		
@@ -237,23 +236,24 @@ try:
 
 					if (newMessage.hsm == "True"):
 						#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
-						eh = subprocess.Popen(["python","hsmEncrypter.py", newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+						eh = subprocess.Popen(["sudo","python","hsmEncrypter.py", newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
 						#print eh.communicate()[0]
 						eh.wait()
-						returncode = eh.returncode
+						returncode = eh.returncode						
+
 					else:
 						#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
 						e = subprocess.Popen(["./encrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
 						#print e.communicate()[0]
 						e.wait()
-						returncode = e.returncode
-					
-					time.sleep(3)
+						returncode = e.returncode		
 		
 					if (returncode == 0):
-						#Stop monitoring
+						#Wait for ending of monitoring
 						me.wait()
-						
+
+						time.sleep(3)
+
 						print "File has been encrypted successfully"
 		
 						SendMessage = {}
@@ -281,16 +281,31 @@ try:
 		
 						client_sock.send(SendMessage)
 		
-						pathToFile = str("%s/%s/%s/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.cipher, newMessage.nameFile))
-						pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
 						
-						#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile, pathToSaveFile)
-						d = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
-						#print d.communicate()[0]
-						d.wait()
 						
-						if (d.returncode == 0):
-							#Stop monitoring
+
+						if (newMessage.hsm == "True"):
+							pathToFile = str("%s/%s/zymbit/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.nameFile))
+							pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
+							
+							#ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, pathToSaveFile)
+							eh = subprocess.Popen(["sudo","python","hsmDecrypter.py", newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+							#print eh.communicate()[0]
+							eh.wait()
+							returncode = eh.returncode						
+
+						else:
+							pathToFile = str("%s/%s/%s/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.cipher, newMessage.nameFile))
+							pathToSaveFile = str("%s/%s" % (pathToDecrypt, newMessage.typeFile))
+
+							#ARGS: (nameFile, typeFile, password, hsm, cipher, pathToFile, pathToSaveFile)
+							d = subprocess.Popen(["./decrypter.sh",newMessage.nameFile,newMessage.typeFile,newMessage.password,newMessage.hsm,newMessage.cipher,pathToFile,pathToSaveFile])
+							#print d.communicate()[0]
+							d.wait()
+							returncode = d.returncode
+						
+						if (returncode == 0):
+							#Wait for ending of monitoring
 							md.wait()
 							
 							print "File has been decrypted successfully"

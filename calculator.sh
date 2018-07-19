@@ -33,7 +33,7 @@ isThereDec=$(echo $(cat $logsFile | grep "decrypter"))
 #echo -e "isThereDec = $isThereDec"
 
 while [ ! "$isThereDec" == "decrypter" ]; do
-	echo -e "Waiting for 'decrypter' to be wrote into the file."
+	echo -e "\t'calculator.sh' - Waiting for 'decrypter' to be wrote into the file."
 	sleep 1
 done
 

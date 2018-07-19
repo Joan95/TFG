@@ -4,7 +4,7 @@
 #WHERE pathToFile	= $pathToEncrypt/$typeFile/$cipher/$nameFile
 #WHERE directory	= $pathToDecrypt/$typeFile
 
-echo -e "\n\n\t\tInside de 'decrypter.sh'"
+echo -e "\n\n\t\tInside of 'decrypter.sh'"
 
 #MONITORING METHODS:
 	#CPU: top -bn1

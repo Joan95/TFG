@@ -8,8 +8,8 @@
 
 sizeOfFileMB=$(echo "$3")
 
-echo -e "\n\n\tInside of 'monitoring.sh'"
-echo -e "\n\tMonitoring has begun for file of $sizeOfFileMB MBytes"
+echo -e "\n\n\t'monitoring.sh' - Inside of 'monitoring.sh'"
+echo -e "\n\t'monitoring.sh' - Monitoring has begun for file of $sizeOfFileMB MBytes"
 
 #MONITORING METHODS:
 	#CPU: top -bn1
@@ -45,14 +45,30 @@ if [ $comparation == '1' ]; then
 	frecOfTop=0.001
 fi
 
-echo -e "\tFrequency will be of: $frecOfTop seconds for file of $sizeOfFileMB MB"
+echo -e "\t'monitoring.sh' - Frequency will be of: $frecOfTop seconds for file of $sizeOfFileMB MB\n"
 
 if [ $hsm == 'True' ]; then 
-	(top -bn 70 -d $frecOfTop | grep sudo ) >> $logsFile
+	while [ ! -f temp.txt ]; do 
+		echo -e "\t'monitoring.sh' - Waiting for start of encryption using Zymbit"
+		sleep 1
+	done
+
+	aux=0
+
+	while [ -f temp.txt ] && [ $(more temp.txt) == "1" ]; do
+		echo -e "\t'monitoring.sh' - Monitoring the encryption,\n\t\tplease wait, it will take a while- $aux s" 
+		(top -bn 10 -d 0.5 | grep zymbit | grep zkifc ) >> $logsFile
+		aux=$((aux + 5))
+	done 
+
+	if [ ! -f temp.txt ]; then 
+		echo -e "\n\t'monitoring.sh' - Monitoring has finished\n"
+		exit 0
+	fi
 else 
 	(top -bn 70 -d $frecOfTop | grep openssl ) >> $logsFile
 fi
 
-echo -e "\n\tMonitoring has finished\n"
+echo -e "\n\t'monitoring.sh' - Monitoring has finished\n"
 
 exit 0

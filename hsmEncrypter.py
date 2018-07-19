@@ -5,9 +5,8 @@ import zymkey
 from zymkey.exceptions import VerificationError
 
 import sys
-
-#DELETE IT 
-import time
+import os
+import os.path
 
 # Flash the LED to indicate the operation is underway
 zymkey.client.led_flash(500, 100)
@@ -17,7 +16,7 @@ zymkey.client.led_flash(500, 100)
 #WHERE pathToEncrypt 	= $device_directory/Encrypt
 #WHERE directory	= $pathToEncrypt/$typeFile
 
-print "\n\tInside of 'hsmEncrypter.py'"
+print "\n\t\tInside of 'hsmEncrypter.py'"
 
 #print (sys.argv)
 
@@ -32,14 +31,38 @@ directory = sys.argv[7]
 print "\n\t\tPath to file %s" % (pathToFile)
 print "\n\t\tSave it here: %s" % (directory)
 
-time.sleep(5)
+if not os.path.exists(directory):
+	print "\n\t\t%s, doesn't exists, creating it" % (directory)
+	os.makedirs(directory)
+
+print "\n\t\t---------- Start of encryption using Zymbit ----------"
+
+file = open("temp.txt", "w+")
+file.write("1")
+file.close()
+
+encrypted = zymkey.client.lock(pathToFile)
+
+zymbitDir = str("%s/zymbit" % (directory))
+zymbitFile = str("%s/%s.txt" % (zymbitDir, nameFile))
+if not os.path.exists(zymbitDir):
+	print "\n\t\t%s, doesn't exists, creating it" % (zymbitDir)
+	os.makedirs(zymbitDir)
+
+if os.path.exists(zymbitFile):
+	print "\n\t%s file already exists, removing it" % (zymbitFile)
+	os.remove(zymbitFile)
+
+zymbitF = open(zymbitFile, "w+")
+zymbitF.write(encrypted)
+zymbitF.close()
+
+if os.path.isfile("temp.txt"):
+	os.remove("temp.txt")
+
+
+print "\n\t\t---------- End of encryption using Zymbit ----------"
+print "\n\t\tDone, exiting from 'hsmEncrypter.py'"
 
 # Turn off the LED
 zymkey.client.led_off()
-
-print "\n\n\t---------- Start of encryption ----------"
-
-#encrypted = zymkey.client.lock(
-
-print "\n\t\t---------- End of encryption ----------"
-print "\n\t\tDone, exiting from 'hsmEncrypter.py'"
