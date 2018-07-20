@@ -44,7 +44,7 @@ file.close()
 encrypted = zymkey.client.lock(pathToFile)
 
 zymbitDir = str("%s/zymbit" % (directory))
-zymbitFile = str("%s/%s.txt" % (zymbitDir, nameFile))
+zymbitFile = str("%s/%s" % (zymbitDir, nameFile))
 if not os.path.exists(zymbitDir):
 	print "\n\t\t%s, doesn't exists, creating it" % (zymbitDir)
 	os.makedirs(zymbitDir)

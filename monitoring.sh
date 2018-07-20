@@ -56,7 +56,7 @@ if [ $hsm == 'True' ]; then
 	aux=0
 
 	while [ -f temp.txt ] && [ $(more temp.txt) == "1" ]; do
-		echo -e "\t'monitoring.sh' - Monitoring the encryption,\n\t\tplease wait, it will take a while- $aux s" 
+		echo -e "\t'monitoring.sh' - Monitoring the encryption,\n\t\tplease wait, it will take a while - $aux s" 
 		(top -bn 10 -d 0.5 | grep zymbit | grep zkifc ) >> $logsFile
 		aux=$((aux + 5))
 	done 

@@ -41,7 +41,12 @@ file = open("temp.txt", "w+")
 file.write("1")
 file.close()
 
-decrypted = zymkey.client.unlock(pathToFile)
+encryptedZymbit = open(pathToFile, "r")
+encryptedZymbitData = encryptedZymbit.read()
+
+print "\n\t\tData encrypted recently: %s" % (encryptedZymbitData)
+
+decrypted = zymkey.client.unlock(encryptedZymbitData)
 
 zymbitDir = str("%s/zymbit" % (directory))
 zymbitFile = str("%s/%s.txt" % (zymbitDir, nameFile))
