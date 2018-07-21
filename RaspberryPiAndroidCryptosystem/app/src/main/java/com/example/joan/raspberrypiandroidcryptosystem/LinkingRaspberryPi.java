@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -54,6 +55,8 @@ public class LinkingRaspberryPi extends AppCompatActivity
 
     private Message message = new Message();
 
+    private InfoFile infoFile;
+
     private ConnectedThread connectedThread;
     private final int handlerState = 0;
     private Handler bluetoothHandler;
@@ -80,8 +83,8 @@ public class LinkingRaspberryPi extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.linking_raspberry_pi);
         final Button sendButton = findViewById(R.id.sendButton);
-        Button refreshButton = findViewById(R.id.refreshButton);
-        Button disconnectButton = findViewById(R.id.disconnectButton);
+        final Button refreshButton = findViewById(R.id.refreshButton);
+        final Button disconnectButton = findViewById(R.id.disconnectButton);
         final Button detailsButton = findViewById(R.id.details);
         final Spinner spinnerMethod = findViewById(R.id.spinnerSelectMethod);
         final Spinner spinnerTypeFile = findViewById(R.id.spinnerSelectTypeFile);
@@ -92,6 +95,8 @@ public class LinkingRaspberryPi extends AppCompatActivity
         final TextView usageMemoryDecrypt = findViewById(R.id.valueMemoryDecrypt);
         final EditText passwordValue = findViewById(R.id.passwordValue);
         final Switch switchHSM = findViewById(R.id.saltSwitch);
+        switchHSM.setChecked(false);
+        message.setHSM(false);
 
         Intent lastInt = getIntent();
         raspberryMac = lastInt.getStringExtra(ShowDevices.BLUETOOTH_MAC_DEVICE);
@@ -103,6 +108,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LinkingRaspberryPi.this, AccuratedInformation.class);
+                intent.putExtra("infoFile", (Parcelable) infoFile);
                 startActivity(intent);
             }
         });
@@ -128,6 +134,11 @@ public class LinkingRaspberryPi extends AppCompatActivity
             public void onClick(View v) {
                 /*Get values, check them and put all of them into the message sending it to the server. */
                 if (message.setPassword(passwordValue.getText().toString())) {
+                    usageCPUEncrypt.setText("New use");
+                    usageCPUDecrypt.setText("New use");
+                    usageMemoryEncrypt.setText("New use");
+                    usageMemoryDecrypt.setText("New use");
+
                     myToasts.show(LinkingRaspberryPi.this, "Using a default password.");
                 }
                 JSONObject jsonMessage = new JSONObject();
@@ -326,7 +337,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
 
                                 if (jsonMessage.has("result")) {
 
-                                    InfoFile infoFile = new InfoFile();
+                                    infoFile = new InfoFile();
 
                                     if (messageJson.equals("encryption")) {
                                         JSONObject jsonObjectE = jsonMessage.getJSONObject("result");
