@@ -79,7 +79,7 @@ timesUsed = 0
 
 ############# Functions ############# 
 
-def createLogsSF(typeFile, cipher, nameFile, sizeOfFileMB, hsm):
+def createLogsSF(typeFile, cipher, nameFile, sizeOfFile, hsm):
 	now = datetime.datetime.now()
 
 	#Name format = 'ss-mm-hh.txt'
@@ -98,7 +98,7 @@ def createLogsSF(typeFile, cipher, nameFile, sizeOfFileMB, hsm):
 	global logsFile
 	logsFile = str("%s/%s" % (directoryLogsPath, nameLogsFile))
 	
-	toWrite = str("type:%s, cipher:%s, nameFile:%s, sizeOfFileMB:%s, hsm:%s\n" % (typeFile, cipher, nameFile, sizeOfFileMB, hsm))
+	toWrite = str("type:%s, cipher:%s, nameFile:%s, sizeOfFile:%s, hsm:%s\n" % (typeFile, cipher, nameFile, sizeOfFile, hsm))
 	file = open(logsFile, "w+")
 	file.write(toWrite)
 	file.close()
@@ -200,9 +200,14 @@ try:
 				#Checking whether file exists.
 				
 				pathToFile = str("%s/%s/%s" % (pathToResources, newMessage.typeFile, newMessage.nameFile))
-		
-				sizeOfFileMB = str("%s" % (os.path.getsize(pathToFile) >> 20))
-				newMessage.size = sizeOfFileMB
+				
+				sizeOfFile = os.path.getsize(pathToFile)
+				sizeOfFileMB = sizeOfFile >> 20
+			
+				if (sizeOfFileMB <= 0):
+					newMessage.size = str("%s KB" % (sizeOfFile)
+				else:
+					newMessage.size = str("%s MB" % (sizeOfFileMB)
 		
 				print "Path to File:\n\t\t%s\nSize of File:\n\t\t%sMB" % (pathToFile, newMessage.size)
 		
