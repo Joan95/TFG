@@ -41,8 +41,6 @@ file = open("temp.txt", "w+")
 file.write("1")
 file.close()
 
-encrypted = zymkey.client.lock(pathToFile)
-
 zymbitDir = str("%s/zymbit" % (directory))
 zymbitFile = str("%s/%s" % (zymbitDir, nameFile))
 if not os.path.exists(zymbitDir):
@@ -54,8 +52,10 @@ if os.path.exists(zymbitFile):
 	os.remove(zymbitFile)
 
 zymbitF = open(zymbitFile, "w+")
-zymbitF.write(encrypted)
 zymbitF.close()
+
+encrypted = zymkey.client.lock(pathToFile, zymbitFile)
+
 
 if os.path.isfile("temp.txt"):
 	os.remove("temp.txt")

@@ -1,0 +1,12 @@
+type:Text, cipher:AES, nameFile:Complete_Sherlock_Holmes-Arthur_Conan_Doyle.txt, sizeOfFileMB:6, hsm:True
+encrypter
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc
+  712 zymbit    20   0   24572   4260   3500 S   0.0  0.5   0:01.50 zkifc

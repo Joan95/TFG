@@ -41,15 +41,8 @@ file = open("temp.txt", "w+")
 file.write("1")
 file.close()
 
-encryptedZymbit = open(pathToFile, "r")
-encryptedZymbitData = encryptedZymbit.read()
-
-print "\n\t\tData encrypted recently: %s" % (encryptedZymbitData)
-
-decrypted = zymkey.client.unlock(encryptedZymbitData)
-
 zymbitDir = str("%s/zymbit" % (directory))
-zymbitFile = str("%s/%s.txt" % (zymbitDir, nameFile))
+zymbitFile = str("%s/%s" % (zymbitDir, nameFile))
 if not os.path.exists(zymbitDir):
 	print "\n\t\t%s, doesn't exists, creating it" % (zymbitDir)
 	os.makedirs(zymbitDir)
@@ -59,8 +52,9 @@ if os.path.exists(zymbitFile):
 	os.remove(zymbitFile)
 
 zymbitF = open(zymbitFile, "w+")
-zymbitF.write(decrypted)
 zymbitF.close()
+
+decrypted = zymkey.client.unlock(pathToFile, zymbitFile)
 
 if os.path.isfile("temp.txt"):
 	os.remove("temp.txt")

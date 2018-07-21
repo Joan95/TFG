@@ -48,28 +48,35 @@ decryptLogs=$(cat $logsFile | sed -n -e '/^decrypter$/,/^end$/{/^decrypter$/d; /
 #echo -e "\n$encryptLogs"
 #echo -e "\n$decryptLogs"
 
-encryptCPUUSage=0	#Average of % of CPU
-encryptMEMUsage=0	#Average of % of MEM
+encryptCPUUSage=0	#Consumption average of CPU
+encryptMEMUsage=0	#Consumption average of MEM
 encryptMaxCPU=0		#Maximum CPU usage
 encryptMaxMEM=0		#Maximum MEM consumption
-encryptTime=0		#Time it took to the Server to do the task
+encryptTimeI=0		#Time when task started in the server
+encryptTimeF=0		#Time when task finished in the server
 encryptCntCPU=0
 encryptCntMEM=0
 
-decryptCPUUsage=0
-decryptMEMUsage=0
-decryptMaxMEM=0
-decryptTime=0
-decryptCntCPU=0
-cntMEM=0
+decryptCPUUsage=0	#Consumption average of CPU
+decryptMEMUsage=0	#Consumption average of MEM
+decryptMaxMEM=0		#Maximum CPU usage
+decryptTime=0		#Maximum MEM consumption
+decryptCntCPU=0		#Time when task started in the server
+cntMEM=0		#Time when task finished in the server
 
 #Change the value from Internal Field Separator to a '\n'
 IFS=$'\n'
+
+firstLine=$(echo -e "$encryptLogs" | head -n 1 )
+encryptTimeI=$(echo -e "$firstLine" | awk ' { print $11 } ') #First time value
+
+echo -e "$encryptTimeI first time value"
+
 for j in $encryptLogs; do 
 	#echo -e "$j"
 	auxCPUValue=$(echo -e "$j" | awk ' { print $9 } ') #CPU value
 	auxMEMValue=$(echo -e "$j" | awk ' { print $10 } ') #MEM value
-	encryptTime=$(echo -e "$j" | awk ' { print $11 } ') #Time value
+	encryptTimeF=$(echo -e "$j" | awk ' { print $11 } ') #Time value
 
 	#echo -e "$encryptMaxCPU < $auxCPUValue"
 	comparation=$(awk ' BEGIN{ print ("'$encryptMaxCPU'"<"'$auxCPUValue'")} ')
@@ -99,7 +106,7 @@ for j in $encryptLogs; do
 	fi
 done
 
-echo -e "\tEncryption process (Duration: $encryptTime):"
+echo -e "\tEncryption process (Duration: $encryptTimeF):"
 echo -e "\t\tCPU"
 echo -e "\t\t\tCPU encrypt usage: \t\t$encryptCPUUsage"
 echo -e "\t\t\tTotal trustly values: \t\t$encryptCntCPU"

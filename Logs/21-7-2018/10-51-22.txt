@@ -1,0 +1,12 @@
+type:Random, cipher:AES, nameFile:1MB, sizeOfFileMB:1, hsm:True
+encrypter
+  712 zymbit    20   0   24572   4100   3500 S   5.2  0.4   0:00.99 zkifc
+  712 zymbit    20   0   24572   4100   3500 S   0.0  0.4   0:00.99 zkifc
+  712 zymbit    20   0   24572   4100   3500 S   0.0  0.4   0:00.99 zkifc
+  712 zymbit    20   0   24572   4100   3500 S   0.0  0.4   0:00.99 zkifc
+  712 zymbit    20   0   24572   4100   3500 S   0.0  0.4   0:00.99 zkifc
+  712 zymbit    20   0   24572   4100   3500 S   0.0  0.4   0:00.99 zkifc
+  712 zymbit    20   0   24572   4104   3500 S   0.0  0.4   0:00.99 zkifc
+  712 zymbit    20   0   24572   4104   3500 S   0.0  0.4   0:00.99 zkifc
+  712 zymbit    20   0   24572   4104   3500 S   0.0  0.4   0:00.99 zkifc
+  712 zymbit    20   0   24572   4104   3500 S   0.0  0.4   0:00.99 zkifc
