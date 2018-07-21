@@ -1,0 +1,27 @@
+type:Random, cipher:AES, nameFile:Sample, sizeOfFileMB:0, hsm:False
+encrypter
+29002 root      20   0    4180   2900   2620 R  40.3  0.3   0:00.01 openssl
+29002 root      20   0    4216   2900   2620 R   0.0  0.3   0:00.01 openssl
+29002 root      20   0    4200   3144   2820 D  86.3  0.3   0:00.03 openssl
+29002 root      20   0    4184   3128   2820 R   0.0  0.3   0:00.03 openssl
+decrypter
+29068 root      20   0    4216   2964   2684 R  36.1  0.3   0:00.01 openssl
+29068 root      20   0    4200   3144   2820 D  81.2  0.3   0:00.03 openssl
+end
+type=encryption;
+CPUUsage=63.3;
+MEMUsage=0.3;
+maxCPU=86.3;
+maxMEM=0.3;
+timeUsed=0.02;
+cntCPU=2;
+cntMEM=4;new;
+
+type=decryption;
+CPUUsage=58.65;
+MEMUsage=0.3;
+maxCPU=81.2;
+maxMEM=0.3;
+timeUsed=0.02;
+cntCPU=2;
+cntMEM=2;new
