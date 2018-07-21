@@ -54,29 +54,31 @@ encryptMaxCPU=0		#Maximum CPU usage
 encryptMaxMEM=0		#Maximum MEM consumption
 encryptTimeI=0		#Time when task started in the server
 encryptTimeF=0		#Time when task finished in the server
-encryptCntCPU=0
-encryptCntMEM=0
+encryptTime=0
+encryptCntCPU=0		#Amount of trustly values from CPU usage
+encryptCntMEM=0		#Amount of trustly values from MEM usage
 
 decryptCPUUsage=0	#Consumption average of CPU
 decryptMEMUsage=0	#Consumption average of MEM
-decryptMaxMEM=0		#Maximum CPU usage
-decryptTime=0		#Maximum MEM consumption
-decryptCntCPU=0		#Time when task started in the server
-cntMEM=0		#Time when task finished in the server
+decryptMaxCPU=0		#Maximum CPU usage
+decryptMaxMEM=0		#Maximum MEM consumption
+decryptTimeI=0		#Time when task started in the server
+decryptTimeF=0		#Time when task finished in the server
+decryptTime=0
+decryptCntCPU=0		#Amount of trustly values from CPU usage
+decryptCntMEM=0		#Amount of trustly values from MEM usage
 
 #Change the value from Internal Field Separator to a '\n'
 IFS=$'\n'
 
-firstLine=$(echo -e "$encryptLogs" | head -n 1 )
-encryptTimeI=$(echo -e "$firstLine" | awk ' { print $11 } ') #First time value
-
-echo -e "$encryptTimeI first time value"
+firstLineEncrypter=$(echo -e "$encryptLogs" | head -n 1 )
+encryptTimeI=$(echo -e "$firstLineEncrypter" | awk ' { print $11 } ') #First encrypter time value
 
 for j in $encryptLogs; do 
 	#echo -e "$j"
 	auxCPUValue=$(echo -e "$j" | awk ' { print $9 } ') #CPU value
 	auxMEMValue=$(echo -e "$j" | awk ' { print $10 } ') #MEM value
-	encryptTimeF=$(echo -e "$j" | awk ' { print $11 } ') #Time value
+	encryptTimeF=$(echo -e "$j" | awk ' { print $11 } ') #Final time value
 
 	#echo -e "$encryptMaxCPU < $auxCPUValue"
 	comparation=$(awk ' BEGIN{ print ("'$encryptMaxCPU'"<"'$auxCPUValue'")} ')
@@ -106,7 +108,21 @@ for j in $encryptLogs; do
 	fi
 done
 
-echo -e "\tEncryption process (Duration: $encryptTimeF):"
+encryptTime=$(echo $encryptTimeF | sed -e "s/\./\:/g")
+#echo -e "$encryptTime after replacement"
+
+encryptTime=$(echo $encryptTimeF | awk -F':' '{ print ($1 * 3600) + ($2 * 60) + ($3 * 1) }')
+#echo -e "$encryptTime ready for the substraction"
+
+encryptTimeAux=$(echo $encryptTimeI | sed -e "s/\./\:/g")
+#echo -e "$encryptTimeAux after replacement"
+encryptTimeAux=$(echo $encryptTimeI | awk -F':' '{ print ($1 * 3600) + ($2 * 60) + ($3 * 1) }')
+#echo -e "$encryptTimeAux ready for the substraction"
+
+encryptTime=$(echo $encryptTime $encryptTimeAux | awk '{ print $1 - $2 }')
+encryptTime=$(echo $encryptTime | awk '{ print $1 / 60 }')
+
+echo -e "\tEncryption process (Duration: $encryptTimeF - $encryptTimeI = $encryptTime min):"
 echo -e "\t\tCPU"
 echo -e "\t\t\tCPU encrypt usage: \t\t$encryptCPUUsage"
 echo -e "\t\t\tTotal trustly values: \t\t$encryptCntCPU"
@@ -124,12 +140,15 @@ echo -e "\t\t\tMaximum %MEM consumption: \t$encryptMaxMEM%"
 
 
 decryptCntCPU=0
-cntMEM=0
+decryptCntMEM=0
+
+firstLineDecrypter=$(echo -e "$decryptLogs" | head -n 1 )
+decryptTimeI=$(echo -e "$firstLineDecrypter" | awk ' { print $11 } ') #First decrypter time value
 
 for j in $decryptLogs; do 
 	auxCPUValue=$(echo -e "$j" | awk ' { print $9 } ') #CPU value
 	auxMEMValue=$(echo -e "$j" | awk ' { print $10 } ') #MEM value
-	decryptTime=$(echo -e "$j" | awk ' { print $11 } ') #Time value
+	decryptTimeF=$(echo -e "$j" | awk ' { print $11 } ') #Final time value
 
 	#echo -e "$decryptMaxCPU < $auxCPUValue"
 	comparation=$(awk ' BEGIN{ print ("'$decryptMaxCPU'"<"'$auxCPUValue'")} ')
@@ -159,7 +178,21 @@ for j in $decryptLogs; do
 	fi
 done
 
-echo -e "\n\tDecryption process (Duration $decryptTime):"
+decryptTime=$(echo $decryptTimeF | sed -e "s/\./\:/g")
+#echo -e "$decryptTime after replacement"
+
+decryptTime=$(echo $decryptTimeF | awk -F':' '{ print ($1 * 3600) + ($2 * 60) + ($3 * 1) }')
+#echo -e "$decryptTime ready for the substraction"
+
+decryptTimeAux=$(echo $decryptTimeI | sed -e "s/\./\:/g")
+#echo -e "$decryptTimeAux after replacement"
+decryptTimeAux=$(echo $decryptTimeI | awk -F':' '{ print ($1 * 3600) + ($2 * 60) + ($3 * 1) }')
+#echo -e "$decryptTimeAux ready for the substraction"
+
+decryptTime=$(echo $decryptTime $decryptTimeAux | awk '{ print $1 - $2 }')
+decryptTime=$(echo $decryptTime | awk '{ print $1 / 60 }')
+
+echo -e "\n\tDecryption process (Duration $decryptTimeF - $decryptTimeI = $decryptTime min):"
 echo -e "\t\tCPU"
 echo -e "\t\t\tCPU decrypt usage: \t\t$decryptCPUUsage"
 echo -e "\t\t\tTotal trustly values: \t\t$decryptCntCPU"

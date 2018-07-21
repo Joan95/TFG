@@ -1,3 +1,0 @@
-type:Random, cipher:AES, nameFile:1MB, sizeOfFileMB:1, hsm:False
-encrypter
-decrypter

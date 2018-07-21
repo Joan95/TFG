@@ -1,7 +1,0 @@
-type:Random, cipher:AES, nameFile:1MB, sizeOfFileMB:1
-encrypter
-decrypter
-30540 root      20   0    4180   2908   2628 R   0.0  0.3   0:00.00 openssl
-30540 root      20   0    4216   2908   2628 R 100.0  0.3   0:00.03 openssl
-30540 root      20   0    4200   3088   2764 D  44.4  0.3   0:00.04 openssl
-end

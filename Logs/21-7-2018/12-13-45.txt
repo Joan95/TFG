@@ -1,2 +1,0 @@
-type:Random, cipher:AES, nameFile:Sample, sizeOfFileMB:0, hsm:True
-encrypter

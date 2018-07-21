@@ -327,7 +327,10 @@ try:
 		
 							fileTemporal = open("temporal.txt", "r")
 							dataTemporal = fileTemporal.read()
-		
+							
+							fileLogsFile = open(logsFile, "a")
+							fileLogsFile.write(dataTemporal)
+							fileLogsFile.close()
 							print dataTemporal
 		
 							dataTemporal = dataTemporal.replace("\n", "").split(';')
