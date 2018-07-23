@@ -1,0 +1,39 @@
+type:Random, cipher:AES, nameFile:1MB, sizeOfFileMB:4, hsm:False
+encrypter
+ 7356 root      20   0    4180   2840   2560 R  34.5  0.3   0:00.01 openssl
+ 7356 root      20   0    4216   2840   2560 R 100.0  0.3   0:00.04 openssl
+ 7356 root      20   0    4216   2840   2560 R 100.0  0.3   0:00.07 openssl
+ 7356 root      20   0    4216   2840   2560 R  71.9  0.3   0:00.09 openssl
+ 7356 root      20   0    4216   2840   2560 R 100.0  0.3   0:00.12 openssl
+ 7356 root      20   0    4200   3084   2760 D 100.0  0.3   0:00.15 openssl
+ 7356 root      20   0    4200   3084   2760 D   0.0  0.3   0:00.15 openssl
+ 7356 root      20   0    4200   3084   2760 D   0.0  0.3   0:00.15 openssl
+ 7356 root      20   0    4200   3084   2760 D   0.0  0.3   0:00.15 openssl
+decrypter
+ 7378 root      20   0    4180   2908   2628 R   0.0  0.3   0:00.00 openssl
+ 7378 root      20   0    4216   2908   2628 R 100.0  0.3   0:00.04 openssl
+ 7378 root      20   0    4216   2908   2628 R  85.0  0.3   0:00.07 openssl
+ 7378 root      20   0    4216   2908   2628 R  71.5  0.3   0:00.09 openssl
+ 7378 root      20   0    4216   2908   2628 R 100.0  0.3   0:00.12 openssl
+ 7378 root      20   0    4200   3028   2704 D 100.0  0.3   0:00.16 openssl
+ 7378 root      20   0    4200   3028   2704 D   0.0  0.3   0:00.16 openssl
+ 7378 root      20   0    4200   3028   2704 D   0.0  0.3   0:00.16 openssl
+ 7378 root      20   0    4200   3028   2704 D   0.0  0.3   0:00.16 openssl
+end
+type=encryption;
+CPUUsage=84.4;
+MEMUsage=0.3;
+maxCPU=71.9;
+maxMEM=0.3;
+timeUsed=0.14;
+cntCPU=6;
+cntMEM=9;new;
+
+type=decryption;
+CPUUsage=91.3;
+MEMUsage=0.3;
+maxCPU=85.0;
+maxMEM=0.3;
+timeUsed=0.16;
+cntCPU=5;
+cntMEM=9;new

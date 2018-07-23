@@ -1,0 +1,76 @@
+type:Random, cipher:AES, nameFile:1MB, sizeOfFileMB:4, hsm:False
+encrypter
+ 6741 root      20   0    4180    880    692 R   0.0  0.1   0:00.00 openssl
+ 6741 root      20   0    4216   2824   2544 R  69.3  0.3   0:00.02 openssl
+ 6741 root      20   0    4216   2824   2544 D  50.6  0.3   0:00.04 openssl
+ 6741 root      20   0    4216   2824   2544 R  34.5  0.3   0:00.05 openssl
+ 6741 root      20   0    4216   2824   2544 R  69.4  0.3   0:00.07 openssl
+ 6741 root      20   0    4216   2824   2544 R  70.1  0.3   0:00.09 openssl
+ 6741 root      20   0    4216   2824   2544 R  69.1  0.3   0:00.11 openssl
+ 6741 root      20   0    4216   2824   2544 D  69.0  0.3   0:00.13 openssl
+ 6741 root      20   0    4216   2824   2544 D  68.9  0.3   0:00.15 openssl
+ 6741 root      20   0    4200   3068   2744 D   0.0  0.3   0:00.15 openssl
+ 6741 root      20   0    4200   3068   2744 D   0.0  0.3   0:00.15 openssl
+ 6741 root      20   0    4200   3068   2744 D   0.0  0.3   0:00.15 openssl
+decrypter
+ 6809 root      20   0    4216   2908   2628 R  76.6  0.3   0:00.03 openssl
+ 6809 root      20   0    4216   2908   2628 R 100.0  0.3   0:00.06 openssl
+ 6809 root      20   0    4216   2908   2628 R 100.0  0.3   0:00.09 openssl
+ 6809 root      20   0    4216   2908   2628 R  72.1  0.3   0:00.11 openssl
+ 6809 root      20   0    4216   2908   2628 R 100.0  0.3   0:00.14 openssl
+ 6809 root      20   0    4200   3028   2704 D  36.4  0.3   0:00.15 openssl
+ 6809 root      20   0    4200   3028   2704 D   0.0  0.3   0:00.15 openssl
+ 6809 root      20   0    4200   3028   2704 D   0.0  0.3   0:00.15 openssl
+ 6809 root      20   0    4200   3028   2704 D   0.0  0.3   0:00.15 openssl
+end
+type=encryption;
+CPUUsage=54.25;
+MEMUsage=0.3;
+maxCPU=66.9;
+maxMEM=0.3;
+timeUsed=0.01;
+cntCPU=2;
+cntMEM=2;new;
+
+type=decryption;
+CPUUsage=63.05;
+MEMUsage=0.3;
+maxCPU=83.2;
+maxMEM=0.3;
+timeUsed=0.01;
+cntCPU=2;
+cntMEM=2;new
+type=encryption;
+CPUUsage=1.98333;
+MEMUsage=0.466429;
+maxCPU=5.9;
+maxMEM=0.6;
+timeUsed=1.81;
+cntCPU=180;
+cntMEM=420;new;
+
+type=decryption;
+CPUUsage=2.04811;
+MEMUsage=0.615238;
+maxCPU=5.6;
+maxMEM=0.7;
+timeUsed=1.87;
+cntCPU=185;
+cntMEM=420;new
+type=encryption;
+CPUUsage=62.6125;
+MEMUsage=0.283333;
+maxCPU=70.1;
+maxMEM=0.3;
+timeUsed=0.15;
+cntCPU=8;
+cntMEM=12;new;
+
+type=decryption;
+CPUUsage=80.85;
+MEMUsage=0.3;
+maxCPU=76.6;
+maxMEM=0.3;
+timeUsed=0.12;
+cntCPU=6;
+cntMEM=9;new

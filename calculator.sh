@@ -143,7 +143,10 @@ decryptCntCPU=0
 decryptCntMEM=0
 
 firstLineDecrypter=$(echo -e "$decryptLogs" | head -n 1 )
+
+
 decryptTimeI=$(echo -e "$firstLineDecrypter" | awk ' { print $11 } ') #First decrypter time value
+
 
 for j in $decryptLogs; do 
 	auxCPUValue=$(echo -e "$j" | awk ' { print $9 } ') #CPU value
