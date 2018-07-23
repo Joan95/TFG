@@ -1,0 +1,66 @@
+type:Random, cipher:AES, nameFile:5MB, sizeOfFileMB:22, hsm:False
+encrypter
+28725 root      20   0    4180   2904   2624 R  32.3  0.3   0:00.03 openssl
+28725 root      20   0    4216   2904   2624 R  89.8  0.3   0:00.09 openssl
+28725 root      20   0    4216   2904   2624 R  97.5  0.3   0:00.15 openssl
+28725 root      20   0    4216   2904   2624 R  99.6  0.3   0:00.21 openssl
+28725 root      20   0    4216   2904   2624 R  99.6  0.3   0:00.27 openssl
+28725 root      20   0    4216   2904   2624 R  99.3  0.3   0:00.33 openssl
+28725 root      20   0    4216   2904   2624 R  99.6  0.3   0:00.39 openssl
+28725 root      20   0    4216   2904   2624 R  91.0  0.3   0:00.45 openssl
+28725 root      20   0    4216   2904   2624 R  99.3  0.3   0:00.51 openssl
+28725 root      20   0    4216   2904   2624 R  99.4  0.3   0:00.57 openssl
+28725 root      20   0    4216   2904   2624 R  99.4  0.3   0:00.63 openssl
+28725 root      20   0    4216   2904   2624 R  99.7  0.3   0:00.69 openssl
+28725 root      20   0    4200   3212   2888 D  66.5  0.3   0:00.73 openssl
+28725 root      20   0    4200   3212   2888 D   0.0  0.3   0:00.73 openssl
+28725 root      20   0    4200   3212   2888 D  16.5  0.3   0:00.74 openssl
+28725 root      20   0    4200   3212   2888 D   0.0  0.3   0:00.74 openssl
+28725 root      20   0    4200   3212   2888 D   0.0  0.3   0:00.74 openssl
+decrypter
+28836 root      20   0    4180   2968   2688 R  32.6  0.3   0:00.02 openssl
+28836 root      20   0    4216   2968   2688 R 100.0  0.3   0:00.09 openssl
+28836 root      20   0    4216   2968   2688 R  94.3  0.3   0:00.15 openssl
+28836 root      20   0    4216   2968   2688 R  98.9  0.3   0:00.21 openssl
+28836 root      20   0    4216   2968   2688 R  99.5  0.3   0:00.27 openssl
+28836 root      20   0    4216   2968   2688 R  99.5  0.3   0:00.33 openssl
+28836 root      20   0    4216   2968   2688 R  99.6  0.3   0:00.39 openssl
+28836 root      20   0    4216   2968   2688 R  99.2  0.3   0:00.45 openssl
+28836 root      20   0    4216   2968   2688 R  99.2  0.3   0:00.51 openssl
+28836 root      20   0    4216   2968   2688 R  99.4  0.3   0:00.57 openssl
+28836 root      20   0    4216   2968   2688 R  99.7  0.3   0:00.63 openssl
+28836 root      20   0    4216   2968   2688 R  99.5  0.3   0:00.69 openssl
+28836 root      20   0    4200   3148   2824 D  82.8  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+28836 root      20   0    4200   3148   2824 D   0.0  0.3   0:00.74 openssl
+end
+type=encryption;
+CPUUsage=84.9643;
+MEMUsage=0.3;
+maxCPU=99.7;
+maxMEM=0.3;
+timeUsed=0.71;
+cntCPU=14;
+cntMEM=17;new;
+
+type=decryption;
+CPUUsage=92.6308;
+MEMUsage=0.3;
+maxCPU=99.7;
+maxMEM=0.3;
+timeUsed=0.72;
+cntCPU=13;
+cntMEM=28;new
