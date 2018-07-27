@@ -48,9 +48,9 @@
         <item>AES</item>
         <item>3DES</item>
         <item>Camellia</item>
-        <item>Clefia</item>
-        <item>XTEA</item>
-        <item>Present</item>
+        <!--<item>Clefia</item>-->
+        <!--<item>XTEA</item>-->
+        <!--<item>Present</item>-->
     </string-array>
 
     <string-array name="stream_ciphers">

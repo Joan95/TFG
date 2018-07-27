@@ -97,6 +97,20 @@
         android:layout_alignStart="@id/usageOfCPU" />
 
     <TextView
+        android:id="@+id/valueMemoryEncryptRAM"
+        android:textColor="@color/whiteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="@string/waiting_for_value"
+        android:gravity="center"
+        android:layout_alignLeft="@id/encrypt"
+        android:layout_alignStart="@id/encrypt"
+        android:layout_alignBaseline="@id/usageOfMemory"
+        android:width="60dp"
+        android:height="50dp"/>
+
+    <TextView
         android:id="@+id/valueMemoryEncrypt"
         android:textColor="@color/whiteText"
         android:layout_width="wrap_content"
@@ -107,8 +121,24 @@
         android:layout_alignLeft="@id/encrypt"
         android:layout_alignStart="@id/encrypt"
         android:layout_alignBaseline="@id/usageOfMemory"
-        android:width="100dp"
-        android:height="50dp"/>
+        android:layout_marginLeft="60dp"
+        android:width="55dp"
+        android:height="50dp"
+        android:layout_marginStart="60dp" />
+
+    <TextView
+        android:id="@+id/valueMemoryDecryptRAM"
+        android:textColor="@color/whiteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="@string/waiting_for_value"
+        android:gravity="center"
+        android:layout_alignLeft="@id/decrypt"
+        android:layout_alignBaseline="@id/usageOfMemory"
+        android:width="60dp"
+        android:height="50dp"
+        android:layout_alignStart="@id/decrypt" />
 
     <TextView
         android:id="@+id/valueMemoryDecrypt"
@@ -119,10 +149,12 @@
         android:text="@string/waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/decrypt"
+        android:layout_alignStart="@id/decrypt"
         android:layout_alignBaseline="@id/usageOfMemory"
-        android:width="100dp"
+        android:layout_marginLeft="60dp"
+        android:width="55dp"
         android:height="50dp"
-        android:layout_alignStart="@id/decrypt" />
+        android:layout_marginStart="60dp" />
 
     <TextView
         android:id="@+id/maxCPU"

@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -338,10 +337,15 @@ public class LinkingRaspberryPi extends AppCompatActivity
                                     if (messageJson.equals("encryption")) {
                                         JSONObject jsonObjectE = jsonMessage.getJSONObject("result");
 
+                                        infoFile.setName(jsonObjectE.getString("name"));
+                                        infoFile.setSize(Float.parseFloat(jsonObjectE.getString("size")));
+
                                         infoFile.setEncryptCPUUsage(Float.parseFloat(jsonObjectE.getString("CPUUsage")));
                                         infoFile.setEncryptMEMUsage(Float.parseFloat(jsonObjectE.getString("MEMUsage")));
+                                        infoFile.setEncryptRAMUsage(Float.parseFloat(jsonObjectE.getString("RAMUsage")));
                                         infoFile.setEncryptMaxCPU(Float.parseFloat(jsonObjectE.getString("maxCPU")));
                                         infoFile.setEncryptMaxMEM(Float.parseFloat(jsonObjectE.getString("maxMEM")));
+                                        infoFile.setEncryptMaxRAM(Float.parseFloat(jsonObjectE.getString("maxRAM")));
                                         infoFile.setEncryptTime(jsonObjectE.getString("timeUsed"));
                                         infoFile.setEncryptTrustlyCPU(jsonObjectE.getInt("cntCPU"));
                                         infoFile.setEncryptTrustlyMEM(jsonObjectE.getInt("cntMEM"));
@@ -357,8 +361,10 @@ public class LinkingRaspberryPi extends AppCompatActivity
 
                                         infoFile.setDecryptCPUUsage(Float.parseFloat(jsonObjectD.getString("CPUUsage")));
                                         infoFile.setDecryptMEMUsage(Float.parseFloat(jsonObjectD.getString("MEMUsage")));
+                                        infoFile.setDecryptRAMUsage(Float.parseFloat(jsonObjectD.getString("RAMUsage")));
                                         infoFile.setDecryptMaxCPU(Float.parseFloat(jsonObjectD.getString("maxCPU")));
                                         infoFile.setDecryptMaxMEM(Float.parseFloat(jsonObjectD.getString("maxMEM")));
+                                        infoFile.setDecryptMaxRAM(Float.parseFloat(jsonObjectD.getString("maxRAM")));
                                         infoFile.setDecryptTime(jsonObjectD.getString("timeUsed"));
                                         infoFile.setDecryptTrustlyCPU(jsonObjectD.getInt("cntCPU"));
                                         infoFile.setDecryptTrustlyMEM(jsonObjectD.getInt("cntMEM"));
