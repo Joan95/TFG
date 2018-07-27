@@ -149,4 +149,25 @@ public class InfoFile {
     public void setDecryptTrustlyMEM(int decryptTrustlyMEM) {
         this.decryptTrustlyMEM = decryptTrustlyMEM;
     }
+
+    @Override
+    public String toString() {
+        return "InfoFile{" +
+                "name='" + name + '\'' +
+                ", encryptCPUUsage=" + encryptCPUUsage +
+                ", encryptMEMUsage=" + encryptMEMUsage +
+                ", encryptMaxCPU=" + encryptMaxCPU +
+                ", encryptMaxMEM=" + encryptMaxMEM +
+                ", encryptTrustlyCPU=" + encryptTrustlyCPU +
+                ", encryptTrustlyMEM=" + encryptTrustlyMEM +
+                ", encryptTime='" + encryptTime + '\'' +
+                ", decryptCPUUsage=" + decryptCPUUsage +
+                ", decryptMEMUsage=" + decryptMEMUsage +
+                ", decryptMaxCPU=" + decryptMaxCPU +
+                ", decryptMaxMEM=" + decryptMaxMEM +
+                ", decryptTrustlyCPU=" + decryptTrustlyCPU +
+                ", decryptTrustlyMEM=" + decryptTrustlyMEM +
+                ", decryptTime='" + decryptTime + '\'' +
+                '}';
+    }
 }
