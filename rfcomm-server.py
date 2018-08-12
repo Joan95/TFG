@@ -263,7 +263,7 @@ try:
 						#print SendMessage
 						#print "\n"
 		
-						client_sock.send(SendMessage)	
+						client_sock.send(SendMessage)
 						
 						fileRunning = "decrypter"
 
@@ -320,7 +320,7 @@ try:
 							client_sock.send(SendMessage)
 		
 							#Calculate %CPU & %MEM used
-							calc = subprocess.Popen(["./calculator.sh", logsFile])
+							calc = subprocess.Popen(["./calculator.sh", logsFile, newMessage.nameFile, newMessage.size])
 							calc.wait()
 		
 							time.sleep(1)
@@ -354,6 +354,7 @@ try:
 									print "\n"
 									
 									client_sock.send(SendMessage)
+									time.sleep(1)
 
 								else:
 									#print "%s %s" % (aux[0], aux[1])
