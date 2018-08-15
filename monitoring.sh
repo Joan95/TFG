@@ -45,7 +45,6 @@ if [ $comparation == '1' ]; then
 	frecOfTop=0.001
 fi
 
-echo -e "\t'monitoring.sh' - Frequency will be of: $frecOfTop seconds for file of $sizeOfFileMB MB\n"
 
 if [ $hsm == 'True' ]; then 
 	while [ ! -f temp.txt ]; do 
@@ -66,6 +65,7 @@ if [ $hsm == 'True' ]; then
 		exit 0
 	fi
 else 
+	echo -e "\t'monitoring.sh' - Frequency will be of: $frecOfTop seconds for file of $sizeOfFileMB MB\n"
 	(top -bn 70 -d $frecOfTop | grep openssl ) >> $logsFile
 fi
 

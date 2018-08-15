@@ -9,6 +9,7 @@ import os
 import os.path
 
 # Flash the LED to indicate the operation is underway
+zymkey.client.__init__
 zymkey.client.led_flash(500, 100)
 
 #ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile, directory)

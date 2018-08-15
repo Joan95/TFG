@@ -8,6 +8,7 @@ import sys
 import os
 import os.path
 
+zymkey.__init__
 # Flash the LED to indicate the operation is underway
 zymkey.client.led_flash(500, 100)
 
