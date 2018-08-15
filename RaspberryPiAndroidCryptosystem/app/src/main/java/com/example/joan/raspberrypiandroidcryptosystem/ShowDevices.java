@@ -107,7 +107,7 @@ public class ShowDevices extends AppCompatActivity
                 {
                     myToasts.show(ShowDevices.this, selectedInfo.get(0));
 
-                    Intent intent = new Intent(ShowDevices.this, LinkingRaspberryPi.class);
+                    Intent intent = new Intent(ShowDevices.this, BindingRaspberryPi.class);
                     intent.putExtra(BLUETOOTH_MAC_DEVICE,selectedInfo.get(1));
                     startActivity(intent);
                 }

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purpleDark"
+    android:label="@string/option_led">
+
+    <TextView
+        android:id="@+id/led_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:text="@string/led_on"
+        android:gravity="center"
+        android:width="100dp"
+        android:height="30dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="80dp" />
+
+    <Button
+        android:id="@+id/button_led_on"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/led_on"
+        android:layout_alignBaseline="@id/led_on"
+        android:layout_alignBottom="@id/led_on"
+        android:layout_toEndOf="@id/led_on"
+        android:layout_toRightOf="@id/led_on"
+        />
+
+    <TextView
+        android:id="@+id/led_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:width="100dp"
+        android:height="30dp"
+        android:text="LED OFF"
+        android:gravity="center"
+        android:layout_below="@+id/button_led_on"
+        android:layout_alignLeft="@id/led_on"
+        android:layout_alignStart="@id/led_on"
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        android:id="@+id/button_led_off"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/led_off"
+        android:layout_alignBaseline="@id/led_off"
+        android:layout_alignBottom="@id/led_off"
+        android:layout_toEndOf="@id/led_off"
+        android:layout_toRightOf="@id/led_off"/>
+
+    <TextView
+        android:id="@+id/led_trigger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:width="100dp"
+        android:height="30dp"
+        android:text="@string/led_trigger"
+        android:gravity="center"
+        android:layout_below="@+id/button_led_off"
+        android:layout_alignLeft="@id/led_off"
+        android:layout_alignStart="@id/led_off"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/ms_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:width="120dp"
+        android:height="40dp"
+        android:text="@string/ms_on"
+        android:gravity="center"
+        android:layout_below="@+id/led_trigger"
+        android:layout_alignLeft="@id/led_off"
+        android:layout_alignStart="@id/led_off"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/value_ms_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/ms_on"
+        android:layout_alignBottom="@id/ms_on"
+        android:layout_toEndOf="@id/ms_on"
+        android:layout_toRightOf="@id/ms_on"
+        android:hint="@string/insert_value"
+        android:inputType="numberDecimal"/>
+
+    <TextView
+        android:id="@+id/ms_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:width="120dp"
+        android:height="40dp"
+        android:text="@string/ms_off"
+        android:gravity="center"
+        android:layout_below="@+id/ms_on"
+        android:layout_alignLeft="@id/ms_on"
+        android:layout_alignStart="@id/ms_on"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/value_ms_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/ms_off"
+        android:layout_alignBottom="@id/ms_off"
+        android:layout_toEndOf="@id/ms_off"
+        android:layout_toRightOf="@id/ms_off"
+        android:hint="@string/insert_value"
+        android:inputType="numberDecimal"/>
+
+    <TextView
+        android:id="@+id/num_flashes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:width="120dp"
+        android:height="30dp"
+        android:text="@string/num_flashes"
+        android:gravity="center"
+        android:layout_below="@+id/ms_off"
+        android:layout_alignLeft="@id/ms_off"
+        android:layout_alignStart="@id/ms_off"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/value_num_flashes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/num_flashes"
+        android:layout_alignBottom="@id/num_flashes"
+        android:layout_toEndOf="@id/num_flashes"
+        android:layout_toRightOf="@id/num_flashes"
+        android:hint="@string/insert_value"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/button_led_trigger"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/led_trigger"
+        android:layout_centerInParent="true"
+        android:layout_toEndOf="@id/led_trigger"
+        android:layout_toRightOf="@id/led_trigger"
+        android:layout_below="@+id/num_flashes"
+        tools:ignore="NotSibling"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

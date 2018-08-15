@@ -10,26 +10,19 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 
@@ -52,7 +45,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
     private String messageProgressDialog = null;
     private String messageProgressTitle = null;
 
-    private Message message = new Message();
+    //private Message message = new Message();
 
     private InfoFile infoFile = InfoFileSingleton.getInfoFile();
 
@@ -80,7 +73,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.linking_raspberry_pi);
+        setContentView(R.layout.option_encrypt_decrypt);
         final Button sendButton = findViewById(R.id.sendButton);
         final Button refreshButton = findViewById(R.id.refreshButton);
         final Button disconnectButton = findViewById(R.id.disconnectButton);
@@ -95,7 +88,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
         final EditText passwordValue = findViewById(R.id.passwordValue);
         final Switch switchHSM = findViewById(R.id.saltSwitch);
         switchHSM.setChecked(false);
-        message.setHSM(false);
+       // message.setHSM(false);
 
         Intent lastInt = getIntent();
         raspberryMac = lastInt.getStringExtra(ShowDevices.BLUETOOTH_MAC_DEVICE);
@@ -126,11 +119,10 @@ public class LinkingRaspberryPi extends AppCompatActivity
             }
         });
 
-        sendButton.setOnClickListener(new View.OnClickListener()
+        /*sendButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                /*Get values, check them and put all of them into the message sending it to the server. */
                 if (message.setPassword(passwordValue.getText().toString())) {
                     usageCPUEncrypt.setText("New use");
                     usageCPUDecrypt.setText("New use");
@@ -246,7 +238,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
 
                         Log.d("JSON", jsonMessage.toString());
 
-                        /*If it is SYSTEM FILES stuff.*/
+
                         if (jsonMessage.has("System Files")) {
 
                             JSONObject content = jsonMessage.getJSONObject("System Files");
@@ -312,7 +304,6 @@ public class LinkingRaspberryPi extends AppCompatActivity
                                 }
 
                                 if (jsonMessage.has("error")) {
-                                    /*It's an error if there is not field 'action'. */
                                     String errorJson = jsonMessage.getString("error");
                                     String bodyJson = jsonMessage.getString("body");
 
@@ -389,7 +380,7 @@ public class LinkingRaspberryPi extends AppCompatActivity
             void deleteMessage() {
                 recDataString.delete(0, recDataString.length());
             }
-        };
+        };*/
 
         new StablishConnection().execute();
     }

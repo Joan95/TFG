@@ -27,12 +27,15 @@ public class MainActivity extends AppCompatActivity
 
         String[] comments = new String[]
                 {
-                    "1st - Achieve the connection between device and Raspberry Pi board",
-                    "2nd - Raspberry will execute a service",
-                    "3rd - Choose a file to be encrypt",
-                    "4th - Also you can choose a file to be decrypt, but three step will be required",
-                    "5th - See %CPU %MEM monitoring",
-                    "That's all!"
+                        "",
+                        "1st - Achieve the connection between device and Raspberry Pi board by scanning and binding via Bluetooth",
+                        "2nd - Be sure to have your Bluetooth on",
+                        "3nd - Be sure of being running the correct service in the Board",
+                        "4rd - Choose an option to be executed for HSM or Raspberry",
+                        "5th - Wait for the results",
+                        "That's all!",
+                        "",
+                        "Press the button below to start."
                 };
 
         ArrayAdapter adapterList = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,comments);

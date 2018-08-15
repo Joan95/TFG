@@ -1,6 +1,6 @@
 package com.example.joan.raspberrypiandroidcryptosystem;
 
-public class Message {
+public class MessageEncDec {
     private String cipher;
     private String typeFile;
     private String nameFile;
@@ -8,7 +8,7 @@ public class Message {
     private Boolean hsm = true;
 
 
-    public Message(){
+    public MessageEncDec(){
         this.cipher = null;
         this.typeFile = null;
         this.nameFile = null;
@@ -16,7 +16,7 @@ public class Message {
         this.hsm = true;
     }
 
-    public Message(String cipher, String typeFile, String nameFile, String password, Boolean hsm) {
+    public MessageEncDec(String cipher, String typeFile, String nameFile, String password, Boolean hsm) {
         this.cipher = cipher;
         this.typeFile = typeFile;
         this.nameFile = nameFile;

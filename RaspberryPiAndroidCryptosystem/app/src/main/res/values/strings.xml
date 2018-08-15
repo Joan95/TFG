@@ -1,16 +1,25 @@
 <resources>
+    <!-- Activity's Name -->
     <string name="app_name">TFG Studio</string>
-    <string name="linking_raspberry_pi">Linking Raspberry Pi</string>
+    <string name="option_led">LED Option</string>
+    <string name="option_encrypt_decrypt">Encrypt Decrypt Option</string>
+    <string name="option_random">Generate RANDOM Option</string>
+    <string name="option_signatures">Signatures Option</string>
+    <string name="option_ecdsa">ECDSA Option</string>
+    <string name="option_i2c">I2C Option</string>
+    <string name="option_tap">TAP Option</string>
+
+
+    <!-- Text view's name -->
     <string name="brief_explanation">Welcome to this app. Here there is a\nbrief explanation about its functionality.</string>
-    <string name="begin">Let\'s start!</string>
 
     <string name="bluetooth_devices_list">Bluetooth Devices List</string>
     <string name="accurated_information">Accurated Information</string>
     <string name="paired_devices_list">Paired Devices List</string>
     <string name="new_devices_list">New Devices List</string>
-    <string name="back">Back</string>
-    <string name="scann">Scann</string>
 
+
+    <string name="refreshSF">Refresh\ System\ Files</string>
     <string name="cpu">CPU</string>
     <string name="mem">MEMORY</string>
 
@@ -22,16 +31,28 @@
     <string name="trustly_cpu_values">Amount Of CPU Operations Considered</string>
     <string name="trustly_mem_values">Amount Of Memory Operations Considered</string>
 
+    <!-- Button's Name -->
+    <string name="begin">Let\'s start!</string>
+    <string name="check_connectivity">Check Connectivity</string>
+    <string name="back">Back</string>
+    <string name="scann">Scann</string>
     <string name="details">DETAILS</string>
     <string name="send">SEND</string>
     <string name="disconnect">DISCONNECT</string>
-
-    <string name="refreshSF">Refresh\ System\ Files</string>
     <string name="refresh">REFRESH</string>
+    <string name="led_on">LED ON</string>
+    <string name="led_off">LED OFF</string>
+    <string name="led_trigger">TRIGGER</string>
+    <string name="ms_on">Miliseconds will be ON</string>
+    <string name="ms_off">Miliseconds will be OFF</string>
+    <string name="num_flashes">Number of Flashes</string>
+    <string name="insert_value">Insert Value</string>
 
+    <!-- Spinner's Name -->
     <string name="selectMethod">Select\ Method</string>
     <string name="selectTypeFile">Select\ Type\ of\ File</string>
     <string name="selectFile">Select\ File</string>
+
 
     <string name="encrypt">ENCRYPT</string>
     <string name="decrypt">DECRYPT</string>
