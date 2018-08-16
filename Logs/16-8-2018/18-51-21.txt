@@ -1,0 +1,91 @@
+type:Audio, cipher:AES, nameFile:Avenged_Sevenfold_So_Far_Away.mp3, sizeOfFileMB:12, hsm:False
+encrypter
+20557 root      20   0    4180    844    656 R   0.0  0.1   0:00.00 openssl
+20557 root      20   0    4216   2908   2628 D  21.9  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D   0.0  0.3   0:00.01 openssl
+20557 root      20   0    4216   2908   2628 D  48.5  0.3   0:00.03 openssl
+20557 root      20   0    4216   2908   2628 D  49.3  0.3   0:00.06 openssl
+20557 root      20   0    4216   2908   2628 R  48.2  0.3   0:00.08 openssl
+20557 root      20   0    4216   2908   2628 R  72.6  0.3   0:00.11 openssl
+20557 root      20   0    4216   2908   2628 R  48.5  0.3   0:00.13 openssl
+20557 root      20   0    4216   2908   2628 R  72.2  0.3   0:00.16 openssl
+20557 root      20   0    4216   2908   2628 R  96.1  0.3   0:00.20 openssl
+decrypter
+20621 root      20   0    4180    852    664 R   0.0  0.1   0:00.00 openssl
+20621 root      20   0    4216   2904   2624 R  89.2  0.3   0:00.04 openssl
+20621 root      20   0    4216   2904   2624 R  94.9  0.3   0:00.08 openssl
+20621 root      20   0    4216   2904   2624 R  96.2  0.3   0:00.12 openssl
+20621 root      20   0    4216   2904   2624 R 100.0  0.3   0:00.17 openssl
+20621 root      20   0    4216   2904   2624 R  94.1  0.3   0:00.21 openssl
+20621 root      20   0    4216   2904   2624 R  96.5  0.3   0:00.25 openssl
+20621 root      20   0    4216   2904   2624 R  96.0  0.3   0:00.29 openssl
+20621 root      20   0    4216   2904   2624 R  96.2  0.3   0:00.33 openssl
+20621 root      20   0    4200   3084   2760 R 100.0  0.3   0:00.38 openssl
+20621 root      20   0    4200   3084   2760 D   0.0  0.3   0:00.38 openssl
+20621 root      20   0    4200   3084   2760 D   0.0  0.3   0:00.38 openssl
+end
+type=encryption;
+name=Avenged_Sevenfold_So_Far_Away.mp3;
+size=12;
+CPUUsage=57.1625;
+MEMUsage=0.296078;
+RAMUsage=2867.53;
+maxCPU=96.1;
+maxMEM=0.3;
+maxRAM=844;
+timeUsed=0.2;
+cntCPU=8;
+cntMEM=51;new;
+
+
+type=decryption;
+CPUUsage=95.9;
+MEMUsage=0.283333;
+RAMUsage=2778;
+maxCPU=96.5;
+maxMEM=0.3;
+maxRAM=852;
+timeUsed=0.38;
+cntCPU=9;
+cntMEM=12;new

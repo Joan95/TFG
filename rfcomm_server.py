@@ -56,7 +56,7 @@ class Message:
 
 
 # ------------- ------------- Variables ------------- -------------# 
-base_directory = "/home/pi/Desktop/TFG2"                 
+base_directory = "/home/pi/Desktop/TFG"                 
 device_directory = "/media/pi/Transcend/TFG"
 
 optionFile = ""                 # Name File Option to be charged
@@ -248,12 +248,9 @@ try:
                                                 if numFlashes == "":
                                                         numFlashes = 0
                                                 else:
-                                                        numFlashes = int(numFlashes)
+                                                        numFlashes = int(numFlashes) * 2
                                                 
                                                 if msOn == 0:
-                                                        msOn = 100
-                                                
-                                                if (msOn < 100):
                                                         msOn = 100
                                                                  
                                                 zymkey.client.led_flash(msOn,msOff,numFlashes)
@@ -525,18 +522,108 @@ try:
 
                         elif optionFunction == 'random':
                                 print "Random has been choosen"
+                                while(noEnd):
+                                        noEnd = True
+                                        
+                                        print "Waiting to recieve the message from device ", client_info
+                                        print "\n"
+
+                                        data = client_sock.recv(1024)
+                                        if len(data) == 0: break
+
+                                        #Data to JSON
+                                        jsonMessage = json.loads(data)
+                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                        if jsonMessage.get("message") == 'endFunction':
+                                                print "End of Function has been selected"
+                                                noEnd = False
+
+                                        
 
                         elif optionFunction == 'signatures':
                                 print "Signatures has been choosen"
+                                while(noEnd):
+                                        noEnd = True
+                                        
+                                        print "Waiting to recieve the message from device ", client_info
+                                        print "\n"
+
+                                        data = client_sock.recv(1024)
+                                        if len(data) == 0: break
+
+                                        #Data to JSON
+                                        jsonMessage = json.loads(data)
+                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                        if jsonMessage.get("message") == 'endFunction':
+                                                print "End of Function has been selected"
+                                                noEnd = False
+
+
 
                         elif optionFunction == 'ecdsa':
                                 print "ECDSA has been choosen"
+                                while(noEnd):
+                                        noEnd = True
+                                        
+                                        print "Waiting to recieve the message from device ", client_info
+                                        print "\n"
+
+                                        data = client_sock.recv(1024)
+                                        if len(data) == 0: break
+
+                                        #Data to JSON
+                                        jsonMessage = json.loads(data)
+                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                        if jsonMessage.get("message") == 'endFunction':
+                                                print "End of Function has been selected"
+                                                noEnd = False
+
+
 
                         elif optionFunction == 'i2c':
                                 print "I2C has been choosen"
+                                while(noEnd):
+                                        noEnd = True
+                                        
+                                        print "Waiting to recieve the message from device ", client_info
+                                        print "\n"
+
+                                        data = client_sock.recv(1024)
+                                        if len(data) == 0: break
+
+                                        #Data to JSON
+                                        jsonMessage = json.loads(data)
+                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                        if jsonMessage.get("message") == 'endFunction':
+                                                print "End of Function has been selected"
+                                                noEnd = False
+
+
 
                         elif optionFunction == 'TAP':
                                 print "TAP has been choosen"
+                                while(noEnd):
+                                        noEnd = True
+                                        
+                                        print "Waiting to recieve the message from device ", client_info
+                                        print "\n"
+
+                                        data = client_sock.recv(1024)
+                                        if len(data) == 0: break
+
+                                        #Data to JSON
+                                        jsonMessage = json.loads(data)
+                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                        if jsonMessage.get("message") == 'endFunction':
+                                                print "End of Function has been selected"
+                                                noEnd = False
+
+
 
                         else:
                                 print "No possible Option"
