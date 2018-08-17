@@ -72,24 +72,9 @@ public class OptionLed extends AppCompatActivity {
                 JSONObject jsonMessage = new JSONObject();
                 try {
                     jsonMessage.put("LED","TRIGGER");
-                    if (triggerMsOn.getText().equals("")) {
-                        jsonMessage.put("msOn", 0);
-                    } else {
-                        jsonMessage.put("msOn", triggerMsOn.getText());
-                    }
-
-                    if (triggerMsOff.getText().equals("")) {
-                        jsonMessage.put("msOff", 0);
-                    } else {
-                        jsonMessage.put("msOff", triggerMsOff.getText());
-                    }
-
-                    if (triggerNumFlashes.equals("")) {
-                        jsonMessage.put("numFlashes", 0);
-                    } else {
-                        jsonMessage.put("numFlashes", triggerNumFlashes.getText());
-                    }
-
+                    jsonMessage.put("msOn", triggerMsOn.getText());
+                    jsonMessage.put("msOff", triggerMsOff.getText());
+                    jsonMessage.put("numFlashes", triggerNumFlashes.getText());
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/orange"
         android:textSize="20sp"
-        android:text="@string/led_on"
+        android:text="@string/text_led_on"
         android:gravity="center"
         android:width="100dp"
         android:height="30dp"
@@ -26,7 +26,7 @@
         android:background="@drawable/custom_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/led_on"
+        android:text="@string/button_led_on"
         android:layout_alignBaseline="@id/led_on"
         android:layout_alignBottom="@id/led_on"
         android:layout_toEndOf="@id/led_on"
@@ -41,7 +41,7 @@
         android:textSize="20sp"
         android:width="100dp"
         android:height="30dp"
-        android:text="LED OFF"
+        android:text="@string/text_led_off"
         android:gravity="center"
         android:layout_below="@+id/button_led_on"
         android:layout_alignLeft="@id/led_on"
@@ -53,7 +53,7 @@
         android:background="@drawable/custom_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/led_off"
+        android:text="@string/button_led_off"
         android:layout_alignBaseline="@id/led_off"
         android:layout_alignBottom="@id/led_off"
         android:layout_toEndOf="@id/led_off"
@@ -65,14 +65,13 @@
         android:layout_height="wrap_content"
         android:textColor="@color/orange"
         android:textSize="20sp"
-        android:width="100dp"
         android:height="30dp"
-        android:text="@string/led_trigger"
+        android:text="@string/text_led_trigger"
         android:gravity="center"
         android:layout_below="@+id/button_led_off"
-        android:layout_alignLeft="@id/led_off"
-        android:layout_alignStart="@id/led_off"
-        android:layout_marginTop="30dp"/>
+        android:layout_alignEnd="@id/led_off"
+        android:layout_marginTop="30dp"
+        android:layout_alignRight="@id/led_off" />
 
     <TextView
         android:id="@+id/ms_on"
@@ -81,7 +80,7 @@
         android:textStyle="italic"
         android:width="120dp"
         android:height="40dp"
-        android:text="@string/ms_on"
+        android:text="@string/text_ms_on"
         android:gravity="center"
         android:layout_below="@+id/led_trigger"
         android:layout_alignLeft="@id/led_off"
@@ -96,7 +95,7 @@
         android:layout_alignBottom="@id/ms_on"
         android:layout_toEndOf="@id/ms_on"
         android:layout_toRightOf="@id/ms_on"
-        android:hint="@string/insert_value"
+        android:hint="@string/hint_example_ms_value"
         android:inputType="numberDecimal"/>
 
     <TextView
@@ -106,7 +105,7 @@
         android:textStyle="italic"
         android:width="120dp"
         android:height="40dp"
-        android:text="@string/ms_off"
+        android:text="@string/text_ms_off"
         android:gravity="center"
         android:layout_below="@+id/ms_on"
         android:layout_alignLeft="@id/ms_on"
@@ -121,7 +120,7 @@
         android:layout_alignBottom="@id/ms_off"
         android:layout_toEndOf="@id/ms_off"
         android:layout_toRightOf="@id/ms_off"
-        android:hint="@string/insert_value"
+        android:hint="@string/hint_example_ms_value"
         android:inputType="numberDecimal"/>
 
     <TextView
@@ -131,7 +130,7 @@
         android:textStyle="italic"
         android:width="120dp"
         android:height="30dp"
-        android:text="@string/num_flashes"
+        android:text="@string/text_num_flashes"
         android:gravity="center"
         android:layout_below="@+id/ms_off"
         android:layout_alignLeft="@id/ms_off"
@@ -146,7 +145,7 @@
         android:layout_alignBottom="@id/num_flashes"
         android:layout_toEndOf="@id/num_flashes"
         android:layout_toRightOf="@id/num_flashes"
-        android:hint="@string/insert_value"
+        android:hint="@string/hint_example_flashes_value"
         android:inputType="number"/>
 
     <Button
@@ -154,7 +153,7 @@
         android:background="@drawable/custom_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/led_trigger"
+        android:text="@string/button_led_trigger"
         android:layout_centerInParent="true"
         android:layout_toEndOf="@id/led_trigger"
         android:layout_toRightOf="@id/led_trigger"

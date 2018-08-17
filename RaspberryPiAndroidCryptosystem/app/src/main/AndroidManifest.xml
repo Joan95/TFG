@@ -35,14 +35,45 @@
         </activity>
 
         <activity
+            android:name=".OptionLed"
+            android:label="LED Option"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name=".OptionEncryptDecrypt"
             android:label="Encrypt Decrypt Option"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".OptionLed"
-            android:label="LED Option">
+            android:name=".OptionRandom"
+            android:label="Random Option"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".OptionSignatures"
+            android:label="Signatures Option"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".OptionECDSA"
+            android:label="ECDSA Option"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".OptionI2C"
+            android:label="I2C Option"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".OptionTAP"
+            android:label="TAP Option"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity

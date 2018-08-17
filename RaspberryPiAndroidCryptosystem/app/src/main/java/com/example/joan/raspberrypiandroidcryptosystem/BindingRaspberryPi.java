@@ -87,7 +87,7 @@ public class BindingRaspberryPi  extends AppCompatActivity {
 
                 JSONObject jsonMessage = new JSONObject();
 
-                Intent intent = null;
+                Intent intent;
 
                 switch (selectOptionFunction){
                     case "LED Control":
@@ -112,7 +112,6 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         }
                         connectedThread.write(jsonMessage);
 
-
                         intent = new Intent(BindingRaspberryPi.this, OptionEncryptDecrypt.class);
                         startActivity(intent);
                         break;
@@ -125,6 +124,8 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         }
                         connectedThread.write(jsonMessage);
 
+                        intent = new Intent(BindingRaspberryPi.this, OptionRandom.class);
+                        startActivity(intent);
                         break;
                     case "Signatures":
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
@@ -135,6 +136,8 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         }
                         connectedThread.write(jsonMessage);
 
+                        intent = new Intent(BindingRaspberryPi.this, OptionSignatures.class);
+                        startActivity(intent);
                         break;
                     case "ECDSA":
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
@@ -145,6 +148,8 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         }
                         connectedThread.write(jsonMessage);
 
+                        intent = new Intent(BindingRaspberryPi.this, OptionECDSA.class);
+                        startActivity(intent);
                         break;
                     case "I2C Options":
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
@@ -155,6 +160,8 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         }
                         connectedThread.write(jsonMessage);
 
+                        intent = new Intent(BindingRaspberryPi.this, OptionI2C.class);
+                        startActivity(intent);
                         break;
                     case "TAP":
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
@@ -165,6 +172,8 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         }
                         connectedThread.write(jsonMessage);
 
+                        intent = new Intent(BindingRaspberryPi.this, OptionTAP.class);
+                        startActivity(intent);
                         break;
                 }
             }

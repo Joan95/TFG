@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purpleDark"
+    android:label="@string/option_random">
+
+    <TextView
+        android:id="@+id/choose_size_random_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:height="30dp"
+        android:text="@string/text_choose_size_random_file"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/warning_choose_size_random_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/choose_size_random_file"
+        android:layout_centerHorizontal="true"
+        android:text="@string/text_warning_choose_size_random_file_text"/>
+
+    <EditText
+        android:id="@+id/value_size_random_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/warning_choose_size_random_file"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/hint_choose_size_random_file_text"
+        android:inputType="number"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/kb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/value_size_random_file"
+        android:textSize="15sp"
+        android:text="@string/text_kb"
+        android:layout_toEndOf="@+id/value_size_random_file"
+        android:layout_toRightOf="@+id/value_size_random_file" />
+
+    <Button
+        android:id="@+id/generateRandomFile"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/value_size_random_file"
+        android:text="@string/button_generate_random"
+        android:layout_alignStart="@+id/kb"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@+id/kb" />
+
+</RelativeLayout>

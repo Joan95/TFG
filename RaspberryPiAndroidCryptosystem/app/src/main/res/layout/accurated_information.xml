@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purpleDark"
-    android:label="@string/accurated_information">
+    android:label="@string/text_accurate_information">
 
     <TextView
         android:id="@+id/encrypt"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/orange"
         android:textSize="20sp"
-        android:text="@string/encrypt"
+        android:text="@string/text_encrypt"
         android:gravity="center"
         android:width="100dp"
         android:height="30dp"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/orange"
         android:textSize="20sp"
-        android:text="@string/decrypt"
+        android:text="@string/text_decrypt"
         android:gravity="center"
         android:width="100dp"
         android:height="30dp"
@@ -47,7 +47,7 @@
         android:layout_marginTop="70dp"
         android:width="100dp"
         android:height="50dp"
-        android:text="@string/usage_of_cpu"
+        android:text="@string/text_usage_of_cpu"
         android:gravity="center"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"/>
@@ -65,7 +65,7 @@
         android:layout_toRightOf="@id/usageOfCPU"
         android:layout_alignLeft="@id/encrypt"
         android:width="100dp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:layout_alignStart="@id/encrypt" />
 
     <TextView
@@ -80,7 +80,7 @@
         android:layout_alignStart="@id/decrypt"
         android:width="100dp"
         android:gravity="center"
-        android:text="@string/waiting_for_value" />
+        android:text="@string/text_waiting_for_value" />
 
     <TextView
         android:id="@+id/usageOfMemory"
@@ -93,7 +93,7 @@
         android:width="100dp"
         android:height="50dp"
         android:gravity="center"
-        android:text="@string/usage_of_memory"
+        android:text="@string/text_usage_of_memory"
         android:layout_alignStart="@id/usageOfCPU" />
 
     <TextView
@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/encrypt"
         android:layout_alignStart="@id/encrypt"
@@ -116,7 +116,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/encrypt"
         android:layout_alignStart="@id/encrypt"
@@ -132,7 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/decrypt"
         android:layout_alignBaseline="@id/usageOfMemory"
@@ -146,7 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/decrypt"
         android:layout_alignStart="@id/decrypt"
@@ -167,7 +167,7 @@
         android:width="100dp"
         android:height="50dp"
         android:gravity="center"
-        android:text="@string/maxCPU"
+        android:text="@string/text_max_cpu"
         android:layout_alignStart="@id/usageOfCPU"/>
 
     <TextView
@@ -176,7 +176,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/encrypt"
         android:layout_alignStart="@id/encrypt"
@@ -190,7 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/decrypt"
         android:layout_alignBaseline="@id/maxCPU"
@@ -209,7 +209,7 @@
         android:width="100dp"
         android:height="50dp"
         android:gravity="center"
-        android:text="@string/maxMEM"
+        android:text="@string/text_max_mem"
         android:layout_alignStart="@id/usageOfCPU"/>
 
     <TextView
@@ -218,7 +218,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/encrypt"
         android:layout_alignStart="@id/encrypt"
@@ -232,7 +232,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/decrypt"
         android:layout_alignBaseline="@id/maxMEM"
@@ -251,7 +251,7 @@
         android:width="100dp"
         android:height="50dp"
         android:gravity="center"
-        android:text="@string/time" />
+        android:text="@string/text_time" />
 
     <TextView
         android:id="@+id/valueTimeEncrypt"
@@ -259,7 +259,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/encrypt"
         android:layout_alignStart="@id/encrypt"
@@ -273,7 +273,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/decrypt"
         android:layout_alignBaseline="@id/time"
@@ -292,7 +292,7 @@
         android:width="100dp"
         android:height="60dp"
         android:gravity="center"
-        android:text="@string/trustly_cpu_values" />
+        android:text="@string/text_trustly_cpu_values" />
 
     <TextView
         android:id="@+id/valueOPCPUEncrypt"
@@ -300,7 +300,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/encrypt"
         android:layout_alignStart="@id/encrypt"
@@ -314,7 +314,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/decrypt"
         android:layout_alignBaseline="@id/cntCPU"
@@ -333,7 +333,7 @@
         android:width="100dp"
         android:height="70dp"
         android:gravity="center"
-        android:text="@string/trustly_mem_values" />
+        android:text="@string/text_trustly_mem_values" />
 
     <TextView
         android:id="@+id/valueOPMEMEncrypt"
@@ -341,7 +341,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/encrypt"
         android:layout_alignStart="@id/encrypt"
@@ -355,7 +355,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/waiting_for_value"
+        android:text="@string/text_waiting_for_value"
         android:gravity="center"
         android:layout_alignLeft="@id/decrypt"
         android:layout_alignBaseline="@id/cntMEM"

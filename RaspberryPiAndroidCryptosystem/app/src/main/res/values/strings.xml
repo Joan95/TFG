@@ -11,78 +11,76 @@
 
 
     <!-- Text view's name -->
-    <string name="brief_explanation">Welcome to this app. Here there is a\nbrief explanation about its functionality.</string>
+    <string name="text_brief_explanation">Welcome to this app. Here there is a\nbrief explanation about its functionality.</string>
+    <string name="text_list_bluetooth_devices_list">Bluetooth Devices List</string>
+    <string name="text_list_paired_devices_list">Paired Devices List</string>
+    <string name="text_list_new_devices_list">New Devices List</string>
 
-    <string name="bluetooth_devices_list">Bluetooth Devices List</string>
-    <string name="accurated_information">Accurated Information</string>
-    <string name="paired_devices_list">Paired Devices List</string>
-    <string name="new_devices_list">New Devices List</string>
+    <string name="text_accurate_information">Accurate Information</string>
+    <string name="text_refresh_sf">Refresh System Files</string>
+    <string name="text_cpu">CPU</string>
+    <string name="text_mem">MEMORY</string>
 
+    <string name="text_usage_of_cpu">Average Of CPU Used %</string>
+    <string name="text_usage_of_memory">Average Of Memory Used %</string>
+    <string name="text_max_cpu">Maximum CPU Used %</string>
+    <string name="text_max_mem">Maximum Memory Used %</string>
+    <string name="text_time">Time Needed</string>
+    <string name="text_trustly_cpu_values">Amount Of CPU Operations Considered</string>
+    <string name="text_trustly_mem_values">Amount Of Memory Operations Considered</string>
+    <string name="text_kb">(KiloBytes)</string>
 
-    <string name="refreshSF">Refresh\ System\ Files</string>
-    <string name="cpu">CPU</string>
-    <string name="mem">MEMORY</string>
+    <string name="text_ms_on">Milliseconds will be ON</string>
+    <string name="text_ms_off">Milliseconds will be OFF</string>
 
-    <string name="usage_of_cpu">Average Of CPU Used %</string>
-    <string name="usage_of_memory">Average Of Memory Used %</string>
-    <string name="maxCPU">Maximum CPU Used %</string>
-    <string name="maxMEM">Maximum Memory Used %</string>
-    <string name="time">Time Needed</string>
-    <string name="trustly_cpu_values">Amount Of CPU Operations Considered</string>
-    <string name="trustly_mem_values">Amount Of Memory Operations Considered</string>
+    <string name="text_encrypt">ENCRYPT</string>
+    <string name="text_decrypt">DECRYPT</string>
+    <string name="text_hsm_question">Do you want to use HSM?</string>
+    <string name="text_waiting_for_value">Waiting for Value</string>
+    <string name="text_password">OPTIONAL Password</string>
+    <string name="text_encrypting">Encrypting</string>
+    <string name="text_decrypting">Decrypting</string>
+    <string name="text_led_on">LED ON</string>
+    <string name="text_led_off">LED OFF</string>
+    <string name="text_led_trigger">LED Trigger</string>
+    <string name="text_num_flashes">Number of Flashes</string>
+    <string name="text_choose_size_random_file">Set Size ofRandom File</string>
+    <string name="text_warning_choose_size_random_file_text">CAUTION: As bigger it would be, it is going to be slower</string>
+
+    <!-- Hint's Name -->
+    <string name="hint_password">Password</string>
+    <string name="hint_example_ms_value">Ex: 500</string>
+    <string name="hint_example_flashes_value">Ex: 10</string>
+    <string name="hint_choose_size_random_file_text">Ex: 5</string>
+
 
     <!-- Button's Name -->
-    <string name="begin">Let\'s start!</string>
-    <string name="check_connectivity">Check Connectivity</string>
-    <string name="back">Back</string>
-    <string name="scann">Scann</string>
-    <string name="details">DETAILS</string>
-    <string name="send">SEND</string>
-    <string name="disconnect">DISCONNECT</string>
-    <string name="refresh">REFRESH</string>
-    <string name="led_on">LED ON</string>
-    <string name="led_off">LED OFF</string>
-    <string name="led_trigger">TRIGGER</string>
-    <string name="ms_on">Miliseconds will be ON</string>
-    <string name="ms_off">Miliseconds will be OFF</string>
-    <string name="num_flashes">Number of Flashes</string>
-    <string name="insert_value">Insert Value</string>
+    <string name="button_begin">Let\'s start!</string>
+    <string name="button_check_connectivity">Check Connectivity</string>
+    <string name="button_back">Back</string>
+    <string name="button_scan">Scan</string>
+    <string name="button_details">DETAILS</string>
+    <string name="button_send">SEND</string>
+    <string name="button_disconnect">DISCONNECT</string>
+    <string name="button_refresh">REFRESH</string>
+    <string name="button_led_on">LED ON</string>
+    <string name="button_led_off">LED OFF</string>
+    <string name="button_led_trigger">TRIGGER</string>
+    <string name="button_ms_on">Milliseconds will be ON</string>
+    <string name="button_ms_off">Milliseconds will be OFF</string>
+    <string name="button_insert_value">Insert Value</string>
+    <string name="button_generate_random">Generate\nRandom</string>
 
     <!-- Spinner's Name -->
-    <string name="selectMethod">Select\ Method</string>
-    <string name="selectTypeFile">Select\ Type\ of\ File</string>
-    <string name="selectFile">Select\ File</string>
+    <string name="text_spinner_select_method">Select\ Method</string>
+    <string name="text_spinner_select_type_file">Select\ Type\ of\ File</string>
+    <string name="text_spinner_select_file">Select\ File</string>
 
-
-    <string name="encrypt">ENCRYPT</string>
-    <string name="decrypt">DECRYPT</string>
-    <string name="hsm_question">Do\ you\ want\ to\ use\ HSM?</string>
-    <string name="waiting_for_value">Waiting\ for\ Value...</string>
-    <string name="password">OPTIONAL Password</string>
-    <string name="hint_password">Password</string>
-
-    <string name="encrypting">Encrypting...</string>
-    <string name="decrypting">Decrypting...</string>
 
     <string-array name="block_ciphers">
         <item>Select Cipher</item>
         <item>AES</item>
         <item>3DES</item>
         <item>Camellia</item>
-        <!--<item>Clefia</item>-->
-        <!--<item>XTEA</item>-->
-        <!--<item>Present</item>-->
     </string-array>
-
-    <string-array name="stream_ciphers">
-        <item>HC128</item>
-        <item>Rabbit</item>
-        <item>Salsa20</item>
-        <item>SOSEMANUK</item>
-        <item>Grain128</item>
-        <item>MICKEYv2</item>
-        <item>Trivium</item>
-        <item>ARC4</item>
-    </string-array>
-
 </resources>
