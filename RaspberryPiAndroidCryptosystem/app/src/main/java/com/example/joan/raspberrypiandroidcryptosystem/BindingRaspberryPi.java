@@ -66,6 +66,7 @@ public class BindingRaspberryPi  extends AppCompatActivity {
 
         String[] functions = new String[]
                 {
+                        "Get RTC",
                         "LED Control",
                         "Encrypt/Decrypt Files",
                         "Generate RANDOM",
@@ -90,6 +91,19 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                 Intent intent;
 
                 switch (selectOptionFunction){
+                    case "Get RTC":
+                        myToasts.show(BindingRaspberryPi.this, "Option: "+position);
+                        try {
+                            jsonMessage.put("Function","RTC");
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                        connectedThread.write(jsonMessage);
+
+                        intent = new Intent(BindingRaspberryPi.this, OptionRTC.class);
+                        startActivity(intent);
+
+                        break;
                     case "LED Control":
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
                         try {
@@ -270,7 +284,6 @@ public class BindingRaspberryPi  extends AppCompatActivity {
 
                 /*Let's start the communication between devices.*/
                 if (connectedThread == null) {
-                    myToasts.show(BindingRaspberryPi.this, "Creating Thread");
                     connectedThread = ConnectedThreadSingleton.getConnectedThread(socket);
                     connectedThread.start();
                 } else {

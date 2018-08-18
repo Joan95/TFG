@@ -29,9 +29,15 @@
             android:label="Bluetooth Devices List">
         </activity>
 
-        <activity android:name=".BindingRaspberryPi"
+        <activity
+            android:name=".BindingRaspberryPi"
             android:label="Binding Raspberry Pi">
+        </activity>
 
+        <activity
+            android:name=".OptionRTC"
+            android:label="RTC Option"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity

@@ -2,11 +2,191 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purpleDark"
     android:label="@string/option_tap">
 
+    <TextView
+        android:id="@+id/aux_reference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/select_new_tap_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/text_header_tap"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:height="30dp"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:id="@+id/text_current_tap_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:height="30dp"
+        android:gravity="center"
+        android:layout_below="@id/select_new_tap_value"
+        android:textStyle="italic"
+        android:layout_alignStart="@+id/select_new_tap_value"
+        android:layout_alignLeft="@+id/select_new_tap_value"
+        android:text="@string/text_current_tap_sensibility" />
+
+    <EditText
+        android:id="@+id/value_current_tap_sensibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@+id/text_current_tap_value"
+        android:layout_toEndOf="@+id/aux_reference"
+        android:layout_toRightOf="@+id/aux_reference"
+        android:hint="@string/hint_tap_sensibility"
+        android:inputType="numberDecimal"
+        android:focusable="false"/>
+
+    <TextView
+        android:id="@+id/text_election_tap_sensibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/value_current_tap_sensibility"
+        android:layout_alignStart="@+id/select_new_tap_value"
+        android:layout_alignLeft="@+id/select_new_tap_value"
+        android:height="30dp"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:text="@string/text_new_tap_sensibility"/>
+
+    <EditText
+        android:id="@+id/value_selected_tap_sensibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/text_election_tap_sensibility"
+        android:layout_alignStart="@+id/text_election_tap_sensibility"
+        android:layout_alignLeft="@id/text_election_tap_sensibility"
+        android:hint="@string/hint_tap_sensibility"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/button_set_new_tap_sensibility"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/value_selected_tap_sensibility"
+        android:layout_toEndOf="@id/value_selected_tap_sensibility"
+        android:layout_alignBaseline="@+id/value_selected_tap_sensibility"
+        android:layout_alignStart="@+id/aux_reference"
+        android:layout_alignLeft="@id/aux_reference"
+        android:layout_marginTop="15dp"
+        android:text="@string/button_set_new_tap_sensibility"
+        />
+
+    <TextView
+        android:id="@+id/text_axis_tap_sensibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_axis_tap_sensibility"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/button_set_new_tap_sensibility"/>
+
+    <TextView
+        android:id="@+id/text_axis_x"
+        android:layout_marginTop="10dp"
+        android:width="80dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_axis_tap_sensibility"
+        android:text="@string/text_tap_axis_x"
+        android:layout_alignStart="@+id/select_new_tap_value"
+        android:layout_alignLeft="@+id/select_new_tap_value"/>
+
+    <EditText
+        android:id="@+id/value_axis_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_tap_sensibility"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/text_axis_x"
+        android:layout_toEndOf="@+id/text_axis_x"
+        android:layout_alignBaseline="@+id/text_axis_x"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/text_axis_y"
+        android:width="80dp"
+        android:gravity="center"
+        android:layout_alignBaseline="@+id/text_axis_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_axis_tap_sensibility"
+        android:text="@string/text_tap_axis_y"
+        android:layout_alignStart="@id/aux_reference"
+        android:layout_alignLeft="@id/aux_reference"/>
+
+    <EditText
+        android:id="@+id/value_axis_y"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_tap_sensibility"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/text_axis_y"
+        android:layout_toEndOf="@+id/text_axis_y"
+        android:layout_alignBaseline="@+id/text_axis_y"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/text_axis_z"
+        android:width="80dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_axis_x"
+        android:layout_marginTop="10dp"
+        android:text="@string/text_tap_axis_z"
+        android:layout_alignStart="@+id/text_axis_x"
+        android:layout_alignLeft="@id/text_axis_x"/>
+
+    <EditText
+        android:id="@+id/value_axis_z"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_tap_sensibility"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/text_axis_z"
+        android:layout_toEndOf="@+id/text_axis_z"
+        android:layout_alignBaseline="@+id/text_axis_z"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/button_set_new_axis_tap_sensibility"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_axis_y"
+        android:text="@string/button_set_new_axis_tap_sensibility"
+        android:layout_alignStart="@id/button_set_new_tap_sensibility"
+        android:layout_alignLeft="@+id/button_set_new_tap_sensibility"/>
+
+    <Button
+        android:id="@+id/button_start_tap_test"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:layout_alignParentBottom="true"
+        android:text="@string/button_start_tap_test"
+        android:layout_alignEnd="@+id/select_new_tap_value"
+        android:layout_alignRight="@+id/select_new_tap_value"
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>

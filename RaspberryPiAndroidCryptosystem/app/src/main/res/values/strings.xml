@@ -1,6 +1,7 @@
 <resources>
     <!-- Activity's Name -->
     <string name="app_name">TFG Studio</string>
+    <string name="option_rtc">RTC Option</string>
     <string name="option_led">LED Option</string>
     <string name="option_encrypt_decrypt">Encrypt Decrypt Option</string>
     <string name="option_random">Generate RANDOM Option</string>
@@ -8,7 +9,6 @@
     <string name="option_ecdsa">ECDSA Option</string>
     <string name="option_i2c">I2C Option</string>
     <string name="option_tap">TAP Option</string>
-
 
     <!-- Text view's name -->
     <string name="text_brief_explanation">Welcome to this app. Here there is a\nbrief explanation about its functionality.</string>
@@ -29,6 +29,7 @@
     <string name="text_trustly_cpu_values">Amount Of CPU Operations Considered</string>
     <string name="text_trustly_mem_values">Amount Of Memory Operations Considered</string>
     <string name="text_kb">(KiloBytes)</string>
+    <string name="text_mb">(MegaBytes)</string>
 
     <string name="text_ms_on">Milliseconds will be ON</string>
     <string name="text_ms_off">Milliseconds will be OFF</string>
@@ -44,14 +45,34 @@
     <string name="text_led_off">LED OFF</string>
     <string name="text_led_trigger">LED Trigger</string>
     <string name="text_num_flashes">Number of Flashes</string>
-    <string name="text_choose_size_random_file">Set Size ofRandom File</string>
+    <string name="text_choose_size_random_file">Set Size of Random File</string>
+    <string name="text_choose_name_random_file">Set Name of Random File</string>
     <string name="text_warning_choose_size_random_file_text">CAUTION: As bigger it would be, it is going to be slower</string>
+    <string name="text_header_select_i2c_address">Select the new I2C address below</string>
+    <string name="text_current_i2c_address">This is the current I2C address</string>
+    <string name="text_selected_i2c_address">This is your I2C address election</string>
+    <string name="text_header_select_hsm_function">Select a HSM\'s function</string>
+    <string name="text_device_current_time">Current\'s device time</string>
+    <string name="text_precise_hsm_rtc">Precise HSM\'s Real Time Clock</string>
+    <string name="text_not_recise_hsm_rtc">Not precise HSM\'s Real Time Clock</string>
+    <string name="text_header_rtc">Current clocks and Real Time Clocks</string>
+    <string name="text_header_tap">Global TAP Sensibility Configuration</string>
+    <string name="text_current_tap_sensibility">This is the current TAP sensibility (%)</string>
+    <string name="text_new_tap_sensibility">This is your TAP sensibility election (%)</string>
+    <string name="text_axis_tap_sensibility">Axis TAP Sensibility Configuration</string>
+    <string name="text_tap_axis_x">Sensibility Axis X</string>
+    <string name="text_tap_axis_y">Sensibility Axis Y</string>
+    <string name="text_tap_axis_z">Sensibility Axis Z</string>
 
     <!-- Hint's Name -->
     <string name="hint_password">Password</string>
     <string name="hint_example_ms_value">Ex: 500</string>
     <string name="hint_example_flashes_value">Ex: 10</string>
-    <string name="hint_choose_size_random_file_text">Ex: 5</string>
+    <string name="hint_choose_size_random_file_text_kb">Ex: 5</string>
+    <string name="hint_choose_size_random_file_text_mb">Ex: 5125</string>
+    <string name="hint_choose_name_random_file">Ex: My First Random File, Yay!</string>
+    <string name="hint_i2c_address">Ex: 0x30</string>
+    <string name="hint_tap_sensibility">0 to 100</string>
 
 
     <!-- Button's Name -->
@@ -70,6 +91,11 @@
     <string name="button_ms_off">Milliseconds will be OFF</string>
     <string name="button_insert_value">Insert Value</string>
     <string name="button_generate_random">Generate\nRandom</string>
+    <string name="button_set_i2c_address">Set I2C</string>
+    <string name="button_refresh_rtc">Refresh RTC</string>
+    <string name="button_set_new_tap_sensibility">Global sensibility</string>
+    <string name="button_start_tap_test">Tap Test</string>
+    <string name="button_set_new_axis_tap_sensibility">Axis sensibility</string>
 
     <!-- Spinner's Name -->
     <string name="text_spinner_select_method">Select\ Method</string>
@@ -82,5 +108,27 @@
         <item>AES</item>
         <item>3DES</item>
         <item>Camellia</item>
+    </string-array>
+
+    <string-array name="list_i2c_0x30">
+        <item>0x30</item>
+        <item>0x31</item>
+        <item>0x32</item>
+        <item>0x33</item>
+        <item>0x34</item>
+        <item>0x35</item>
+        <item>0x36</item>
+        <item>0x37</item>
+    </string-array>
+
+    <string-array name="list_i2c_0x60">
+        <item>0x60</item>
+        <item>0x61</item>
+        <item>0x62</item>
+        <item>0x63</item>
+        <item>0x64</item>
+        <item>0x65</item>
+        <item>0x66</item>
+        <item>0x67</item>
     </string-array>
 </resources>
