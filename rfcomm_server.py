@@ -634,6 +634,14 @@ try:
                                 print "Option I2C has been choosen"
                                 while(noEnd):
                                         noEnd = True
+
+                                        SendMessage = {}
+                                        SendMessage["I2CCurrentAddress"] = str("%s" % (i2cAddress))
+                                        SendMessage = json.dumps(SendMessage)
+                                        SendMessage = str("{'I2C': %s}" % (SendMessage))
+                                        print SendMessage
+                                        print "\n"        
+                                        client_sock.send(SendMessage)
                                         
                                         print "Waiting to recieve the message from device ", client_info
                                         print "\n"
@@ -644,6 +652,9 @@ try:
                                         #Data to JSON
                                         jsonMessage = json.loads(data)
                                         print "jsonMessage:\n%s" % jsonMessage
+
+                                        if jsonMessage.get("I2CNewAddress"):
+                                                i2cAddress = jsonMessage.get("I2CNewAddress")
 
                                         if jsonMessage.get("message") == 'endFunction':
                                                 print "End of Function has been selected"
