@@ -59,6 +59,8 @@ class Message:
 base_directory = "/home/pi/Desktop/TFG"                 
 device_directory = "/media/pi/Transcend/TFG"
 
+i2c_info_file = "/sys/kernel/debug/tracing/trace"
+
 optionFile = ""                 # Name File Option to be charged
 optionFunction = ""             # Function has been choosen
 
@@ -90,7 +92,8 @@ logsFile = ""
 fileRunning = ""
 
 # ------------- ------------- Recommended Variables ------------- -------------#
-i2cAddress = '0x30'
+i2cAddress = '0x30'                             # I2C default address
+tapSensibility = 50                             # TAP's default sensibility 
 recommendedMinRandomFileSize = 0                # Recommended minimum size of Random File in Kilobytes
 recommendedMaxRandomFileSize = 5120             # Recommended maximum size of Random File in Kilobytes
 
@@ -206,8 +209,42 @@ try:
                         noEnd = True
                         
                         ############# Enormous Switch Case #############
+
+
+                        if optionFunction == 'RTC':
+                                print "Option RTC has been choosen"
+                                while (noEnd) :
+                                        noEnd = True
+
+                                        timeNotPrecise = zymkey.client.get_time(False)
+                                        timePrecise = zymkey.client.get_time(True)
+                                        
+                                        SendMessage = {}
+                                        SendMessage["RTCNotPreciseTime"] = timeNotPrecise
+                                        SendMessage["RTCPreciseTime"] = timePrecise
+                                        SendMessage = json.dumps(SendMessage)
+                                        SendMessage = str("{'RTC': %s}" % (SendMessage))
+                                        print SendMessage
+                                        print "\n"        
+                                        client_sock.send(SendMessage)
+
+                                        print "Waiting to recieve confirmation from device ", client_info
+                                        print "\n"
+
+                                        data = client_sock.recv(1024)
+                                        if len(data) == 0: break
+
+                                        #Data to JSON
+                                        jsonMessage = json.loads(data)
+                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                        if jsonMessage.get("message") == 'endFunction':
+                                                print "End of Function has been selected"
+                                                noEnd = False
+
+                                                
 			
-                        if optionFunction == 'LED':
+                        elif optionFunction == 'LED':
                                 print "Option LED has been choosen"
                                 while (noEnd) :
                                         noEnd = True
@@ -655,7 +692,10 @@ try:
 
                                         if jsonMessage.get("I2CNewAddress"):
                                                 i2cAddress = jsonMessage.get("I2CNewAddress")
-
+                                                zymkey.client.set_i2c_address(i2cAddress)
+                                                line = subprocess.check_output(['sudo', 'tail', '-2', i2c_info_file])
+                                                print line
+                                                
                                         if jsonMessage.get("message") == 'endFunction':
                                                 print "End of Function has been selected"
                                                 noEnd = False
@@ -676,6 +716,7 @@ try:
                                         #Data to JSON
                                         jsonMessage = json.loads(data)
                                         print "jsonMessage:\n%s" % jsonMessage
+
 
                                         if jsonMessage.get("message") == 'endFunction':
                                                 print "End of Function has been selected"
