@@ -729,12 +729,16 @@ try:
                                         print "jsonMessage:\n%s" % jsonMessage
 
                                         if jsonMessage.get("TAP") == "TAPGlobalSensibility":
-                                                tapSensibility = jsonMessage.get("Sensibility")
+                                                tapSensibility = int(jsonMessage.get("Sensibility"))
+                                                zymkey.client.set_tap_sensitivity('all', tapSensibility)
 
                                         if jsonMessage.get("TAP") == "TAPAxisSensibility":
                                                 tapSensibilityAxisX = jsonMessage.get("AxisX")
                                                 tapSensibilityAxisY = jsonMessage.get("AxisY")
                                                 tapSensibilityAxisZ = jsonMessage.get("AxisZ")
+                                                zymkey.client.set_tap_sensitivity('x', tapSensibilityAxisX)
+                                                zymkey.client.set_tap_sensitivity('y', tapSensibilityAxisY)
+                                                zymkey.client.set_tap_sensitivity('z', tapSensibilityAxisZ)
                                                 
                                         if jsonMessage.get("message") == 'endFunction':
                                                 print "End of Function has been selected"
