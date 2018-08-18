@@ -51,7 +51,7 @@ def zymkey.module.Zymkey.verify ( self,
 	raise_exception = True, 
 	slot = 0, 
 	pubkey = None, 
-	pubkey_curve = ’NISTP256’, 
+	pubkey_curve = Â’NISTP256Â’, 
 	sig_is_der = False 
 	)
 
@@ -62,7 +62,7 @@ def zymkey.module.Zymkey.verify_digest ( self,
 	raise_exception = True, 
 	slot = 0, 
 	pubkey = None, 
-	pubkey_curve = ’NISTP256’, 
+	pubkey_curve = Â’NISTP256Â’, 
 	sig_is_der = False 
 	)
 
@@ -95,7 +95,7 @@ def zymkey.module.Zymkey.get_time ( self,
 # TAP
 def set_tap_sensitivity
 def zymkey.module.Zymkey.set_tap_sensitivity ( self, 
-	axis = ’all’, 
+	axis = Â’allÂ’, 
 	pct = 50.0 
 	)
 
@@ -137,5 +137,3 @@ def zymkey.module.Zymkey.led_flash( self,
 	off_ms=0, 
 	num_flashes=0 
 	)
-
-dsadfa 

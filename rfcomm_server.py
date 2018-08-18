@@ -69,6 +69,7 @@ msOff = 0                       # Amount of miliseconds LED will be OFF
 numFlashes = 0                  # Number of Flashes it will do 
 
 pathToResources = str("%s/%s" % (device_directory, "Resources"))
+pathToRandomGenerated = str("%s/%s" % (pathToResources, "RandomGenerated"))
 pathToEncrypt = str("%s/%s" % (device_directory, "Encrypt"))
 pathToDecrypt = str("%s/%s" % (device_directory, "Decrypt"))
 pathToLogs = str("%s/%s" % (base_directory, "Logs"))
@@ -88,7 +89,10 @@ logsFile = ""
 
 fileRunning = ""
 
-
+# ------------- ------------- Recommended Variables ------------- -------------#
+i2cAddress = '0x30'
+recommendedMinRandomFileSize = 0                # Recommended minimum size of Random File in Kilobytes
+recommendedMaxRandomFileSize = 5120             # Recommended maximum size of Random File in Kilobytes
 
                 ########## Dicctionaries ##########
 
@@ -159,7 +163,8 @@ def sendSF(pathToResources,FDevice,SFDevice):
 # ------------- ------------- Main ------------- ------------- #
 
 print "\n\n\t\tWelcome to my TFG!\n\n"
-zymkey.client.__init__
+zymkey.client.__init__                          # Zymkey initialization
+zymkey.client.set_i2c_address(i2cAddress)       # Set I2C address to '0x30'
 
 try:
 	while True:
@@ -521,7 +526,7 @@ try:
 
 
                         elif optionFunction == 'random':
-                                print "Random has been choosen"
+                                print "Option RANDOM has been choosen"
                                 while(noEnd):
                                         noEnd = True
                                         
@@ -539,10 +544,52 @@ try:
                                                 print "End of Function has been selected"
                                                 noEnd = False
 
-                                        
+                                        elif jsonMessage.get("RANDOM") == 'GENERATE':
+                                                randomFileSize = jsonMessage.get("size")
+                                                randomFileName = jsonMessage.get("name")
+                                                print "\nChecking %s characteristics..." % (randomFileName)
+                                                if (randomFileSize <= recommendedMinRandomFileSize):
+                                                        print "\nWARING!\n%s Kilobytes is not big enough, it will be changed to 1024 Kilobytes" % (randomFileSize)
+                                                        randomFileSize = 1024
+
+                                                elif (randomFileSize > recommendedMaxRandomFileSize):
+                                                        print "\nWARNING!\n%s Kilobytes is too big, and it is not recommeded due to HSM's speed characteristics, it will be changed to 1024 Kilobytes" % (randomFileSize)
+                                                        randomFileSize = 1024
+
+                                                print "\nBegin of operation, creating file %s KB" % randomFileSize
+                                                pathToNewRandomGenerated = str("%s/%s" % (pathToRandomGenerated, randomFileName))
+                                                print "\nIt will be stored at: %s" % pathToNewRandomGenerated
+
+                                                if (os.path.isfile(pathToNewRandomGenerated)):
+                                                        #FILE EXISTS
+                                                        print "File already exists, deleting it..."
+
+                                                        if os.path.isfile(pathToNewRandomGenerated):
+                                                                                os.remove(pathToNewRandomGenerated)
+                                                randomFileSize = randomFileSize * 1024
+                                                print "Generating the file with %s bytes, please wait..." % (randomFileSize)
+
+                                                SendMessage = {}
+                                                SendMessage["RANDOMOperation"] = "started"
+                                                SendMessage = json.dumps(SendMessage)
+                                                SendMessage = str("{'RANDOM': %s}" % (SendMessage))
+                                                print SendMessage
+                                                print "\n"        
+                                                client_sock.send(SendMessage)
+                                                
+                                                zymkey.client.create_random_file(pathToNewRandomGenerated,randomFileSize)
+                                                print "End of operation. File has been generated correctly!"
+                                                
+                                                SendMessage = {}
+                                                SendMessage["RANDOMOperation"] = "ended"
+                                                SendMessage = json.dumps(SendMessage)
+                                                SendMessage = str("{'RANDOM': %s}" % (SendMessage))
+                                                print SendMessage
+                                                print "\n"        
+                                                client_sock.send(SendMessage)
 
                         elif optionFunction == 'signatures':
-                                print "Signatures has been choosen"
+                                print "Option Signatures has been choosen"
                                 while(noEnd):
                                         noEnd = True
                                         
@@ -563,7 +610,7 @@ try:
 
 
                         elif optionFunction == 'ecdsa':
-                                print "ECDSA has been choosen"
+                                print "Option ECDSA has been choosen"
                                 while(noEnd):
                                         noEnd = True
                                         
@@ -584,7 +631,7 @@ try:
 
 
                         elif optionFunction == 'i2c':
-                                print "I2C has been choosen"
+                                print "Option I2C has been choosen"
                                 while(noEnd):
                                         noEnd = True
                                         
@@ -605,7 +652,7 @@ try:
 
 
                         elif optionFunction == 'TAP':
-                                print "TAP has been choosen"
+                                print "Option TAP has been choosen"
                                 while(noEnd):
                                         noEnd = True
                                         
