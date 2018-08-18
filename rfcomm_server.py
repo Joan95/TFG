@@ -93,7 +93,10 @@ fileRunning = ""
 
 # ------------- ------------- Recommended Variables ------------- -------------#
 i2cAddress = '0x30'                             # I2C default address
-tapSensibility = 50                             # TAP's default sensibility 
+tapSensibility = 50                             # TAP's default sensibility
+tapSensibilityAxisX = 50                        # TAP's Axis X sensibility
+tapSensibilityAxisY = 50                        # TAP's Axis Y sensibility
+tapSensibilityAxisZ = 50                        # TAP's Axis Z sensibility
 recommendedMinRandomFileSize = 0                # Recommended minimum size of Random File in Kilobytes
 recommendedMaxRandomFileSize = 5120             # Recommended maximum size of Random File in Kilobytes
 
@@ -706,8 +709,16 @@ try:
                                 print "Option TAP has been choosen"
                                 while(noEnd):
                                         noEnd = True
+
+                                        SendMessage = {}
+                                        SendMessage["TAPCurrentGlobalSensibility"] = str("%s" % (tapSensibility))
+                                        SendMessage = json.dumps(SendMessage)
+                                        SendMessage = str("{'TAP': %s}" % (SendMessage))
+                                        print SendMessage
+                                        print "\n"        
+                                        client_sock.send(SendMessage)
                                         
-                                        print "Waiting to recieve the message from device ", client_info
+                                        print "Waiting to recieve the new TAP sensibility configuration from device ", client_info
                                         print "\n"
 
                                         data = client_sock.recv(1024)
@@ -717,7 +728,14 @@ try:
                                         jsonMessage = json.loads(data)
                                         print "jsonMessage:\n%s" % jsonMessage
 
+                                        if jsonMessage.get("TAP") == "TAPGlobalSensibility":
+                                                tapSensibility = jsonMessage.get("Sensibility")
 
+                                        if jsonMessage.get("TAP") == "TAPAxisSensibility":
+                                                tapSensibilityAxisX = jsonMessage.get("AxisX")
+                                                tapSensibilityAxisY = jsonMessage.get("AxisY")
+                                                tapSensibilityAxisZ = jsonMessage.get("AxisZ")
+                                                
                                         if jsonMessage.get("message") == 'endFunction':
                                                 print "End of Function has been selected"
                                                 noEnd = False
