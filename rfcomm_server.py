@@ -11,8 +11,6 @@ import traceback
 import time
 import datetime
 
-import ctypes
-
 import json
 
 
@@ -228,12 +226,31 @@ try:
                                 while (noEnd) :
                                         noEnd = True
 
+                                        SendMessage = {}
+                                        SendMessage["RTCOperation"] = "started"
+                                        SendMessage = json.dumps(SendMessage)
+                                        SendMessage = str("{'RTC': %s}" % (SendMessage))
+                                        print SendMessage
+                                        print "\n"        
+                                        client_sock.send(SendMessage)
+
                                         timeNotPrecise = zymkey.client.get_time(False)
                                         timePrecise = zymkey.client.get_time(True)
                                         
                                         SendMessage = {}
+                                        SendMessage["RTCOperation"] = "results"
                                         SendMessage["RTCNotPreciseTime"] = timeNotPrecise
                                         SendMessage["RTCPreciseTime"] = timePrecise
+                                        SendMessage = json.dumps(SendMessage)
+                                        SendMessage = str("{'RTC': %s}" % (SendMessage))
+                                        print SendMessage
+                                        print "\n"        
+                                        client_sock.send(SendMessage)
+
+                                        time.sleep(0.5)
+
+                                        SendMessage = {}
+                                        SendMessage["RTCOperation"] = "ended"
                                         SendMessage = json.dumps(SendMessage)
                                         SendMessage = str("{'RTC': %s}" % (SendMessage))
                                         print SendMessage
@@ -806,6 +823,42 @@ try:
                                                                 print "Value of G force in Axis Z was %s" % (accelerometer_result[2].g_force)
                                                                 print "Value of TAP direction in Axis Z was %s" % (accelerometer_result[2].tap_dir)
 
+                                                                SendMessage = {}
+                                                                SendMessage["TAPTestValues"] = "AxisX"
+                                                                SendMessage["TAPTestGForce"] = accelerometer_result[0].g_force
+                                                                SendMessage["TAPTestTAPDirection"] = accelerometer_result[0].tap_dir
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'TAPTest': %s}" % (SendMessage))
+                                                                print SendMessage
+                                                                print "\n"        
+                                                                client_sock.send(SendMessage)
+
+                                                                time.sleep(0.5)
+
+                                                                SendMessage = {}
+                                                                SendMessage["TAPTestValues"] = "AxisY"
+                                                                SendMessage["TAPTestGForce"] = accelerometer_result[1].g_force
+                                                                SendMessage["TAPTestTAPDirection"] = accelerometer_result[1].tap_dir
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'TAPTest': %s}" % (SendMessage))
+                                                                print SendMessage
+                                                                print "\n"        
+                                                                client_sock.send(SendMessage)
+
+                                                                time.sleep(0.5)
+
+                                                                SendMessage = {}
+                                                                SendMessage["TAPTestValues"] = "AxisZ"
+                                                                SendMessage["TAPTestGForce"] = accelerometer_result[2].g_force
+                                                                SendMessage["TAPTestTAPDirection"] = accelerometer_result[2].tap_dir
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'TAPTest': %s}" % (SendMessage))
+                                                                print SendMessage
+                                                                print "\n"        
+                                                                client_sock.send(SendMessage)
+
+                                                                time.sleep(0.5)
+                                                                
                                                                 SendMessage = {}
                                                                 SendMessage["TAPTestStatus"] = "ended"
                                                                 SendMessage = json.dumps(SendMessage)
