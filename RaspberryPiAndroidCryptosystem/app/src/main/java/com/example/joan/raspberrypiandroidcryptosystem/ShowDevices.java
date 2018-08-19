@@ -44,7 +44,7 @@ public class ShowDevices extends AppCompatActivity
         setContentView(R.layout.show_devices);
 
         Button buttonBack = findViewById(R.id.buttonBack);
-        Button buttonReScann = findViewById(R.id.buttonReScann);
+        Button buttonReScann = findViewById(R.id.buttonReScan);
         ListView showPairedDevicesList = findViewById(R.id.pairedDevicesList);
         ListView showNewDevicesList = findViewById(R.id.newDevicesList);
 

@@ -42,6 +42,8 @@ public class ConnectedThread extends Thread{
     public static Context contextI2C;
     @SuppressLint("StaticFieldLeak")
     public static Context contextTAP;
+    @SuppressLint("StaticFieldLeak")
+    public static Context contextTAPTest;
 
     private SystemFile systemFile = SystemFileSingleton.getCurrentSystemFile();
     private InfoFile infoFile = InfoFileSingleton.getInfoFile();
@@ -138,12 +140,31 @@ public class ConnectedThread extends Thread{
                         JSONObject tapContent = jsonMessage.getJSONObject("TAP");
 
                         Log.d("TAP message", tapContent.toString());
-                        String currentTAPSensibility = tapContent.getString("TAPCurrentGlobalSensibility");
-                        try {
-                            EditText valueCurrentTAPSensibility = ((Activity)contextTAP).findViewById(R.id.value_current_tap_sensibility);
-                            valueCurrentTAPSensibility.setText(currentTAPSensibility);
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
+
+                        if (tapContent.has("TAPCurrentGlobalSensibility")) {
+                            String currentTAPSensibility = tapContent.getString("TAPCurrentGlobalSensibility");
+                            try {
+                                EditText valueCurrentTAPSensibility = ((Activity)contextTAP).findViewById(R.id.value_current_tap_sensibility);
+                                valueCurrentTAPSensibility.setText(currentTAPSensibility);
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        if (tapContent.has("TAPCurrentAxisXSensibility")) {
+                            String currentAxisX = tapContent.getString("TAPCurrentAxisXSensibility");
+                            String currentAxisY = tapContent.getString("TAPCurrentAxisYSensibility");
+                            String currentAxisZ = tapContent.getString("TAPCurrentAxisZSensibility");
+                            try {
+                                EditText valueAxisX = ((Activity)contextTAP).findViewById(R.id.value_current_axis_x);
+                                EditText valueAxisY = ((Activity)contextTAP).findViewById(R.id.value_current_axis_y);
+                                EditText valueAxisZ = ((Activity)contextTAP).findViewById(R.id.value_current_axis_z);
+                                valueAxisX.setText(currentAxisX);
+                                valueAxisY.setText(currentAxisY);
+                                valueAxisZ.setText(currentAxisZ);
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 

@@ -43,7 +43,7 @@
         android:height="30dp"
         android:text="@string/text_led_off"
         android:gravity="center"
-        android:layout_below="@+id/button_led_on"
+        android:layout_below="@id/button_led_on"
         android:layout_alignLeft="@id/led_on"
         android:layout_alignStart="@id/led_on"
         android:layout_marginTop="30dp"/>
@@ -68,7 +68,7 @@
         android:height="30dp"
         android:text="@string/text_led_trigger"
         android:gravity="center"
-        android:layout_below="@+id/button_led_off"
+        android:layout_below="@id/button_led_off"
         android:layout_alignEnd="@id/led_off"
         android:layout_marginTop="30dp"
         android:layout_alignRight="@id/led_off" />
@@ -82,7 +82,7 @@
         android:height="40dp"
         android:text="@string/text_ms_on"
         android:gravity="center"
-        android:layout_below="@+id/led_trigger"
+        android:layout_below="@id/led_trigger"
         android:layout_alignLeft="@id/led_off"
         android:layout_alignStart="@id/led_off"
         android:layout_marginTop="10dp"/>
@@ -107,7 +107,7 @@
         android:height="40dp"
         android:text="@string/text_ms_off"
         android:gravity="center"
-        android:layout_below="@+id/ms_on"
+        android:layout_below="@id/ms_on"
         android:layout_alignLeft="@id/ms_on"
         android:layout_alignStart="@id/ms_on"
         android:layout_marginTop="10dp"/>
@@ -132,7 +132,7 @@
         android:height="30dp"
         android:text="@string/text_num_flashes"
         android:gravity="center"
-        android:layout_below="@+id/ms_off"
+        android:layout_below="@id/ms_off"
         android:layout_alignLeft="@id/ms_off"
         android:layout_alignStart="@id/ms_off"
         android:layout_marginTop="10dp"/>
@@ -157,7 +157,7 @@
         android:layout_centerInParent="true"
         android:layout_toEndOf="@id/led_trigger"
         android:layout_toRightOf="@id/led_trigger"
-        android:layout_below="@+id/num_flashes"
+        android:layout_below="@id/num_flashes"
         tools:ignore="NotSibling"
         android:layout_marginTop="10dp"/>
 

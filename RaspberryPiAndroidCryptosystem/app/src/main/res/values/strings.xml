@@ -58,21 +58,30 @@
     <string name="text_header_rtc">Current clocks and Real Time Clocks</string>
     <string name="text_header_tap">Global TAP Sensibility Configuration</string>
     <string name="text_current_tap_sensibility">This is the current TAP sensibility (%)</string>
+    <string name="text_current_tap_axis_value">This is the current AXIS TAP sensibility (%)</string>
     <string name="text_new_tap_sensibility">This is your TAP sensibility election (%)</string>
     <string name="text_axis_tap_sensibility">Axis TAP Sensibility Configuration</string>
-    <string name="text_tap_axis_x">Sensibility Axis X</string>
-    <string name="text_tap_axis_y">Sensibility Axis Y</string>
-    <string name="text_tap_axis_z">Sensibility Axis Z</string>
+    <string name="text_current_tap_axis_x">Current Axis X (%) value</string>
+    <string name="text_current_tap_axis_y">Current Axis Y (%) value</string>
+    <string name="text_current_tap_axis_z">Current Axis Z (%) value</string>
+    <string name="text_tap_axis_x">Set new Sensibility Axis X (%)</string>
+    <string name="text_tap_axis_y">Set new Sensibility Axis Y (%)</string>
+    <string name="text_tap_axis_z">Set new Sensibility Axis Z (%)</string>
+    <string name="text_info_tap">If you press the button without having entered any value to Axis, it would be reset to 50.</string>
+    <string name="text_header_tap_test">Start TEST Display</string>
+    <string name="text_tap_test_set_time_ms">Set wanted time to wait for TAP event in milliseconds</string>
+    <string name="text_info_tap_test">Is the time is not set, or set to 0, it would be running until the end of Activity.</string>
 
     <!-- Hint's Name -->
     <string name="hint_password">Password</string>
-    <string name="hint_example_ms_value">Ex: 500</string>
+    <string name="hint_example_ms_value">Ex: 500 ms</string>
     <string name="hint_example_flashes_value">Ex: 10</string>
     <string name="hint_choose_size_random_file_text_kb">Ex: 5</string>
     <string name="hint_choose_size_random_file_text_mb">Ex: 5125</string>
     <string name="hint_choose_name_random_file">Ex: My First Random File, Yay!</string>
     <string name="hint_i2c_address">Ex: 0x30</string>
     <string name="hint_tap_sensibility">0 to 100</string>
+    <string name="hint_rtc">Day Month NDay Hour GMT</string>
 
 
     <!-- Button's Name -->

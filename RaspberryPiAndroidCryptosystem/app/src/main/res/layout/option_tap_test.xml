@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purpleDark"
+    android:label="@string/option_signatures">
+
+    <TextView
+        android:id="@+id/text_header_tap_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_header_tap_test"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:height="30dp"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/text_info_tap_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_info_tap_test"
+        android:layout_centerHorizontal="true"
+        android:width="260dp"
+        android:textStyle="italic"
+        android:textColor="@color/whiteText"
+        android:layout_below="@id/text_header_tap_test"/>
+
+    <TextView
+        android:id="@+id/text_tap_test_set_time_ms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:width="120dp"
+        android:gravity="center"
+        android:text="@string/text_tap_test_set_time_ms"
+        android:layout_alignStart="@id/text_info_tap_test"
+        android:layout_alignLeft="@id/text_info_tap_test"
+        android:layout_below="@id/text_info_tap_test"
+        android:layout_marginTop="15dp"/>
+
+    <EditText
+        android:id="@+id/value_tap_test_time_ms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/text_tap_test_set_time_ms"
+        android:layout_toEndOf="@id/text_tap_test_set_time_ms"
+        android:layout_alignBottom="@id/text_tap_test_set_time_ms"
+        android:hint="@string/hint_example_ms_value"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/button_start_tap_test"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_start_tap_test"
+        android:layout_below="@id/value_tap_test_time_ms"
+        android:layout_alignEnd="@id/text_info_tap_test"
+        android:layout_alignRight="@id/text_info_tap_test"/>
+
+
+</RelativeLayout>

@@ -32,8 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/text_device_time"
-        android:focusable="false"/>
+        android:layout_below="@id/text_device_time"
+        android:focusable="false"
+        android:hint="@string/hint_rtc"
+        android:inputType="text"/>
 
     <TextView
         android:id="@+id/text_hsm_precise_rtc"
@@ -50,7 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:focusable="false"
-        android:layout_below="@+id/text_hsm_precise_rtc"/>
+        android:layout_below="@id/text_hsm_precise_rtc"
+        android:hint="@string/hint_rtc"
+        android:inputType="text"/>
 
     <TextView
         android:id="@+id/text_hsm_not_precise_rtc"
@@ -67,7 +71,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/text_hsm_not_precise_rtc"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:hint="@string/hint_rtc"
+        android:inputType="text"/>
 
     <Button
         android:id="@+id/button_refresh_rtc"
@@ -76,8 +82,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/button_refresh_rtc"
-        android:layout_alignEnd="@+id/text_header_rtc"
-        android:layout_alignRight="@+id/text_header_rtc"
+        android:layout_alignEnd="@id/text_header_rtc"
+        android:layout_alignRight="@id/text_header_rtc"
         android:layout_marginBottom="10dp"/>
 
 </RelativeLayout>

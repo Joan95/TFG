@@ -22,8 +22,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
-        android:layout_above="@+id/buttonBluetooth"
-        android:layout_below="@+id/text_choose_option"/>
+        android:layout_above="@id/buttonBluetooth"
+        android:layout_below="@id/text_choose_option"/>
 
     <Button
         android:id="@+id/buttonBluetooth"

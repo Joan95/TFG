@@ -33,8 +33,8 @@
         android:gravity="center"
         android:layout_below="@id/select_new_tap_value"
         android:textStyle="italic"
-        android:layout_alignStart="@+id/select_new_tap_value"
-        android:layout_alignLeft="@+id/select_new_tap_value"
+        android:layout_alignStart="@id/select_new_tap_value"
+        android:layout_alignLeft="@id/select_new_tap_value"
         android:text="@string/text_current_tap_sensibility" />
 
     <EditText
@@ -42,9 +42,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_below="@+id/text_current_tap_value"
-        android:layout_toEndOf="@+id/aux_reference"
-        android:layout_toRightOf="@+id/aux_reference"
+        android:layout_toEndOf="@id/text_current_tap_value"
+        android:layout_toRightOf="@id/text_current_tap_value"
+        android:layout_alignTop="@id/text_current_tap_value"
         android:hint="@string/hint_tap_sensibility"
         android:inputType="numberDecimal"
         android:focusable="false"/>
@@ -53,9 +53,9 @@
         android:id="@+id/text_election_tap_sensibility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/value_current_tap_sensibility"
-        android:layout_alignStart="@+id/select_new_tap_value"
-        android:layout_alignLeft="@+id/select_new_tap_value"
+        android:layout_below="@id/value_current_tap_sensibility"
+        android:layout_alignStart="@id/select_new_tap_value"
+        android:layout_alignLeft="@id/select_new_tap_value"
         android:height="30dp"
         android:gravity="center"
         android:textStyle="italic"
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_below="@id/text_election_tap_sensibility"
-        android:layout_alignStart="@+id/text_election_tap_sensibility"
+        android:layout_alignStart="@id/text_election_tap_sensibility"
         android:layout_alignLeft="@id/text_election_tap_sensibility"
         android:hint="@string/hint_tap_sensibility"
         android:inputType="number"/>
@@ -77,10 +77,11 @@
         android:background="@drawable/custom_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/value_selected_tap_sensibility"
+        android:width="140dp"
+        android:layout_toRightOf="@id/value_selected_tap_sensibility"
         android:layout_toEndOf="@id/value_selected_tap_sensibility"
-        android:layout_alignBaseline="@+id/value_selected_tap_sensibility"
-        android:layout_alignStart="@+id/aux_reference"
+        android:layout_alignBaseline="@id/value_selected_tap_sensibility"
+        android:layout_alignStart="@id/aux_reference"
         android:layout_alignLeft="@id/aux_reference"
         android:layout_marginTop="15dp"
         android:text="@string/button_set_new_tap_sensibility"
@@ -99,16 +100,93 @@
         android:layout_below="@id/button_set_new_tap_sensibility"/>
 
     <TextView
+        android:id="@+id/text_current_tap_axis_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_axis_tap_sensibility"
+        android:layout_centerHorizontal="true"
+        android:text="@string/text_current_tap_axis_value"/>
+
+    <TextView
+        android:id="@+id/text_current_axis_x"
+        android:width="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/text_axis_tap_sensibility"
+        android:layout_alignLeft="@id/text_axis_tap_sensibility"
+        android:layout_below="@id/text_current_tap_axis_value"
+        android:text="@string/text_current_tap_axis_x"/>
+
+    <EditText
+        android:id="@+id/value_current_axis_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="50dp"
+        android:focusable="false"
+        android:gravity="center"
+        android:hint="@string/hint_tap_sensibility"
+        android:layout_toEndOf="@id/text_current_axis_x"
+        android:layout_toRightOf="@id/text_current_axis_x"
+        android:layout_alignTop="@id/text_current_axis_x"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/text_current_axis_y"
+        android:width="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_current_tap_axis_value"
+        android:layout_toRightOf="@id/value_current_axis_x"
+        android:layout_toEndOf="@id/value_current_axis_x"
+        android:text="@string/text_current_tap_axis_y"/>
+
+    <EditText
+        android:id="@+id/value_current_axis_y"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="50dp"
+        android:focusable="false"
+        android:gravity="center"
+        android:hint="@string/hint_tap_sensibility"
+        android:layout_toEndOf="@id/text_current_axis_y"
+        android:layout_toRightOf="@id/text_current_axis_y"
+        android:layout_alignTop="@id/text_current_axis_y"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/text_current_axis_z"
+        android:width="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/value_current_axis_y"
+        android:layout_toRightOf="@id/value_current_axis_y"
+        android:layout_below="@id/text_current_tap_axis_value"
+        android:text="@string/text_current_tap_axis_z"/>
+
+    <EditText
+        android:id="@+id/value_current_axis_z"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="50dp"
+        android:focusable="false"
+        android:gravity="center"
+        android:hint="@string/hint_tap_sensibility"
+        android:layout_toEndOf="@id/text_current_axis_z"
+        android:layout_toRightOf="@id/text_current_axis_z"
+        android:layout_alignTop="@id/text_current_axis_z"
+        android:inputType="number"/>
+
+    <TextView
         android:id="@+id/text_axis_x"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:width="80dp"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_axis_tap_sensibility"
+        android:layout_below="@id/text_current_axis_x"
         android:text="@string/text_tap_axis_x"
-        android:layout_alignStart="@+id/select_new_tap_value"
-        android:layout_alignLeft="@+id/select_new_tap_value"/>
+        android:layout_alignStart="@id/select_new_tap_value"
+        android:layout_alignLeft="@id/select_new_tap_value"/>
 
     <EditText
         android:id="@+id/value_axis_x"
@@ -116,16 +194,16 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_tap_sensibility"
         android:gravity="center"
-        android:layout_toRightOf="@+id/text_axis_x"
-        android:layout_toEndOf="@+id/text_axis_x"
-        android:layout_alignBaseline="@+id/text_axis_x"
+        android:layout_toRightOf="@id/text_axis_x"
+        android:layout_toEndOf="@id/text_axis_x"
+        android:layout_alignTop="@id/text_axis_x"
         android:inputType="number"/>
 
     <TextView
         android:id="@+id/text_axis_y"
         android:width="80dp"
         android:gravity="center"
-        android:layout_alignBaseline="@+id/text_axis_x"
+        android:layout_alignBaseline="@id/text_axis_x"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_axis_tap_sensibility"
@@ -139,9 +217,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_tap_sensibility"
         android:gravity="center"
-        android:layout_toRightOf="@+id/text_axis_y"
-        android:layout_toEndOf="@+id/text_axis_y"
-        android:layout_alignBaseline="@+id/text_axis_y"
+        android:layout_toRightOf="@id/text_axis_y"
+        android:layout_toEndOf="@id/text_axis_y"
+        android:layout_alignTop="@id/text_axis_y"
         android:inputType="number"/>
 
     <TextView
@@ -153,7 +231,7 @@
         android:layout_below="@id/text_axis_x"
         android:layout_marginTop="10dp"
         android:text="@string/text_tap_axis_z"
-        android:layout_alignStart="@+id/text_axis_x"
+        android:layout_alignStart="@id/text_axis_x"
         android:layout_alignLeft="@id/text_axis_x"/>
 
     <EditText
@@ -162,9 +240,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_tap_sensibility"
         android:gravity="center"
-        android:layout_toRightOf="@+id/text_axis_z"
-        android:layout_toEndOf="@+id/text_axis_z"
-        android:layout_alignBaseline="@+id/text_axis_z"
+        android:layout_toRightOf="@id/text_axis_z"
+        android:layout_toEndOf="@id/text_axis_z"
+        android:layout_alignTop="@id/text_axis_z"
         android:inputType="number"/>
 
     <Button
@@ -172,10 +250,24 @@
         android:background="@drawable/custom_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_axis_y"
+        android:layout_below="@id/text_axis_y"
         android:text="@string/button_set_new_axis_tap_sensibility"
-        android:layout_alignStart="@id/button_set_new_tap_sensibility"
-        android:layout_alignLeft="@+id/button_set_new_tap_sensibility"/>
+        android:layout_alignEnd="@id/button_set_new_tap_sensibility"
+        android:layout_alignRight="@id/button_set_new_tap_sensibility"
+        android:layout_alignTop="@id/text_axis_z"/>
+
+    <TextView
+        android:id="@+id/text_info_tap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:layout_marginTop="15dp"
+        android:width="220dp"
+        android:textColor="@color/whiteText"
+        android:text="@string/text_info_tap"
+        android:layout_alignStart="@id/text_axis_tap_sensibility"
+        android:layout_alignLeft="@id/text_axis_tap_sensibility"
+        android:layout_below="@id/text_axis_z"/>
 
     <Button
         android:id="@+id/button_start_tap_test"
@@ -185,8 +277,8 @@
         android:enabled="false"
         android:layout_alignParentBottom="true"
         android:text="@string/button_start_tap_test"
-        android:layout_alignEnd="@+id/select_new_tap_value"
-        android:layout_alignRight="@+id/select_new_tap_value"
+        android:layout_alignEnd="@id/select_new_tap_value"
+        android:layout_alignRight="@id/select_new_tap_value"
         android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>

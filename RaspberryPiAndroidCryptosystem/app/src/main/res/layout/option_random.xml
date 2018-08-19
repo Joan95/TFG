@@ -20,7 +20,7 @@
         android:id="@+id/warning_choose_size_random_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/choose_size_random_file"
+        android:layout_below="@id/choose_size_random_file"
         android:layout_centerHorizontal="true"
         android:text="@string/text_warning_choose_size_random_file_text"/>
 
@@ -28,7 +28,7 @@
         android:id="@+id/value_size_random_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/warning_choose_size_random_file"
+        android:layout_below="@id/warning_choose_size_random_file"
         android:layout_centerHorizontal="true"
         android:hint="@string/hint_choose_size_random_file_text_kb"
         android:inputType="numberDecimal"
@@ -38,11 +38,11 @@
         android:id="@+id/kb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/value_size_random_file"
+        android:layout_alignBaseline="@id/value_size_random_file"
         android:textSize="15sp"
         android:text="@string/text_kb"
-        android:layout_toEndOf="@+id/value_size_random_file"
-        android:layout_toRightOf="@+id/value_size_random_file"
+        android:layout_toEndOf="@id/value_size_random_file"
+        android:layout_toRightOf="@id/value_size_random_file"
         android:layout_marginLeft="15sp"
         android:layout_marginStart="15sp" />
 
@@ -50,7 +50,7 @@
         android:id="@+id/mbConverter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/value_size_random_file"
+        android:layout_below="@id/value_size_random_file"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:hint="@string/hint_choose_size_random_file_text_mb"
@@ -60,17 +60,17 @@
         android:id="@+id/mb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/mbConverter"
+        android:layout_alignBaseline="@id/mbConverter"
         android:textSize="15sp"
         android:text="@string/text_mb"
-        android:layout_alignStart="@+id/kb"
-        android:layout_alignLeft="@+id/kb"/>
+        android:layout_alignStart="@id/kb"
+        android:layout_alignLeft="@id/kb"/>
 
     <TextView
         android:id="@+id/choose_name_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mb"
+        android:layout_below="@id/mb"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:textColor="@color/orange"
@@ -82,7 +82,7 @@
         android:id="@+id/value_name_random_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/choose_name_file"
+        android:layout_below="@id/choose_name_file"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:hint="@string/hint_choose_name_random_file"
@@ -93,10 +93,10 @@
         android:background="@drawable/custom_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/value_name_random_file"
+        android:layout_below="@id/value_name_random_file"
         android:text="@string/button_generate_random"
-        android:layout_alignStart="@+id/kb"
+        android:layout_alignStart="@id/kb"
         android:layout_marginTop="10dp"
-        android:layout_alignLeft="@+id/kb" />
+        android:layout_alignLeft="@id/kb" />
 
 </RelativeLayout>

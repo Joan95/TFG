@@ -1,5 +1,6 @@
 package com.example.joan.raspberrypiandroidcryptosystem;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -111,9 +112,31 @@ public class OptionTAP extends AppCompatActivity {
                     jsonMessage.put("AxisY", Integer.parseInt(valueAxisY.getText().toString()));
                     jsonMessage.put("AxisZ", Integer.parseInt(valueAxisZ.getText().toString()));
 
+                    valueAxisX.setText("");
+                    valueAxisY.setText("");
+                    valueAxisZ.setText("");
+
                     buttonStartTAPTest.setEnabled(true);
 
                     connectedThread.write(jsonMessage);
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+        buttonStartTAPTest.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                JSONObject jsonMessage = new JSONObject();
+                try {
+                    jsonMessage.put("TAP","TAPStartTAPTest");
+                    connectedThread.write(jsonMessage);
+
+                    Intent intent = new Intent(OptionTAP.this, OptionTAPTest.class);
+                    startActivity(intent);
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }

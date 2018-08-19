@@ -34,18 +34,18 @@
         android:layout_below="@id/select_new_i2c_address"
         android:layout_marginTop="10dp"
         android:textStyle="italic"
-        android:layout_alignStart="@+id/select_new_i2c_address"
-        android:layout_alignLeft="@+id/select_new_i2c_address"
+        android:layout_alignStart="@id/select_new_i2c_address"
+        android:layout_alignLeft="@id/select_new_i2c_address"
         android:text="@string/text_current_i2c_address" />
 
     <EditText
         android:id="@+id/value_current_i2c_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/select_new_i2c_address"
-        android:layout_toEndOf="@+id/text_current_i2c_address"
-        android:layout_toRightOf="@+id/text_current_i2c_address"
-        android:layout_alignBaseline="@+id/text_current_i2c_address"
+        android:layout_below="@id/select_new_i2c_address"
+        android:layout_toEndOf="@id/text_current_i2c_address"
+        android:layout_toRightOf="@id/text_current_i2c_address"
+        android:layout_alignBaseline="@id/text_current_i2c_address"
         android:hint="@string/hint_i2c_address"
         android:inputType="text"
         android:focusable="false"/>
@@ -55,9 +55,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/text_current_i2c_address"
-        android:layout_alignStart="@+id/select_new_i2c_address"
-        android:layout_alignLeft="@+id/select_new_i2c_address"
+        android:layout_below="@id/text_current_i2c_address"
+        android:layout_alignStart="@id/select_new_i2c_address"
+        android:layout_alignLeft="@id/select_new_i2c_address"
         android:height="30dp"
         android:gravity="center"
         android:textStyle="italic"
@@ -68,9 +68,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/value_current_i2c_address"
-        android:layout_toEndOf="@+id/text_election_i2c_address"
-        android:layout_toRightOf="@+id/text_election_i2c_address"
-        android:layout_alignBaseline="@+id/text_election_i2c_address"
+        android:layout_toEndOf="@id/text_election_i2c_address"
+        android:layout_toRightOf="@id/text_election_i2c_address"
+        android:layout_alignBaseline="@id/text_election_i2c_address"
         android:hint="@string/hint_i2c_address"
         android:inputType="text"
         android:focusable="false"/>
@@ -79,13 +79,13 @@
         android:id="@+id/list_i2c_0x30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/select_new_i2c_address"
-        android:layout_alignLeft="@+id/select_new_i2c_address"
-        android:layout_toStartOf="@+id/aux_reference"
-        android:layout_toLeftOf="@+id/aux_reference"
-        android:layout_below="@+id/value_selected_i2c_address"
+        android:layout_alignStart="@id/select_new_i2c_address"
+        android:layout_alignLeft="@id/select_new_i2c_address"
+        android:layout_toStartOf="@id/aux_reference"
+        android:layout_toLeftOf="@id/aux_reference"
+        android:layout_below="@id/value_selected_i2c_address"
         android:layout_marginTop="5dp"
-        android:layout_above="@+id/button_set_new_i2c"
+        android:layout_above="@id/button_set_new_i2c"
         android:entries="@array/list_i2c_0x30">
     </ListView>
 
@@ -93,13 +93,13 @@
         android:id="@+id/list_i2c_0x60"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/value_selected_i2c_address"
+        android:layout_below="@id/value_selected_i2c_address"
         android:entries="@array/list_i2c_0x60"
         android:layout_above="@id/button_set_new_i2c"
-        android:layout_toRightOf="@+id/aux_reference"
-        android:layout_toEndOf="@+id/aux_reference"
-        android:layout_alignEnd="@+id/select_new_i2c_address"
-        android:layout_alignRight="@+id/select_new_i2c_address"
+        android:layout_toRightOf="@id/aux_reference"
+        android:layout_toEndOf="@id/aux_reference"
+        android:layout_alignEnd="@id/select_new_i2c_address"
+        android:layout_alignRight="@id/select_new_i2c_address"
         android:layout_marginTop="5dp">
     </ListView>
 
@@ -111,8 +111,8 @@
         android:enabled="false"
         android:layout_alignParentBottom="true"
         android:text="@string/button_set_i2c_address"
-        android:layout_alignEnd="@+id/select_new_i2c_address"
-        android:layout_alignRight="@+id/select_new_i2c_address"
+        android:layout_alignEnd="@id/select_new_i2c_address"
+        android:layout_alignRight="@id/select_new_i2c_address"
         android:layout_marginBottom="10dp"/>
 
 </RelativeLayout>

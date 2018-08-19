@@ -45,7 +45,7 @@
         android:textStyle="italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/encrypt"
+        android:layout_below="@id/encrypt"
         android:width="100dp"
         android:height="50dp"
         android:text="@string/text_usage_of_cpu"
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/usageOfCPU"
-        android:layout_below="@+id/usageOfCPU"
+        android:layout_below="@id/usageOfCPU"
         android:width="100dp"
         android:height="50dp"
         android:gravity="center"
@@ -133,7 +133,7 @@
         android:text="@string/button_details"
         android:layout_alignLeft="@id/decrypt"
         android:layout_alignStart="@id/decrypt"
-        android:layout_below="@+id/valueMemoryDecrypt"
+        android:layout_below="@id/valueMemoryDecrypt"
         android:layout_marginTop="10dp"
         android:enabled="false"
         />
@@ -189,13 +189,13 @@
         android:checked="true" />
 
     <TextView
-        android:id="@id/selectMethod"
-        android:layout_alignStart="@+id/usageOfCPU"
+        android:id="@+id/selectMethod"
+        android:layout_alignStart="@id/usageOfCPU"
         android:textStyle="bold"
         android:textColor="@color/orange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordText"
+        android:layout_below="@id/passwordText"
         android:layout_alignLeft="@id/usageOfCPU"
         android:gravity="center"
         android:width="80dp"
@@ -248,7 +248,7 @@
         android:layout_alignLeft="@id/usageOfCPU"
         android:layout_alignStart="@id/usageOfCPU"
         android:gravity="center"
-        android:layout_below="@+id/selectMethod"
+        android:layout_below="@id/selectMethod"
         android:layout_marginTop="10dp"
         android:width="80dp"
         android:height="50dp"
@@ -271,7 +271,7 @@
         android:textColor="@color/orange"
         android:textStyle="italic"
         android:text="@string/text_refresh_sf"
-        android:layout_below="@+id/selectFile"
+        android:layout_below="@id/selectFile"
         android:layout_alignLeft="@id/selectFile"
         android:layout_alignStart="@id/selectFile"
         android:layout_marginTop="10dp"/>
@@ -283,8 +283,8 @@
         android:layout_height="wrap_content"
         android:text="@string/button_refresh"
         android:layout_alignBaseline="@id/refreshSF"
-        android:layout_alignStart="@+id/decrypt"
-        android:layout_alignLeft="@+id/decrypt" />
+        android:layout_alignStart="@id/decrypt"
+        android:layout_alignLeft="@id/decrypt" />
 
     <Button
         android:id="@+id/sendButton"
@@ -292,8 +292,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_send"
-        android:layout_below="@+id/refreshButton"
-        android:layout_alignStart="@+id/refreshButton"
-        android:layout_alignLeft="@+id/refreshButton" />
+        android:layout_below="@id/refreshButton"
+        android:layout_alignStart="@id/refreshButton"
+        android:layout_alignLeft="@id/refreshButton" />
 
 </RelativeLayout>
