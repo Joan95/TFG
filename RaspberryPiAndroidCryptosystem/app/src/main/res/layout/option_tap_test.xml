@@ -50,10 +50,11 @@
         android:layout_toEndOf="@id/text_tap_test_set_time_ms"
         android:layout_alignBottom="@id/text_tap_test_set_time_ms"
         android:hint="@string/hint_example_ms_value"
+        android:gravity="center"
         android:inputType="number"/>
 
     <Button
-        android:id="@+id/button_start_tap_test"
+        android:id="@+id/button_begin_tap_test"
         android:background="@drawable/custom_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

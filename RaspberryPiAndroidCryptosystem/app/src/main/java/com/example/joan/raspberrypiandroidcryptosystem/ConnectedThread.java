@@ -168,6 +168,30 @@ public class ConnectedThread extends Thread{
                         }
                     }
 
+                    if (jsonMessage.has("TAPTest")) {
+                        JSONObject tapTestContent = jsonMessage.getJSONObject("TAPTest");
+
+                        Log.d("TAPTest message", tapTestContent.toString());
+
+                        if (tapTestContent.has("TAPTestStatus")) {
+                            String operationTAPTest = tapTestContent.getString("TAPTestStatus");
+
+                            if (operationTAPTest.equals("started")) {
+                                Button buttonStartTAPTest = ((Activity)contextTAPTest).findViewById(R.id.button_begin_tap_test);
+                                buttonStartTAPTest.setEnabled(false);
+                            }
+
+                            if (operationTAPTest.equals("ended")) {
+                                Button buttonStartTAPTest = ((Activity)contextTAPTest).findViewById(R.id.button_begin_tap_test);
+                                buttonStartTAPTest.setEnabled(true);
+                            }
+                        }
+
+                        if (tapTestContent.has("TAPTestValues")) {
+
+                        }
+                    }
+
                     if (jsonMessage.has("System Files")) {
 
                         JSONObject content = jsonMessage.getJSONObject("System Files");
