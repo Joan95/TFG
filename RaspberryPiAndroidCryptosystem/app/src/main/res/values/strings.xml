@@ -71,6 +71,13 @@
     <string name="text_header_tap_test">Start TEST Display</string>
     <string name="text_tap_test_set_time_ms">Set wanted time to wait for TAP event in milliseconds</string>
     <string name="text_info_tap_test">Is the time is not set, or set to 0, it would be running until the end of Activity.</string>
+    <string name="text_tap_test_axis_values">Movement detected has had the following characteristics.</string>
+    <string name="text_tap_test_g_force">G Force Value</string>
+    <string name="text_tap_test_tap_direction_meaning">That TAP direction means</string>
+    <string name="text_tap_test_tap_direction">TAP Direction</string>
+    <string name="text_tap_test_axis_x_values">Axis X values</string>
+    <string name="text_tap_test_axis_y_values">Axis Y values</string>
+    <string name="text_tap_test_axis_z_values">Axis Z values</string>
 
     <!-- Hint's Name -->
     <string name="hint_password">Password</string>
@@ -82,6 +89,8 @@
     <string name="hint_i2c_address">Ex: 0x30</string>
     <string name="hint_tap_sensibility">0 to 100</string>
     <string name="hint_rtc">Day Month NDay Hour GMT</string>
+    <string name="hint_g_force">-1 to 1</string>
+    <string name="hint_tap_direction">Direction</string>
 
 
     <!-- Button's Name -->

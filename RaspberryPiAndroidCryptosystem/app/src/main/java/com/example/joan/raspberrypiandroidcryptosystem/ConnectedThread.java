@@ -72,19 +72,30 @@ public class ConnectedThread extends Thread{
 
                         Log.d("RTC operation", jsonMessage.toString());
 
-                        long rtcNotPrecise = rtcContent.getLong("RTCNotPreciseTime") * 1000;
-                        long rtcPrecise = rtcContent.getLong("RTCPreciseTime") * 1000;
+                        Button buttonRTCRefreshRTC = ((Activity)contextRTC).findViewById(R.id.button_refresh_rtc);
+                        if (rtcContent.getString("RTCOperation").equals("started")) {
+                            buttonRTCRefreshRTC.setEnabled(false);
+                        }
 
-                        EditText rtcNotPreciseHSMValue = ((Activity)contextRTC).findViewById(R.id.value_hsm_not_precise_rtc);
-                        EditText rtcPreciseHSMValue = ((Activity)contextRTC).findViewById(R.id.value_hsm_precise_rtc);
+                        if (rtcContent.getString("RTCOperation").equals("ended")) {
+                            buttonRTCRefreshRTC.setEnabled(true);
+                        }
 
-                        Calendar calendar = Calendar.getInstance();
+                        if (rtcContent.getString("RTCOperation").equals("results")) {
+                            long rtcNotPrecise = rtcContent.getLong("RTCNotPreciseTime") * 1000;
+                            long rtcPrecise = rtcContent.getLong("RTCPreciseTime") * 1000;
 
-                        calendar.setTimeInMillis(rtcNotPrecise);
-                        rtcNotPreciseHSMValue.setText(calendar.getTime().toString());
+                            EditText rtcNotPreciseHSMValue = ((Activity)contextRTC).findViewById(R.id.value_hsm_not_precise_rtc);
+                            EditText rtcPreciseHSMValue = ((Activity)contextRTC).findViewById(R.id.value_hsm_precise_rtc);
 
-                        calendar.setTimeInMillis(rtcPrecise);
-                        rtcPreciseHSMValue.setText(calendar.getTime().toString());
+                            Calendar calendar = Calendar.getInstance();
+
+                            calendar.setTimeInMillis(rtcNotPrecise);
+                            rtcNotPreciseHSMValue.setText(calendar.getTime().toString());
+
+                            calendar.setTimeInMillis(rtcPrecise);
+                            rtcPreciseHSMValue.setText(calendar.getTime().toString());
+                        }
                     }
 
                     if (jsonMessage.has("LED")) {
@@ -188,6 +199,64 @@ public class ConnectedThread extends Thread{
                         }
 
                         if (tapTestContent.has("TAPTestValues")) {
+                            String axisTAPValue = tapTestContent.getString("TAPTestValues");
+                            String gForceTAPTest = tapTestContent.getString("TAPTestGForce");
+                            String tapDirectionTAPTest = tapTestContent.getString("TAPTestTAPDirection");
+                            String tapDirectionTAPMeaning = null;
+
+                            if (Integer.parseInt(tapDirectionTAPTest) == -1) {
+                                tapDirectionTAPMeaning = "Axis Down";
+                            }
+
+                            if (Integer.parseInt(tapDirectionTAPTest) == 0) {
+                                tapDirectionTAPMeaning = "No movement";
+                            }
+
+                            if (Integer.parseInt(tapDirectionTAPTest) == 1) {
+                                tapDirectionTAPMeaning = "Axis UP";
+                            }
+
+                            if (axisTAPValue.equals("AxisX")) {
+                                EditText gForceAxisXValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_x_g_force);
+                                EditText tapDirectionValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_x_tap_direction);
+                                EditText tapDirectionValueMeaning = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_x_tap_direction_meaning);
+
+                                try {
+                                    gForceAxisXValue.setText(gForceTAPTest);
+                                    tapDirectionValue.setText(tapDirectionTAPTest);
+                                    tapDirectionValueMeaning.setText(tapDirectionTAPMeaning);
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            if (axisTAPValue.equals("AxisY")) {
+                                EditText gForceAxisYValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_y_g_force);
+                                EditText tapDirectionValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_y_tap_direction);
+                                EditText tapDirectionValueMeaning = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_y_tap_direction_meaning);
+
+                                try {
+                                    gForceAxisYValue.setText(gForceTAPTest);
+                                    tapDirectionValue.setText(tapDirectionTAPTest);
+                                    tapDirectionValueMeaning.setText(tapDirectionTAPMeaning);
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            if (axisTAPValue.equals("AxisZ")) {
+                                EditText gForceAxisZValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_z_g_force);
+                                EditText tapDirectionValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_z_tap_direction);
+                                EditText tapDirectionValueMeaning = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_z_tap_direction_meaning);
+
+                                try {
+                                    gForceAxisZValue.setText(gForceTAPTest);
+                                    tapDirectionValue.setText(tapDirectionTAPTest);
+                                    tapDirectionValueMeaning.setText(tapDirectionTAPMeaning);
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
                         }
                     }
