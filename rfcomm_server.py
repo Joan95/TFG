@@ -11,6 +11,8 @@ import traceback
 import time
 import datetime
 
+import ctypes
+
 import json
 
 
@@ -98,6 +100,8 @@ tapSensibility = 50                             # TAP's default sensibility
 tapSensibilityAxisX = 0                         # TAP's Axis X sensibility
 tapSensibilityAxisY = 0                         # TAP's Axis Y sensibility
 tapSensibilityAxisZ = 0                         # TAP's Axis Z sensibility
+accelerometer_result = []                       # Empty array where it would be the TAP infromation with function get_accelerometer_data
+timeTAPTest = 0                                 # Time in milliseconds for TAP Test
 recommendedMinRandomFileSize = 0                # Recommended minimum size of Random File in Kilobytes
 recommendedMaxRandomFileSize = 5120             # Recommended maximum size of Random File in Kilobytes
 
@@ -763,7 +767,7 @@ try:
                                                 while(noTestEnd):
                                                         noTestEnd = True
 
-                                                        print "Waiting to recieve the message from device ", client_info
+                                                        print "Waiting to recieve the configuration for the TAP test from device ", client_info
                                                         print "\n"
 
                                                         data = client_sock.recv(1024)
@@ -773,6 +777,44 @@ try:
                                                         jsonMessage = json.loads(data)
                                                         print "jsonMessage:\n%s" % jsonMessage
 
+                                                        if jsonMessage.get("TAPTest") == "TAPTestStart":
+                                                                SendMessage = {}
+                                                                SendMessage["TAPTestStatus"] = "started"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'TAPTest': %s}" % (SendMessage))
+                                                                print SendMessage
+                                                                print "\n"        
+                                                                client_sock.send(SendMessage)
+                                                                
+                                                                timeTAPTest = int(jsonMessage.get("TAPTestSetTime"))*-1
+                                                                
+                                                                if timeTAPTest == 0:
+                                                                        print "Time configuration would be of %s" % (timeTAPTest)
+                                                                        zymkey.client.wait_for_tap()
+                                                                else:
+                                                                        print "Time configuration would be of %s" % (timeTAPTest)
+                                                                        zymkey.client.wait_for_tap(timeout_ms = timeTAPTest)
+
+                                                                
+
+                                                                accelerometer_result = zymkey.client.get_accelerometer_data()
+                                                                print accelerometer_result
+                                                                print "Value of G force in Axis X was %s" % (accelerometer_result[0].g_force)
+                                                                print "Value of TAP direction in Axis X was %s" % (accelerometer_result[0].tap_dir)
+                                                                print "Value of G force in Axis Y was %s" % (accelerometer_result[1].g_force)
+                                                                print "Value of TAP direction in Axis Y was %s" % (accelerometer_result[1].tap_dir)
+                                                                print "Value of G force in Axis Z was %s" % (accelerometer_result[2].g_force)
+                                                                print "Value of TAP direction in Axis Z was %s" % (accelerometer_result[2].tap_dir)
+
+                                                                SendMessage = {}
+                                                                SendMessage["TAPTestStatus"] = "ended"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'TAPTest': %s}" % (SendMessage))
+                                                                print SendMessage
+                                                                print "\n"        
+                                                                client_sock.send(SendMessage)
+
+                                                                
                                                         if jsonMessage.get("message") == 'endFunction':
                                                                 print "End of Function has been selected"
                                                                 noTestEnd = False
