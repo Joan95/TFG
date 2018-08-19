@@ -65,6 +65,7 @@ optionFile = ""                 # Name File Option to be charged
 optionFunction = ""             # Function has been choosen
 
 noEnd = False                   # Boolean for while's switch menu
+noTestEnd = False               # Boolean for TAP Test Loop
 
 msOn = 0                        # Amount of miliseconds LED will be ON
 msOff = 0                       # Amount of miliseconds LED will be OFF
@@ -94,9 +95,9 @@ fileRunning = ""
 # ------------- ------------- Recommended Variables ------------- -------------#
 i2cAddress = '0x30'                             # I2C default address
 tapSensibility = 50                             # TAP's default sensibility
-tapSensibilityAxisX = 50                        # TAP's Axis X sensibility
-tapSensibilityAxisY = 50                        # TAP's Axis Y sensibility
-tapSensibilityAxisZ = 50                        # TAP's Axis Z sensibility
+tapSensibilityAxisX = 0                         # TAP's Axis X sensibility
+tapSensibilityAxisY = 0                         # TAP's Axis Y sensibility
+tapSensibilityAxisZ = 0                         # TAP's Axis Z sensibility
 recommendedMinRandomFileSize = 0                # Recommended minimum size of Random File in Kilobytes
 recommendedMaxRandomFileSize = 5120             # Recommended maximum size of Random File in Kilobytes
 
@@ -171,6 +172,9 @@ def sendSF(pathToResources,FDevice,SFDevice):
 print "\n\n\t\tWelcome to my TFG!\n\n"
 zymkey.client.__init__                          # Zymkey initialization
 zymkey.client.set_i2c_address(i2cAddress)       # Set I2C address to '0x30'
+zymkey.client.set_tap_sensitivity('all', tapSensibility)
+
+print zymkey.client
 
 try:
 	while True:
@@ -210,6 +214,7 @@ try:
 			client_sock.send(SendMessage)
 
                         noEnd = True
+                        noTestEnd = True
                         
                         ############# Enormous Switch Case #############
 
@@ -717,6 +722,16 @@ try:
                                         print SendMessage
                                         print "\n"        
                                         client_sock.send(SendMessage)
+
+                                        SendMessage = {}
+                                        SendMessage["TAPCurrentAxisXSensibility"] = str("%s" % (tapSensibilityAxisX))
+                                        SendMessage["TAPCurrentAxisYSensibility"] = str("%s" % (tapSensibilityAxisY))
+                                        SendMessage["TAPCurrentAxisZSensibility"] = str("%s" % (tapSensibilityAxisZ))
+                                        SendMessage = json.dumps(SendMessage)
+                                        SendMessage = str("{'TAP': %s}" % (SendMessage))
+                                        print SendMessage
+                                        print "\n"        
+                                        client_sock.send(SendMessage)
                                         
                                         print "Waiting to recieve the new TAP sensibility configuration from device ", client_info
                                         print "\n"
@@ -739,12 +754,28 @@ try:
                                                 zymkey.client.set_tap_sensitivity('x', tapSensibilityAxisX)
                                                 zymkey.client.set_tap_sensitivity('y', tapSensibilityAxisY)
                                                 zymkey.client.set_tap_sensitivity('z', tapSensibilityAxisZ)
-                                                
+
                                         if jsonMessage.get("message") == 'endFunction':
                                                 print "End of Function has been selected"
                                                 noEnd = False
 
+                                        if jsonMessage.get("TAP") == "TAPStartTAPTest":
+                                                while(noTestEnd):
+                                                        noTestEnd = True
 
+                                                        print "Waiting to recieve the message from device ", client_info
+                                                        print "\n"
+
+                                                        data = client_sock.recv(1024)
+                                                        if len(data) == 0: break
+
+                                                        #Data to JSON
+                                                        jsonMessage = json.loads(data)
+                                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                                        if jsonMessage.get("message") == 'endFunction':
+                                                                print "End of Function has been selected"
+                                                                noTestEnd = False
 
                         else:
                                 print "No possible Option"
