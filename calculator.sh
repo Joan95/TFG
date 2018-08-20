@@ -278,8 +278,8 @@ echo -e "\t\t\tMaximum %MEM consumption: \t$decryptMaxMEM%"
 	#decryptCntCPU		#Number of Trustly values of CPU
 	#decryptCntMEM		#Number of Trustly values of MEM
 
-returnValue="type=encryption;\nname=$name;\nsize=$size;\nCPUUsage=$encryptCPUUsage;\nMEMUsage=$encryptMEMUsage;\nRAMUsage=$encryptRAMUsage;\nmaxCPU=$encryptMaxCPU;\nmaxMEM=$encryptMaxMEM;\nmaxRAM=$encryptMaxRAM;\ntimeUsed=$encryptTime;\ncntCPU=$encryptCntCPU;\ncntMEM=$encryptCntMEM;new;
-\n\ntype=decryption;\nCPUUsage=$decryptCPUUsage;\nMEMUsage=$decryptMEMUsage;\nRAMUsage=$decryptRAMUsage;\nmaxCPU=$decryptMaxCPU;\nmaxMEM=$decryptMaxMEM;\nmaxRAM=$decryptMaxRAM;\ntimeUsed=$decryptTime;\ncntCPU=$decryptCntCPU;\ncntMEM=$decryptCntMEM;new"
+returnValue="type=encryption;\nvalues=header;\nname=$name;\nsize=$size;\nsend;\nvalues=CPU;\nCPUUsage=$encryptCPUUsage;\nmaxCPU=$encryptMaxCPU;\ncntCPU=$encryptCntCPU;\nsend;\nvalues=MEM;\nMEMUsage=$encryptMEMUsage;\nmaxMEM=$encryptMaxMEM;\ncntMEM=$encryptCntMEM;\nsend;\nvalues=RAM;\nRAMUsage=$encryptRAMUsage;\nmaxRAM=$encryptMaxRAM;\ntimeUsed=$encryptTime;\nsend;
+\n\ntype=decryption;\nvalues=header;\nname=$name;\nsize=$size;\nsend;\nvalues=CPU;\nCPUUsage=$decryptCPUUsage;\nmaxCPU=$decryptMaxCPU;\ncntCPU=$decryptCntCPU;\nsend;\nvalues=MEM;\nMEMUsage=$decryptMEMUsage;\nmaxMEM=$decryptMaxMEM;\ncntMEM=$decryptCntMEM;\nsend;\nvalues=RAM;\nRAMUsage=$decryptRAMUsage;\nmaxRAM=$decryptMaxRAM;\ntimeUsed=$decryptTime;\nsend"
 
 echo -e "$returnValue" >> temporal.txt
 

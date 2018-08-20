@@ -60,6 +60,7 @@ base_directory = "/home/pi/Desktop/TFG"
 device_directory = "/media/pi/Transcend/TFG"
 
 i2c_info_file = "/sys/kernel/debug/tracing/trace"
+i2c_enable_tracing = "/sys/kernel/debug/tracing/events/i2c/enable"
 
 optionFile = ""                 # Name File Option to be charged
 optionFunction = ""             # Function has been choosen
@@ -175,8 +176,6 @@ print "\n\n\t\tWelcome to my TFG!\n\n"
 zymkey.client.__init__                          # Zymkey initialization
 zymkey.client.set_i2c_address(i2cAddress)       # Set I2C address to '0x30'
 zymkey.client.set_tap_sensitivity('all', tapSensibility)
-
-print zymkey.client
 
 try:
 	while True:
@@ -353,13 +352,29 @@ try:
                                                 print "End of Function has been selected"
                                                 noEnd = False
 
-                                        elif jsonMessage.get("message") == 'refresh':
+                                        elif jsonMessage.get("encrypt_decrypt") == 'refresh':
                                                 #print "Resending System Files"
                                                 #print "\tCollecting information of files from: ", pathToResources
                                                 FDevice = {}
                                                 SFDevice = {}
 
+                                                SendMessage = {}
+                                                SendMessage["refreshOperation"] = "started"
+                                                SendMessage = json.dumps(SendMessage)
+                                                SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
+                                                print SendMessage
+                                                print "\n"
+                                                client_sock.send(SendMessage)
+
                                                 sendSF(pathToResources,FDevice,SFDevice)
+
+                                                SendMessage = {}
+                                                SendMessage["refreshOperation"] = "ended"
+                                                SendMessage = json.dumps(SendMessage)
+                                                SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
+                                                print SendMessage
+                                                print "\n"
+                                                client_sock.send(SendMessage)
                                                         
                                                 print "\tThe whole System File information has sent to ", client_info
                                                 print "\n"
@@ -393,11 +408,11 @@ try:
                                                 if (os.path.isfile(pathToFile)):
                                                         #FILE EXISTS
                                                         SendMessage = {}
-                                                        SendMessage["message"] = "encryption"
-                                                        SendMessage["action"] = "start"
+                                                        SendMessage["operationEncryption"] = "started"
                                                         SendMessage = json.dumps(SendMessage)
-                                                        #print SendMessage
-                                                        #print "\n"
+                                                        SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
+                                                        print SendMessage
+                                                        print "\n"
                                                         
                                                         client_sock.send(SendMessage)
                                 
@@ -442,11 +457,11 @@ try:
                                                                 print "File has been encrypted successfully"
                                 
                                                                 SendMessage = {}
-                                                                SendMessage["message"] = "encryption"
-                                                                SendMessage["action"] = "end"
+                                                                SendMessage["operationEncryption"] = "ended"
                                                                 SendMessage = json.dumps(SendMessage)
-                                                                #print SendMessage
-                                                                #print "\n"
+                                                                SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
+                                                                print SendMessage
+                                                                print "\n"
                                 
                                                                 client_sock.send(SendMessage)
                                                                 
@@ -458,11 +473,11 @@ try:
                                                                 time.sleep(1)
                                 
                                                                 SendMessage = {}
-                                                                SendMessage["message"] = "decryption"
-                                                                SendMessage["action"] = "start"
+                                                                SendMessage["operationDecryption"] = "started"
                                                                 SendMessage = json.dumps(SendMessage)
-                                                                #print SendMessage
-                                                                #print "\n"
+                                                                SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
+                                                                print SendMessage
+                                                                print "\n"
                                 
                                                                 client_sock.send(SendMessage)
                                 
@@ -496,11 +511,11 @@ try:
                                                                         print "File has been decrypted successfully"
                                 
                                                                         SendMessage = {}
-                                                                        SendMessage["message"] = "decryption"
-                                                                        SendMessage["action"] = "end"
+                                                                        SendMessage["operationDecryption"] = "ended"
                                                                         SendMessage = json.dumps(SendMessage)
-                                                                        #print SendMessage
-                                                                        #print "\n"
+                                                                        SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
+                                                                        print SendMessage
+                                                                        print "\n"
                                 
                                                                         client_sock.send(SendMessage)
                                 
@@ -516,10 +531,10 @@ try:
                                                                         fileLogsFile = open(logsFile, "a")
                                                                         fileLogsFile.write(dataTemporal)
                                                                         fileLogsFile.close()
-                                                                        print dataTemporal
+                                                                        #print dataTemporal
                                 
                                                                         dataTemporal = dataTemporal.replace("\n", "").split(';')
-                                                                        #print dataTemporal
+                                                                        print dataTemporal
 
                                                                         infoForType = {}							
 
@@ -529,20 +544,25 @@ try:
                                                                                 #print aux
                                                                                 if (aux[0] == "type"):
                                                                                         auxType = aux[1]
+                                                                                        auxType = str("%sResults" % (auxType))
 
-                                                                                if (aux[0] == "new"):
+                                                                                elif (aux[0] == "values"):
+                                                                                        auxValues = aux[1]
+
+                                                                                elif (aux[0] == "send"):
                                                                                         SendMessage = {}
-                                                                                        SendMessage["message"] = auxType
-                                                                                        SendMessage["result"] = infoForType
+                                                                                        SendMessage[auxType] = auxValues
+                                                                                        SendMessage["values"] = infoForType
                                                                                         SendMessage = json.dumps(SendMessage)
+                                                                                        SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
                                                                                         print SendMessage
                                                                                         print "\n"
-                                                                                        
                                                                                         client_sock.send(SendMessage)
-                                                                                        time.sleep(1)
 
+                                                                                        infoForType = {}
+                                                                                        
                                                                                 else:
-                                                                                        #print "%s %s" % (aux[0], aux[1])
+                                                                                        #print "aux 0: %s, aux 1: %s" % (aux[0], aux[1])
                                                                                         infoForType[aux[0]] = aux[1]
 
                                                                         fileTemporal.close()
@@ -552,6 +572,7 @@ try:
                                                                         del infoForType
                                 
                                                                         if os.path.isfile("temporal.txt"):
+                                                                                print ""
                                                                                 os.remove("temporal.txt")
                                                                         else:
                                                                                 print "Error: 'temporal.txt' not found"
@@ -562,6 +583,7 @@ try:
                                                                         SendMessage["error"] = "error"
                                                                         SendMessage["body"] = "Error during the decryption."
                                                                         SendMessage = json.dumps(SendMessage)
+                                                                        SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
                                                                         #print SendMessage
                                                                         #print "\n"
                                 
@@ -573,6 +595,7 @@ try:
                                                                 SendMessage["error"] = "error"
                                                                 SendMessage["body"] = "Error during the encryption."
                                                                 SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
                                                                 #print SendMessage
                                                                 #print "\n"
                                 
@@ -584,6 +607,7 @@ try:
                                                         SendMessage["error"] = "error"
                                                         SendMessage["body"] = "File not found."
                                                         SendMessage = json.dumps(SendMessage)
+                                                        SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
                                                         #print SendMessage
                                                         #print "\n"
                                 
@@ -698,6 +722,16 @@ try:
 
                         elif optionFunction == 'i2c':
                                 print "Option I2C has been choosen"
+
+                                e = subprocess.Popen(["./i2c.sh"])
+                                #print e.communicate()[0]
+                                e.wait()
+                                returncode = e.returncode
+                                
+                                #subprocess.check_output(['sudo','echo','1','>',i2c_enable_tracing])
+                                line = subprocess.check_output(['sudo', 'cat', i2c_enable_tracing])
+                                print line
+
                                 while(noEnd):
                                         noEnd = True
 
@@ -722,6 +756,8 @@ try:
                                         if jsonMessage.get("I2CNewAddress"):
                                                 i2cAddress = jsonMessage.get("I2CNewAddress")
                                                 zymkey.client.set_i2c_address(i2cAddress)
+                                                line = subprocess.check_output(['gpio','readall'])
+                                                print line
                                                 line = subprocess.check_output(['sudo', 'tail', '-2', i2c_info_file])
                                                 print line
                                                 
