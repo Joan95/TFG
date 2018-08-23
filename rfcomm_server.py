@@ -53,7 +53,17 @@ class Message:
 	
 	def __repr__(self):
 		return str(self.__dict__)
+                
+class Tree:
+        def __init__(self, number = '*', text = "Main Menu", parent = None, children = None, hasChildren = False):
+                self.number = number
+                self.text = text
+                self.parent = parent
+                self.children = []
+                self.hasChildren = hasChildren
 
+        def __repr__(self):
+                return str("%s - %s" % (self.number, self.text))
 
 # ------------- ------------- Variables ------------- -------------# 
 base_directory = "/home/pi/Desktop/TFG"                 
@@ -115,9 +125,74 @@ SendMessage = {}                # Dictionary to send messages between devices
 FDevice = {}                    # Dictionary to save file's information resident in the PenDrive
 SFDevice = {}                   # Dictionary to send System's File recollected to the device
 
+mainMenu = None
 
 # ------------- ------------- Funtions ------------- -------------#
+                ########## Display Main Menu ##########
+def createMenu():
+        global mainMenu
+        mainMenu = Tree(hasChildren = True)
+        RTC = Tree(0,"Get Real Time Clock (RTC)", mainMenu)
+        LED = Tree(1, "LED Controller", mainMenu, hasChildren = True)
+        LEDOn = Tree(1.1, "LED On", LED)
+        LEDOff = Tree(1.2, "LED Off", LED)
+        LEDToggle = Tree(1.3, "LED Toggle", LED)
+        encryptDecrypt = Tree(2, "Encrypt and Decrypt files", mainMenu, hasChildren = True)
+        details = Tree(2.1, "See Operation's details", encryptDecrypt)
+        random = Tree(3, "Generate RANDOM files", mainMenu)
+        signatures = Tree(4, "Signatures", mainMenu, hasChildren = True)
+        signaturesGenerate = Tree(4.1, "Generate new Signature", signatures)
+        signaturesCorrupt = Tree(4.2, "Corrupt a Signature", signatures)
+        signaturesCheck = Tree(4.3, "Check a Signature", signatures)
+        ecdsa = Tree(5, "ECDSA", mainMenu)
+        i2c = Tree(6, "Change configuration of I2A bus", mainMenu)
+        tap = Tree(7, "Configure TAP sensibility", mainMenu, hasChildren = True)
+        tapTest = Tree(7.1, "Begin TAP Test", tap)
 
+        
+        LED.children.append(LEDOn)
+        LED.children.append(LEDOff)
+        LED.children.append(LEDToggle)
+
+        encryptDecrypt.children.append(details)
+
+        signatures.children.append(signaturesGenerate)
+        signatures.children.append(signaturesCorrupt)
+        signatures.children.append(signaturesCheck)
+
+        tap.children.append(tapTest)
+        
+        mainMenu.children.append(RTC)
+        mainMenu.children.append(LED)
+        mainMenu.children.append(encryptDecrypt)
+        mainMenu.children.append(random)
+        mainMenu.children.append(signatures)
+        mainMenu.children.append(ecdsa)
+        mainMenu.children.append(i2c)
+        mainMenu.children.append(tap)
+
+def showMenu(position):
+        print ""
+        print "---------- MAIN MENU ----------"
+        print ""
+        if position == None:
+                print "%s\t\t\t<---(Your position)" % mainMenu
+
+                if mainMenu.hasChildren:
+                        for child in mainMenu.children:
+                                print "\t%s" % child 
+                
+        else: 
+                print "%s\t\t\t<---(Your position)" % mainMenu.children[position]
+
+                if mainMenu.children[position].hasChildren:       
+                        for child in mainMenu.children[position].children:
+                                print "\t%s" % child
+
+        print ""
+        print "---------- ********* ----------"
+        print ""
+        
                 ########## System Files Logs Creation ##########
 def createLogsSF(typeFile, cipher, nameFile, sizeOfFileMB, hsm):
 	now = datetime.datetime.now()
@@ -168,11 +243,34 @@ def sendSF(pathToResources,FDevice,SFDevice):
 		SFDevice = json.dumps(SFDevice)
 		SFDevice = str("{'System Files': %s}" % (SFDevice))
 
-		print SFDevice
+		print "Message sent to target:\n\t%s" % SFDevice
 		client_sock.send(SFDevice)
 		FDevice = {}
 		SFDevice = {}
 
+                ########## Send Signatures Files to target ##########
+def sendSignatures(pathToSignatures):
+        signaturesDirectories = os.listdir(pathToSignatures)
+
+        listOfSignatures = []
+        
+        print "\n\tSending all Signatures configuration..."
+        print "\tSignatures:\n\t\t%s" % (signaturesDirectories)
+                                        
+        if signaturesDirectories != None:
+                for signature in signaturesDirectories:
+                        print signature
+                        listOfSignatures.append(signature)
+
+        
+        SendMessage = {}
+        SendMessage["NumberOfFiles"] = num_signatures
+        SendMessage["ListOfSign"] = listOfSignatures
+        SendMessage = json.dumps(SendMessage)
+        SendMessage = str("{'Signatures Files': %s}" % (SendMessage))
+        print "Message sent to target:\n\t%s" % SendMessage
+        print "\n"        
+        client_sock.send(SendMessage)
 
 
 # ------------- ------------- Main ------------- ------------- #
@@ -192,9 +290,13 @@ try:
 
 		try:
 		    while True:
-		        data = client_sock.recv(1024)
-	
-		        if len(data) == 0: break
+                        createMenu()
+                        showMenu(None)
+
+                        print "Please choose an option"
+                        
+                        data = client_sock.recv(1024)
+                        if len(data) == 0: break
 
 		        print "Message received from %s:\n\t[%s]\n" % (client_info, data)
 	
@@ -204,20 +306,7 @@ try:
 
                         optionFunction = str("%s" % (jsonMessage.get("Function")))
 			print "%s" % optionFunction
-			optionFile = str("%s.py" % (jsonMessage.get("Function")))
-
-                        SendMessage = {}        # Clear Dicctionary for a new assignment
-                        SendMessage["OpF"] = optionFunction
-			SendMessage["msg"] = "OK"
-			SendMessage["act"] = "start"
-			SendMessage["bytes"] = sys.getsizeof(SendMessage)
-
-			
-			SendMessage = json.dumps(SendMessage)
-			print "Sending message %s" % SendMessage
-			print "\n"
-					
-			client_sock.send(SendMessage)
+			optionNumber = int(jsonMessage.get("Number"))
 
                         # Enable loop boolean
                         noEnd = True
@@ -228,6 +317,9 @@ try:
 
                         if optionFunction == 'RTC':
                                 print "Option RTC has been choosen"
+
+                                showMenu(optionNumber)
+                                
                                 while (noEnd) :
                                         noEnd = True
 
@@ -235,7 +327,7 @@ try:
                                         SendMessage["RTCOperation"] = "started"
                                         SendMessage = json.dumps(SendMessage)
                                         SendMessage = str("{'RTC': %s}" % (SendMessage))
-                                        print SendMessage
+                                        print "Message sent to target:\n\t%s" % SendMessage
                                         print "\n"        
                                         client_sock.send(SendMessage)
 
@@ -248,7 +340,7 @@ try:
                                         SendMessage["RTCPreciseTime"] = timePrecise
                                         SendMessage = json.dumps(SendMessage)
                                         SendMessage = str("{'RTC': %s}" % (SendMessage))
-                                        print SendMessage
+                                        print "Message sent to target:\n\t%s" % SendMessage
                                         print "\n"        
                                         client_sock.send(SendMessage)
 
@@ -258,11 +350,11 @@ try:
                                         SendMessage["RTCOperation"] = "ended"
                                         SendMessage = json.dumps(SendMessage)
                                         SendMessage = str("{'RTC': %s}" % (SendMessage))
-                                        print SendMessage
+                                        print "Message sent to target:\n\t%s" % SendMessage
                                         print "\n"        
                                         client_sock.send(SendMessage)
 
-                                        print "Waiting to recieve confirmation from device ", client_info
+                                        print "Waiting to recieve order from device", client_info
                                         print "\n"
 
                                         data = client_sock.recv(1024)
@@ -270,16 +362,21 @@ try:
 
                                         #Data to JSON
                                         jsonMessage = json.loads(data)
-                                        print "jsonMessage:\n%s" % jsonMessage
+                                        print "Message recieved from device:\n\t%s" % jsonMessage
+                                        print ""
 
                                         if jsonMessage.get("message") == 'endFunction':
                                                 print "End of Function has been selected"
+                                                print "Retruning to Main Menu"
                                                 noEnd = False
 
                                                 
 			
                         elif optionFunction == 'LED':
                                 print "Option LED has been choosen"
+
+                                showMenu(optionNumber)
+                                
                                 while (noEnd) :
                                         noEnd = True
 
@@ -291,25 +388,27 @@ try:
 
                                         #Data to JSON
                                         jsonMessage = json.loads(data)
-                                        print "jsonMessage:\n%s" % jsonMessage
+                                        print "Message received from device:\n\t%s" % jsonMessage
+                                        print ""
 
                                         if jsonMessage.get("message") == 'endFunction':
                                                 print "End of Function has been selected"
+                                                print "Returning to Main Menu"
                                                 noEnd = False
 
                                         elif jsonMessage.get("LED") == 'ON':
-                                                print "LED on has been received"
+                                                print "Switching on the LED"
                                                 zymkey.client.led_on()
 
                                         elif jsonMessage.get("LED") == 'OFF':
-                                                print "LED off has been received"
+                                                print "Switching off the LED"
                                                 zymkey.client.led_off()
                                                                
                                         elif jsonMessage.get("LED") == 'TRIGGER':
-                                                print "LED trigger has been received"
                                                 msOn = jsonMessage.get("msOn")
                                                 msOff = jsonMessage.get("msOff")
                                                 numFlashes = jsonMessage.get("numFlashes")
+                                                print "Triggering the LED %s times" % numFlashes
 
                                                 if msOn == "":
                                                         msOn = 0
@@ -336,6 +435,9 @@ try:
 
                         elif optionFunction == 'encrypt_decrypt':
                                 print "Option encrypt_decrypt has been choosen"
+
+                                showMenu(optionNumber)
+                                
                                 while (noEnd):
                                         noEnd = True
                                         
@@ -368,7 +470,7 @@ try:
                                                 SendMessage["refreshOperation"] = "started"
                                                 SendMessage = json.dumps(SendMessage)
                                                 SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
-                                                print SendMessage
+                                                print "Message sent to target:\n\t%s" % SendMessage
                                                 print "\n"
                                                 client_sock.send(SendMessage)
 
@@ -378,7 +480,7 @@ try:
                                                 SendMessage["refreshOperation"] = "ended"
                                                 SendMessage = json.dumps(SendMessage)
                                                 SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
-                                                print SendMessage
+                                                print "Message sent to target:\n\t%s" % SendMessage
                                                 print "\n"
                                                 client_sock.send(SendMessage)
                                                         
@@ -417,7 +519,7 @@ try:
                                                         SendMessage["operationEncryption"] = "started"
                                                         SendMessage = json.dumps(SendMessage)
                                                         SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
-                                                        print SendMessage
+                                                        print "Message sent to target:\n\t%s" % SendMessage
                                                         print "\n"
                                                         
                                                         client_sock.send(SendMessage)
@@ -464,7 +566,7 @@ try:
                                                                 SendMessage["operationEncryption"] = "ended"
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
-                                                                print SendMessage
+                                                                print "Message sent to target:\n\t%s" % SendMessage
                                                                 print "\n"
                                 
                                                                 client_sock.send(SendMessage)
@@ -478,7 +580,7 @@ try:
                                                                 SendMessage["operationDecryption"] = "started"
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
-                                                                print SendMessage
+                                                                print "Message sent to target:\n\t%s" % SendMessage
                                                                 print "\n"
                                 
                                                                 client_sock.send(SendMessage)
@@ -514,7 +616,7 @@ try:
                                                                         SendMessage["operationDecryption"] = "ended"
                                                                         SendMessage = json.dumps(SendMessage)
                                                                         SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
-                                                                        print SendMessage
+                                                                        print "Message sent to target:\n\t%s" % SendMessage
                                                                         print "\n"
                                 
                                                                         client_sock.send(SendMessage)
@@ -555,7 +657,7 @@ try:
                                                                                         SendMessage["values"] = infoForType
                                                                                         SendMessage = json.dumps(SendMessage)
                                                                                         SendMessage = str("{'encrypt_decrypt': %s}" % (SendMessage))
-                                                                                        print SendMessage
+                                                                                        print "Message sent to target:\n\t%s" % SendMessage
                                                                                         print "\n"
                                                                                         client_sock.send(SendMessage)
 
@@ -617,6 +719,9 @@ try:
 
                         elif optionFunction == 'random':
                                 print "Option RANDOM has been choosen"
+
+                                showMenu(optionNumber)
+                                
                                 while(noEnd):
                                         noEnd = True
                                         
@@ -664,7 +769,7 @@ try:
                                                 SendMessage["RANDOMOperation"] = "started"
                                                 SendMessage = json.dumps(SendMessage)
                                                 SendMessage = str("{'RANDOM': %s}" % (SendMessage))
-                                                print SendMessage
+                                                print "Message sent to target:\n\t%s" % SendMessage
                                                 print "\n"        
                                                 client_sock.send(SendMessage)
                                                 
@@ -681,6 +786,9 @@ try:
 
                         elif optionFunction == 'signatures':
                                 print "Option Signatures has been choosen"
+
+                                showMenu(optionNumber)
+                                
                                 while(noEnd):
                                         noEnd = True
                                         
@@ -722,7 +830,7 @@ try:
                                                                 SendMessage["operationSignaturesGenerateStatus"] = "started"
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'signatures': %s}" % (SendMessage))
-                                                                print SendMessage
+                                                                print "Message sent to target:\n\t%s" % SendMessage
                                                                 print "\n"
                                                                 client_sock.send(SendMessage)
                                                                 
@@ -743,6 +851,7 @@ try:
                                                                                 print "Removing its signature..."
                                                                                 os.remove(auxPathToSignature)
                                                                                 print "Done"
+                                                                                num_signatures = num_signatures - 1
 
                                                                         except OSError:
                                                                                 print "Some files didn't exist, but no problem it carries on"
@@ -757,6 +866,8 @@ try:
                                                                 signatureOfMessage = open(auxPathToSignature, "w+")
                                                                 signatureOfMessage.write(newSignature)
                                                                 signatureOfMessage.close()
+
+                                                                num_signatures = num_signatures + 1
                                                                 
                                                                 print "Message created and signed successfully"
 
@@ -764,7 +875,7 @@ try:
                                                                 SendMessage["operationSignaturesGenerateStatus"] = "ended"
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'signatures': %s}" % (SendMessage))
-                                                                print SendMessage
+                                                                print "Message sent to target:\n\t%s" % SendMessage
                                                                 print "\n"
                                                                 client_sock.send(SendMessage)
 
@@ -792,6 +903,8 @@ try:
                                                 while(noSignatureEnd):
                                                         noSignatureEnd = True
 
+                                                        sendSignatures(pathToSignatures)
+
                                                         print "Waiting to recieve information in order to check signature from device ", client_info
                                                         print "\n"
 
@@ -809,6 +922,9 @@ try:
 
                         elif optionFunction == 'ecdsa':
                                 print "Option ECDSA has been choosen"
+
+                                showMenu(optionNumber)
+                                
                                 while(noEnd):
                                         noEnd = True
                                         
@@ -827,10 +943,11 @@ try:
                                                 noEnd = False
 
 
-
                         elif optionFunction == 'i2c':
                                 print "Option I2C has been choosen"
 
+                                showMenu(optionNumber)
+                                
                                 e = subprocess.Popen(["./i2c.sh"])
                                 #print e.communicate()[0]
                                 e.wait()
@@ -847,7 +964,7 @@ try:
                                         SendMessage["I2CCurrentAddress"] = str("%s" % (i2cAddress))
                                         SendMessage = json.dumps(SendMessage)
                                         SendMessage = str("{'I2C': %s}" % (SendMessage))
-                                        print SendMessage
+                                        print "Message sent to target:\n\t%s" % SendMessage
                                         print "\n"        
                                         client_sock.send(SendMessage)
                                         
@@ -874,9 +991,11 @@ try:
                                                 noEnd = False
 
 
-
                         elif optionFunction == 'TAP':
                                 print "Option TAP has been choosen"
+
+                                showMenu(optionNumber)
+                                
                                 while(noEnd):
                                         noEnd = True
 
@@ -884,7 +1003,7 @@ try:
                                         SendMessage["TAPCurrentGlobalSensibility"] = str("%s" % (tapSensibility))
                                         SendMessage = json.dumps(SendMessage)
                                         SendMessage = str("{'TAP': %s}" % (SendMessage))
-                                        print SendMessage
+                                        print "Message sent to target:\n\t%s" % SendMessage
                                         print "\n"        
                                         client_sock.send(SendMessage)
 
@@ -894,7 +1013,7 @@ try:
                                         SendMessage["TAPCurrentAxisZSensibility"] = str("%s" % (tapSensibilityAxisZ))
                                         SendMessage = json.dumps(SendMessage)
                                         SendMessage = str("{'TAP': %s}" % (SendMessage))
-                                        print SendMessage
+                                        print "Message sent to target:\n\t%s" % SendMessage
                                         print "\n"        
                                         client_sock.send(SendMessage)
                                         
@@ -943,7 +1062,7 @@ try:
                                                                 SendMessage["TAPTestStatus"] = "started"
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'TAPTest': %s}" % (SendMessage))
-                                                                print SendMessage
+                                                                print "Message sent to target:\n\t%s" % SendMessage
                                                                 print "\n"        
                                                                 client_sock.send(SendMessage)
                                                                 
@@ -973,7 +1092,7 @@ try:
                                                                 SendMessage["TAPTestTAPDirection"] = accelerometer_result[0].tap_dir
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'TAPTest': %s}" % (SendMessage))
-                                                                print SendMessage
+                                                                print "Message sent to target:\n\t%s" % SendMessage
                                                                 print "\n"        
                                                                 client_sock.send(SendMessage)
 
@@ -985,7 +1104,7 @@ try:
                                                                 SendMessage["TAPTestTAPDirection"] = accelerometer_result[1].tap_dir
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'TAPTest': %s}" % (SendMessage))
-                                                                print SendMessage
+                                                                print "Message sent to target:\n\t%s" % SendMessage
                                                                 print "\n"        
                                                                 client_sock.send(SendMessage)
 
@@ -997,7 +1116,7 @@ try:
                                                                 SendMessage["TAPTestTAPDirection"] = accelerometer_result[2].tap_dir
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'TAPTest': %s}" % (SendMessage))
-                                                                print SendMessage
+                                                                print "Message sent to target:\n\t%s" % SendMessage
                                                                 print "\n"        
                                                                 client_sock.send(SendMessage)
 
@@ -1007,7 +1126,7 @@ try:
                                                                 SendMessage["TAPTestStatus"] = "ended"
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'TAPTest': %s}" % (SendMessage))
-                                                                print SendMessage
+                                                                print "Message sent to target:\n\t%s" % SendMessage
                                                                 print "\n"        
                                                                 client_sock.send(SendMessage)
 
