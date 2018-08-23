@@ -6,6 +6,9 @@
     <string name="option_encrypt_decrypt">Encrypt Decrypt Option</string>
     <string name="option_random">Generate RANDOM Option</string>
     <string name="option_signatures">Signatures Option</string>
+    <string name="option_signatures_generate">Signatures Generate Option</string>
+    <string name="option_signatures_corrupt">Signatures Corrupt Option</string>
+    <string name="option_signatures_check">Signatures Check Option</string>
     <string name="option_ecdsa">ECDSA Option</string>
     <string name="option_i2c">I2C Option</string>
     <string name="option_tap">TAP Option</string>
@@ -28,6 +31,7 @@
     <string name="text_time">Time Needed</string>
     <string name="text_trustly_cpu_values">Amount Of CPU Operations Considered</string>
     <string name="text_trustly_mem_values">Amount Of Memory Operations Considered</string>
+    <string name="text_bytes">(Bytes)</string>
     <string name="text_kb">(KiloBytes)</string>
     <string name="text_mb">(MegaBytes)</string>
 
@@ -78,19 +82,25 @@
     <string name="text_tap_test_axis_x_values">Axis X values</string>
     <string name="text_tap_test_axis_y_values">Axis Y values</string>
     <string name="text_tap_test_axis_z_values">Axis Z values</string>
+    <string name="text_header_signatures_create_message">Create your message and sign it</string>
+    <string name="text_signatures_set_title">Message\'s Title</string>
+    <string name="text_signatures_message">Write your message below</string>
 
     <!-- Hint's Name -->
     <string name="hint_password">Password</string>
     <string name="hint_example_ms_value">Ex: 500 ms</string>
     <string name="hint_example_flashes_value">Ex: 10</string>
-    <string name="hint_choose_size_random_file_text_kb">Ex: 5</string>
-    <string name="hint_choose_size_random_file_text_mb">Ex: 5125</string>
+    <string name="hint_choose_size_random_file_text_bytes">Ex: 1048576</string>
+    <string name="hint_choose_size_random_file_text_kb">Ex: 1024</string>
+    <string name="hint_choose_size_random_file_text_mb">Ex: 1</string>
     <string name="hint_choose_name_random_file">Ex: My First Random File, Yay!</string>
     <string name="hint_i2c_address">Ex: 0x30</string>
     <string name="hint_tap_sensibility">0 to 100</string>
     <string name="hint_rtc">Day Month NDay Hour GMT</string>
     <string name="hint_g_force">-1 to 1</string>
     <string name="hint_tap_direction">Direction</string>
+    <string name="hint_signatures_set_title">Message to Bob</string>
+    <string name="hint_signatures_message">Ex: Hello Bob, I\'m Alice! &#8230;</string>
 
 
     <!-- Button's Name -->
@@ -114,6 +124,7 @@
     <string name="button_set_new_tap_sensibility">Global sensibility</string>
     <string name="button_start_tap_test">Tap Test</string>
     <string name="button_set_new_axis_tap_sensibility">Axis sensibility</string>
+    <string name="button_sign_message">Sign message</string>
 
     <!-- Spinner's Name -->
     <string name="text_spinner_select_method">Select\ Method</string>

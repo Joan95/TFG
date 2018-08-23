@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -289,129 +290,236 @@ public class ConnectedThread extends Thread{
                         }
 
                         try {
-                            Spinner spinnerMethod = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectMethod);
-                            Spinner spinnerTypeFile = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectTypeFile);
-                            Spinner spinnerFile = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectFile);
+                            Spinner spinnerSelectMethod = ((Activity) contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectMethod);
+                            Spinner spinnerSelectTypeFile = ((Activity) contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectTypeFile);
+                            Spinner spinnerSelectFile = ((Activity) contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectFile);
 
-                            spinnerMethod.setSelection(0);
-                            spinnerTypeFile.setAdapter(null);
-                            spinnerFile.setAdapter(null);
+                            spinnerSelectMethod.setSelection(0);
+                            spinnerSelectTypeFile.setAdapter(null);
+                            spinnerSelectFile.setAdapter(null);
 
                         } catch (NullPointerException e) {
-                            Log.d("ERROR", e.toString());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (jsonMessage.has("encrypt_decrypt")) {
+                        JSONObject encryptDecryptContent = jsonMessage.getJSONObject("encrypt_decrypt");;
+
+                        Log.d("encrypt_decrypt", encryptDecryptContent.toString());
+
+                        TextView usageCPUEncrypt = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.valueCPUEncrypt);
+                        TextView usageCPUDecrypt = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.valueCPUDecrypt);
+                        TextView usageMemoryEncrypt = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.valueMemoryEncrypt);
+                        TextView usageMemoryDecrypt = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.valueMemoryDecrypt);
+
+                        Switch hsmSwitch = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.saltSwitch);
+                        EditText password = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.passwordValue);
+
+                        Button sendButton = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.sendButton);
+                        Button refreshButton = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.refreshButton);
+                        Button detailsButton = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.details);
+
+                        if (encryptDecryptContent.has("refreshOperation")) {
+                            String operationStatus = encryptDecryptContent.getString("refreshOperation");
+
+                            if (operationStatus.equals("started")) {
+                                OptionEncryptDecrypt.operating = true;
+                                password.setEnabled(false);
+                                refreshButton.setEnabled(false);
+                                sendButton.setEnabled(false);
+                                hsmSwitch.setEnabled(false);
+
+                                try {
+                                    Spinner spinnerSelectMethod = ((Activity) contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectMethod);
+                                    Spinner spinnerSelectTypeFile = ((Activity) contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectTypeFile);
+                                    Spinner spinnerSelectFile = ((Activity) contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectFile);
+
+                                    spinnerSelectMethod.setEnabled(false);
+                                    spinnerSelectTypeFile.setEnabled(false);
+                                    spinnerSelectFile.setEnabled(false);
+
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            if (operationStatus.equals("ended")) {
+                                OptionEncryptDecrypt.operating = false;
+                                password.setEnabled(true);
+                                refreshButton.setEnabled(true);
+                                sendButton.setEnabled(true);
+                                hsmSwitch.setEnabled(true);
+
+                                try {
+                                    Spinner spinnerSelectMethod = ((Activity) contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectMethod);
+                                    Spinner spinnerSelectTypeFile = ((Activity) contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectTypeFile);
+                                    Spinner spinnerSelectFile = ((Activity) contextOptionEncryptDecrypt).findViewById(R.id.spinnerSelectFile);
+
+                                    spinnerSelectMethod.setEnabled(true);
+                                    spinnerSelectTypeFile.setEnabled(true);
+                                    spinnerSelectFile.setEnabled(true);
+
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
 
+                        if (encryptDecryptContent.has("operationEncryption")) {
+                            String actionJson = encryptDecryptContent.getString("operationEncryption");
 
-                    } else {
+                            if (actionJson.equals("started")) {
+                                OptionEncryptDecrypt.operating = true;
+                                usageCPUEncrypt.setText("Start encryption");
+                                usageMemoryEncrypt.setText("Start encryption");
 
-                        if (jsonMessage.has("message")) {
-                            String messageJson = jsonMessage.getString("message");
-
-                            TextView usageCPUEncrypt = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.valueCPUEncrypt);
-                            TextView usageCPUDecrypt = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.valueCPUDecrypt);
-                            TextView usageMemoryEncrypt = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.valueMemoryEncrypt);
-                            TextView usageMemoryDecrypt = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.valueMemoryDecrypt);
-
-                            Button sendButton = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.sendButton);
-                            Button detailsButton = ((Activity)contextOptionEncryptDecrypt).findViewById(R.id.details);
-
-                            if (jsonMessage.has("action")) {
-                                String actionJson = jsonMessage.getString("action");
-
-                                if (messageJson.equals("encryption")) {
-                                    if (actionJson.equals("start")){
-                                        usageCPUEncrypt.setText("Start encryption");
-                                        usageMemoryEncrypt.setText("Start encryption");
-                                        sendButton.setEnabled(false);
-                                    }
-
-                                    if (actionJson.equals("end")) {
-                                        usageCPUEncrypt.setText("Encryption has finished");
-                                        usageMemoryEncrypt.setText("Waiting for results");
-                                    }
-                                }
-
-                                if (messageJson.equals("decryption")) {
-                                    if (actionJson.equals("start")) {
-                                        usageCPUDecrypt.setText("Start decryption");
-                                        usageMemoryDecrypt.setText("Start decryption");
-                                    }
-
-                                    if (actionJson.equals("end")) {
-                                        usageCPUDecrypt.setText("Decryption has finished");
-                                        usageMemoryDecrypt.setText("Waiting for results");
-                                        sendButton.setEnabled(true);
-                                    }
-                                }
+                                password.setEnabled(false);
+                                refreshButton.setEnabled(false);
+                                sendButton.setEnabled(false);
+                                hsmSwitch.setEnabled(false);
+                                detailsButton.setEnabled(false);
                             }
 
-                            if (jsonMessage.has("error")) {
-                                String errorJson = jsonMessage.getString("error");
-                                String bodyJson = jsonMessage.getString("body");
+                            if (actionJson.equals("ended")) {
+                                usageCPUEncrypt.setText("Encryption has finished");
+                                usageMemoryEncrypt.setText("Waiting for results");
+                            }
+                        }
 
-                                if (messageJson.equals("encryption")) {
-                                    if (errorJson.equals("error")){
-                                        usageCPUEncrypt.setText(bodyJson);
-                                        usageMemoryEncrypt.setText(bodyJson);
-                                        sendButton.setEnabled(true);
-                                    }
-                                }
+                        if (encryptDecryptContent.has("operationDecryption")) {
+                            String actionJson = encryptDecryptContent.getString("operationDecryption");
 
-                                if (messageJson.equals("decryption")) {
-                                    if (errorJson.equals("error")) {
-                                        usageCPUDecrypt.setText(bodyJson);
-                                        usageMemoryDecrypt.setText(bodyJson);
-                                        sendButton.setEnabled(true);
-                                    }
-                                }
+                            if (actionJson.equals("started")) {
+                                usageCPUDecrypt.setText("Start decryption");
+                                usageMemoryDecrypt.setText("Start decryption");
                             }
 
-                            if (jsonMessage.has("result")) {
-                                if (messageJson.equals("encryption")) {
-                                    JSONObject jsonObjectE = jsonMessage.getJSONObject("result");
-
-                                    infoFile.setName(jsonObjectE.getString("name"));
-                                    infoFile.setSize(Float.parseFloat(jsonObjectE.getString("size")));
-
-                                    infoFile.setEncryptCPUUsage(Float.parseFloat(jsonObjectE.getString("CPUUsage")));
-                                    infoFile.setEncryptMEMUsage(Float.parseFloat(jsonObjectE.getString("MEMUsage")));
-                                    infoFile.setEncryptRAMUsage(Float.parseFloat(jsonObjectE.getString("RAMUsage")));
-                                    infoFile.setEncryptMaxCPU(Float.parseFloat(jsonObjectE.getString("maxCPU")));
-                                    infoFile.setEncryptMaxMEM(Float.parseFloat(jsonObjectE.getString("maxMEM")));
-                                    infoFile.setEncryptMaxRAM(Float.parseFloat(jsonObjectE.getString("maxRAM")));
-                                    infoFile.setEncryptTime(jsonObjectE.getString("timeUsed"));
-                                    infoFile.setEncryptTrustlyCPU(jsonObjectE.getInt("cntCPU"));
-                                    infoFile.setEncryptTrustlyMEM(jsonObjectE.getInt("cntMEM"));
-
-                                    Log.d("InfoFileEncrypt", infoFile.toString());
-
-                                    usageCPUEncrypt.setText(jsonObjectE.getString("CPUUsage")+'%');
-                                    usageMemoryEncrypt.setText(jsonObjectE.getString("MEMUsage")+'%');
-                                }
-
-                                if (messageJson.equals("decryption")) {
-                                    JSONObject jsonObjectD = jsonMessage.getJSONObject("result");
-
-                                    infoFile.setDecryptCPUUsage(Float.parseFloat(jsonObjectD.getString("CPUUsage")));
-                                    infoFile.setDecryptMEMUsage(Float.parseFloat(jsonObjectD.getString("MEMUsage")));
-                                    infoFile.setDecryptRAMUsage(Float.parseFloat(jsonObjectD.getString("RAMUsage")));
-                                    infoFile.setDecryptMaxCPU(Float.parseFloat(jsonObjectD.getString("maxCPU")));
-                                    infoFile.setDecryptMaxMEM(Float.parseFloat(jsonObjectD.getString("maxMEM")));
-                                    infoFile.setDecryptMaxRAM(Float.parseFloat(jsonObjectD.getString("maxRAM")));
-                                    infoFile.setDecryptTime(jsonObjectD.getString("timeUsed"));
-                                    infoFile.setDecryptTrustlyCPU(jsonObjectD.getInt("cntCPU"));
-                                    infoFile.setDecryptTrustlyMEM(jsonObjectD.getInt("cntMEM"));
-
-                                    Log.d("InfoFileDecrypt", infoFile.toString());
-
-                                    usageCPUDecrypt.setText(jsonObjectD.getString("CPUUsage")+'%');
-                                    usageMemoryDecrypt.setText(jsonObjectD.getString("MEMUsage")+'%');
-                                }
-
+                            if (actionJson.equals("ended")) {
+                                OptionEncryptDecrypt.operating = false;
+                                usageCPUDecrypt.setText("Decryption has finished");
+                                usageMemoryDecrypt.setText("Waiting for results");
+                                password.setEnabled(true);
+                                refreshButton.setEnabled(true);
+                                sendButton.setEnabled(true);
+                                hsmSwitch.setEnabled(true);
                                 detailsButton.setEnabled(true);
                             }
                         }
+
+
+                        /*if (encryptDecryptContent.has("error")) {
+                            String errorJson = encryptDecryptContent.getString("error");
+                            String bodyJson = encryptDecryptContent.getString("body");
+
+                            if (messageJson.equals("encryption")) {
+                                if (errorJson.equals("error")){
+                                    usageCPUEncrypt.setText(bodyJson);
+                                    usageMemoryEncrypt.setText(bodyJson);
+                                    sendButton.setEnabled(true);
+                                }
+                            }
+
+                            if (messageJson.equals("decryption")) {
+                                if (errorJson.equals("error")) {
+                                    usageCPUDecrypt.setText(bodyJson);
+                                    usageMemoryDecrypt.setText(bodyJson);
+                                    sendButton.setEnabled(true);
+                                }
+                            }
+                        }
+
+                        */
+                        if (encryptDecryptContent.has("encryptionResults")) {
+                            String typeResult = encryptDecryptContent.getString("encryptionResults");
+                            JSONObject results = encryptDecryptContent.getJSONObject("values");
+
+                            Log.d("RESULTS", results.toString());
+
+                            if (typeResult.equals("header")) {
+                                infoFile.setName(results.getString("name"));
+                                infoFile.setSize(Float.parseFloat(results.getString("size")));
+                            }
+
+                            if (typeResult.equals("CPU")) {
+                                try {
+                                    infoFile.setEncryptCPUUsage(Float.parseFloat(results.getString("CPUUsage")));
+                                    infoFile.setEncryptMaxCPU(Float.parseFloat(results.getString("maxCPU")));
+                                    infoFile.setEncryptTrustlyCPU(results.getInt("cntCPU"));
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                                usageCPUEncrypt.setText(results.getString("CPUUsage")+'%');
+                            }
+
+                            if (typeResult.equals("MEM")) {
+                                try {
+                                    infoFile.setEncryptMEMUsage(Float.parseFloat(results.getString("MEMUsage")));
+                                    infoFile.setEncryptMaxMEM(Float.parseFloat(results.getString("maxMEM")));
+                                    infoFile.setEncryptTrustlyMEM(results.getInt("cntMEM"));
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                                usageMemoryEncrypt.setText(results.getString("MEMUsage")+'%');
+                            }
+
+                            if (typeResult.equals("RAM")) {
+                                try {
+                                    infoFile.setEncryptRAMUsage(Float.parseFloat(results.getString("RAMUsage")));
+                                    infoFile.setEncryptMaxRAM(Float.parseFloat(results.getString("maxRAM")));
+                                    infoFile.setEncryptTime(results.getString("timeUsed"));
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            Log.d("InfoFileEncrypt", infoFile.toString());
+                        }
+
+                        if (encryptDecryptContent.has("decryptionResults")) {
+                            String typeResult = encryptDecryptContent.getString("decryptionResults");
+                            JSONObject results = encryptDecryptContent.getJSONObject("values");
+
+                            Log.d("RESULTS", results.toString());
+
+                            if (typeResult.equals("CPU")) {
+                                try {
+                                    infoFile.setDecryptCPUUsage(Float.parseFloat(results.getString("CPUUsage")));
+                                    infoFile.setDecryptMaxCPU(Float.parseFloat(results.getString("maxCPU")));
+                                    infoFile.setDecryptTrustlyCPU(results.getInt("cntCPU"));
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                                usageCPUDecrypt.setText(results.getString("CPUUsage")+'%');
+                            }
+
+                            if (typeResult.equals("MEM")) {
+                                try {
+                                    infoFile.setDecryptMEMUsage(Float.parseFloat(results.getString("MEMUsage")));
+                                    infoFile.setDecryptMaxMEM(Float.parseFloat(results.getString("maxMEM")));
+                                    infoFile.setDecryptTrustlyMEM(results.getInt("cntMEM"));
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                                usageMemoryDecrypt.setText(results.getString("MEMUsage")+'%');
+                            }
+
+                            if (typeResult.equals("RAM")) {
+                                try {
+                                    infoFile.setDecryptRAMUsage(Float.parseFloat(results.getString("RAMUsage")));
+                                    infoFile.setDecryptMaxRAM(Float.parseFloat(results.getString("maxRAM")));
+                                    infoFile.setDecryptTime(results.getString("timeUsed"));
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            Log.d("InfoFileDecrypt", infoFile.toString());
+
+                            detailsButton.setEnabled(true);
+                        }
                     }
+
                     Log.d("Message Operation", "Deleted");
                     deleteMessage();
                 } catch (JSONException e) {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purpleDark"
-    android:label="@string/option_signatures">
+    android:label="@string/option_signatures_corrupt">
 
     <TextView
         android:id="@+id/aux_reference"

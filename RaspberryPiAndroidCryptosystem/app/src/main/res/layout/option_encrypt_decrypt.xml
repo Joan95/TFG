@@ -9,6 +9,12 @@
     android:label="@string/option_encrypt_decrypt">
 
     <TextView
+        android:id="@+id/aux_reference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
         android:id="@+id/encrypt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,9 +24,8 @@
         android:gravity="center"
         android:width="100dp"
         android:height="30dp"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="120dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:id="@+id/decrypt"
@@ -46,12 +51,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/encrypt"
-        android:width="100dp"
-        android:height="50dp"
         android:text="@string/text_usage_of_cpu"
         android:gravity="center"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"/>
+        android:layout_toLeftOf="@id/encrypt"
+        android:layout_toStartOf="@id/encrypt"
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:id="@+id/valueCPUEncrypt"
@@ -91,11 +95,12 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/usageOfCPU"
         android:layout_below="@id/usageOfCPU"
-        android:width="100dp"
-        android:height="50dp"
         android:gravity="center"
         android:text="@string/text_usage_of_memory"
-        android:layout_alignStart="@id/usageOfCPU" />
+        android:layout_alignStart="@id/usageOfCPU"
+        android:layout_alignEnd="@id/usageOfCPU"
+        android:layout_alignRight="@id/usageOfCPU"
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:id="@+id/valueMemoryEncrypt"
@@ -142,28 +147,26 @@
         android:id="@+id/passwordText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/usageOfCPU"
+        android:layout_toLeftOf="@id/aux_reference"
+        android:layout_toStartOf="@id/aux_reference"
         android:textColor="@color/orange"
-        android:height="50dp"
-        android:width="80dp"
         android:gravity="center"
         android:text="@string/text_password"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@id/usageOfCPU"
+        android:layout_below="@id/details"
         android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/passwordValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:height="50dp"
-        android:width="100dp"
+        android:layout_below="@id/passwordText"
         android:textColor="@color/greyBKG"
         android:inputType="textPassword"
         android:hint="@string/hint_password"
-        android:layout_toEndOf="@id/passwordText"
-        android:layout_toRightOf="@id/passwordText"
-        android:layout_alignBaseline="@id/passwordText"/>
+        android:layout_alignStart="@id/passwordText"
+        android:layout_alignLeft="@id/passwordText"
+        android:layout_alignEnd="@id/passwordText"
+        android:layout_alignRight="@id/passwordText"/>
 
     <TextView
         android:id="@+id/textSwitch"
@@ -171,50 +174,51 @@
         android:textStyle="italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/encrypt"
-        android:width="80dp"
-        android:height="50dp"
         android:gravity="center"
         android:text="@string/text_hsm_question"
-        android:layout_toRightOf="@id/encrypt" />
+        android:layout_below="@id/details"
+        android:layout_toRightOf="@id/aux_reference"
+        android:layout_toEndOf="@id/aux_reference"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"/>
 
     <Switch
         android:id="@+id/saltSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/textSwitch"
-        android:layout_toRightOf="@id/textSwitch"
+        android:layout_alignStart="@id/details"
+        android:layout_alignLeft="@id/details"
+        android:layout_below="@id/textSwitch"
+        android:gravity="center"
         android:checked="true" />
 
     <TextView
         android:id="@+id/selectMethod"
-        android:layout_alignStart="@id/usageOfCPU"
         android:textStyle="bold"
         android:textColor="@color/orange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/passwordText"
-        android:layout_alignLeft="@id/usageOfCPU"
-        android:gravity="center"
-        android:width="80dp"
-        android:height="50dp"
-        android:text="@string/text_spinner_select_method" />
+        android:layout_below="@id/passwordValue"
+        android:text="@string/text_spinner_select_method"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignStart="@id/passwordText"
+        android:layout_alignLeft="@id/passwordText"
+        android:layout_alignEnd="@id/passwordText"
+        android:layout_alignRight="@id/passwordText"/>
 
     <Spinner
         android:id="@+id/spinnerSelectMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/selectMethod"
-        android:layout_marginTop="13dp"
-        android:layout_toEndOf="@id/selectMethod"
-        android:layout_toRightOf="@id/selectMethod"
-        android:layout_alignRight="@id/encrypt"
-        android:layout_alignEnd="@id/encrypt"
+        android:layout_below="@id/selectMethod"
         android:entries="@array/block_ciphers"
-        android:maxWidth="90dp"
-        android:minWidth="90dp" />
+        android:layout_marginTop="10dp"
+        android:layout_alignStart="@id/selectMethod"
+        android:layout_alignLeft="@id/selectMethod"
+        android:layout_alignEnd="@id/selectMethod"
+        android:layout_alignRight="@id/selectMethod"/>
 
     <TextView
         android:id="@+id/selectTypeFile"
@@ -222,21 +226,22 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/selectMethod"
-        android:layout_toEndOf="@id/spinnerSelectMethod"
-        android:layout_toRightOf="@id/spinnerSelectMethod"
+        android:layout_below="@id/passwordValue"
+        android:layout_marginTop="15dp"
+        android:layout_alignBottom="@id/selectMethod"
+        android:layout_alignStart="@id/aux_reference"
+        android:layout_alignLeft="@id/aux_reference"
         android:gravity="center"
-        android:width="43dp"
         android:text="@string/text_spinner_select_type_file"/>
 
     <Spinner
         android:id="@+id/spinnerSelectTypeFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/selectTypeFile"
-        android:layout_toRightOf="@id/selectTypeFile"
-        android:layout_alignTop="@id/selectTypeFile"
-        android:layout_marginTop="8dp"
+        android:layout_below="@id/selectTypeFile"
+        android:layout_marginTop="10dp"
+        android:layout_alignStart="@id/selectTypeFile"
+        android:layout_alignLeft="@id/selectTypeFile"
         android:minWidth="100dp" />
 
     <TextView
@@ -245,22 +250,20 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/usageOfCPU"
-        android:layout_alignStart="@id/usageOfCPU"
+        android:layout_alignLeft="@id/passwordText"
+        android:layout_alignStart="@id/passwordText"
         android:gravity="center"
-        android:layout_below="@id/selectMethod"
-        android:layout_marginTop="10dp"
-        android:width="80dp"
-        android:height="50dp"
+        android:layout_below="@id/spinnerSelectMethod"
+        android:layout_marginTop="15dp"
         android:text="@string/text_spinner_select_file"/>
 
     <Spinner
         android:id="@+id/spinnerSelectFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/selectFile"
-        android:layout_toRightOf="@id/selectFile"
-        android:layout_alignTop="@id/selectFile"
+        android:layout_below="@id/selectFile"
+        android:layout_alignStart="@id/selectFile"
+        android:layout_alignLeft="@id/selectFile"
         android:layout_marginTop="10dp"
         android:minWidth="150dp" />
 
@@ -271,10 +274,10 @@
         android:textColor="@color/orange"
         android:textStyle="italic"
         android:text="@string/text_refresh_sf"
-        android:layout_below="@id/selectFile"
+        android:layout_below="@id/spinnerSelectFile"
         android:layout_alignLeft="@id/selectFile"
         android:layout_alignStart="@id/selectFile"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:id="@+id/refreshButton"
@@ -282,9 +285,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_refresh"
-        android:layout_alignBaseline="@id/refreshSF"
-        android:layout_alignStart="@id/decrypt"
-        android:layout_alignLeft="@id/decrypt" />
+        android:layout_below="@id/refreshSF"
+        android:layout_alignStart="@id/refreshSF"
+        android:layout_alignLeft="@id/refreshSF"
+        android:layout_alignEnd="@id/refreshSF"
+        android:layout_alignRight="@id/refreshSF"/>
 
     <Button
         android:id="@+id/sendButton"
@@ -292,8 +297,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_send"
-        android:layout_below="@id/refreshButton"
-        android:layout_alignStart="@id/refreshButton"
-        android:layout_alignLeft="@id/refreshButton" />
+        android:layout_alignBottom="@id/refreshButton"
+        android:layout_alignEnd="@id/selectTypeFile"
+        android:layout_alignRight="@id/selectTypeFile"/>
 
 </RelativeLayout>

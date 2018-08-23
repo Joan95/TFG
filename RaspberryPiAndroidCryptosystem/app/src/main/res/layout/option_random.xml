@@ -25,12 +25,40 @@
         android:text="@string/text_warning_choose_size_random_file_text"/>
 
     <EditText
-        android:id="@+id/value_size_random_file"
+        android:id="@+id/bytesConverter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/warning_choose_size_random_file"
         android:layout_centerHorizontal="true"
+        android:hint="@string/hint_choose_size_random_file_text_bytes"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/bytes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/bytesConverter"
+        android:textSize="15sp"
+        android:text="@string/text_bytes"
+        android:layout_toEndOf="@id/value_size_random_file"
+        android:layout_toRightOf="@id/value_size_random_file"
+        android:layout_marginLeft="15sp"
+        android:layout_marginStart="15sp" />
+
+    <EditText
+        android:id="@+id/value_size_random_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bytes"
+        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@id/bytesConverter"
+        android:layout_alignLeft="@id/bytesConverter"
+        android:layout_alignEnd="@id/bytesConverter"
+        android:layout_alignRight="@id/bytesConverter"
         android:hint="@string/hint_choose_size_random_file_text_kb"
+        android:gravity="center"
         android:inputType="numberDecimal"
         android:layout_marginTop="10dp"/>
 
@@ -51,7 +79,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/value_size_random_file"
+        android:layout_alignStart="@id/bytesConverter"
+        android:layout_alignLeft="@id/bytesConverter"
+        android:layout_alignEnd="@id/bytesConverter"
+        android:layout_alignRight="@id/bytesConverter"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:layout_marginTop="10dp"
         android:hint="@string/hint_choose_size_random_file_text_mb"
         android:inputType="numberDecimal"/>
@@ -62,6 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/mbConverter"
         android:textSize="15sp"
+        android:gravity="center"
         android:text="@string/text_mb"
         android:layout_alignStart="@id/kb"
         android:layout_alignLeft="@id/kb"/>

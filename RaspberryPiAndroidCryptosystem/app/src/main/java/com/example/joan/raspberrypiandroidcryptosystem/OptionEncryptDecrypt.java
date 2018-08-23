@@ -26,6 +26,8 @@ public class OptionEncryptDecrypt extends AppCompatActivity {
 
     private SystemFile systemFile = SystemFileSingleton.getCurrentSystemFile();
 
+    public static Boolean operating = false;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.option_encrypt_decrypt);
@@ -64,7 +66,7 @@ public class OptionEncryptDecrypt extends AppCompatActivity {
                 /*Send refresh message to Server to upload the files. */
                 JSONObject jsonMessage = new JSONObject();
                 try {
-                    jsonMessage.put("message","refresh");
+                    jsonMessage.put("encrypt_decrypt","refresh");
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
@@ -171,15 +173,19 @@ public class OptionEncryptDecrypt extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        JSONObject jsonMessage = new JSONObject();
-        try {
-            jsonMessage.put("message","endFunction");
-            Log.d("message","endFunction");
-        } catch (JSONException e1) {
-            e1.printStackTrace();
+        if (operating) {
+            myToasts.show(OptionEncryptDecrypt.this, "Wait please, there is an operation underway.");
+        } else {
+            JSONObject jsonMessage = new JSONObject();
+            try {
+                jsonMessage.put("message","endFunction");
+                Log.d("message","endFunction");
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+            connectedThread.write(jsonMessage);
+            super.onBackPressed();
+            finish();
         }
-        connectedThread.write(jsonMessage);
-        super.onBackPressed();
-        finish();
     }
 }

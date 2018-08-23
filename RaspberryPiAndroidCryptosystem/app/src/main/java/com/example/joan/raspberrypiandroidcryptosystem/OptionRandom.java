@@ -28,9 +28,43 @@ public class OptionRandom extends AppCompatActivity {
         ConnectedThread.contextOptionRandom = OptionRandom.this;
 
         final EditText valueSizeRandom = findViewById(R.id.value_size_random_file);
+        final EditText byteConverter = findViewById(R.id.bytesConverter);
         final EditText mbConverter = findViewById(R.id.mbConverter);
         final EditText valueNameRandom = findViewById(R.id.value_name_random_file);
         final Button buttonGenerateRandom = findViewById(R.id.buttonGenerateRandomFile);
+
+        byteConverter.addTextChangedListener(new TextWatcher() {
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (byteConverter.hasFocus()) {
+                    if (byteConverter.getText().toString().equals("")) {
+                        valueSizeRandom.setText(String.valueOf(0));
+                        mbConverter.setText(String.valueOf(0));
+                    } else {
+                        float aux;
+                        String auxKB;
+                        String auxMB;
+
+                        try {
+                            aux = Float.parseFloat(byteConverter.getText().toString());
+                            auxKB = String.valueOf(aux/1024);
+                            auxMB = String.valueOf(aux/(1024*1024));
+                            valueSizeRandom.setText(auxKB);
+                            mbConverter.setText(auxMB);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            myToasts.show(OptionRandom.this, "Number not valid.");
+                        }
+                    }
+                }
+            }
+        });
 
         valueSizeRandom.addTextChangedListener(new TextWatcher() {
 
@@ -43,23 +77,24 @@ public class OptionRandom extends AppCompatActivity {
 
                 if (valueSizeRandom.hasFocus()) {
                     if (valueSizeRandom.getText().toString().equals("")) {
+                        byteConverter.setText(String.valueOf(0));
                         mbConverter.setText(String.valueOf(0));
                     } else {
-                        float aux = 0;
-                        String auxS;
+                        float aux;
+                        String auxB;
+                        String auxMB;
 
                         try {
                             aux = Float.parseFloat(valueSizeRandom.getText().toString());
-                            auxS = String.valueOf(aux/1024);
+                            auxB = String.valueOf(aux*1024);
+                            auxMB = String.valueOf(aux/1024);
+
+                            byteConverter.setText(auxB);
+                            mbConverter.setText(auxMB);
                         } catch (NumberFormatException e) {
-                            auxS = valueSizeRandom.getText().toString();
+                            e.printStackTrace();
+                            myToasts.show(OptionRandom.this, "Number not valid.");
                         }
-
-                        if ((auxS.length() > 6) && (aux > 999999)) {
-                            auxS = "Number too long";
-                        }
-
-                        mbConverter.setText(auxS);
                     }
                 }
             }
@@ -77,21 +112,21 @@ public class OptionRandom extends AppCompatActivity {
                     if (mbConverter.getText().toString().equals("")) {
                         valueSizeRandom.setText(String.valueOf(0));
                     } else {
-                        float aux = 0;
-                        String auxS;
+                        float aux;
+                        String auxB;
+                        String auxKB;
 
                         try {
                             aux = Float.parseFloat(mbConverter.getText().toString());
-                            auxS = String.valueOf(aux*1024);
+                            auxB = String.valueOf(aux*1024*1024);
+                            auxKB = String.valueOf(aux*1024);
+
+                            byteConverter.setText(auxB);
+                            valueSizeRandom.setText(auxKB);
                         } catch (NumberFormatException e) {
-                            auxS = mbConverter.getText().toString();
+                            e.printStackTrace();
+                            myToasts.show(OptionRandom.this, "Number not valid.");
                         }
-
-                        if ((auxS.length() > 6) && (aux > 999999)) {
-                            auxS = "Number too long";
-                        }
-
-                        valueSizeRandom.setText(auxS);
                     }
                 }
             }
@@ -111,7 +146,11 @@ public class OptionRandom extends AppCompatActivity {
                         valueSizeRandom.setText("0");
                     }
 
-                    jsonMessage.put("size", Float.parseFloat(valueSizeRandom.getText().toString()));
+                    try {
+                        jsonMessage.put("size", Float.parseFloat(valueSizeRandom.getText().toString()));
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
 
                     if (valueNameRandom.getText().toString().equals("")) {
                         auxName = valueSizeRandom.getText().toString() + "kb.txt";
@@ -121,20 +160,22 @@ public class OptionRandom extends AppCompatActivity {
 
                     jsonMessage.put("name", auxName);
 
+
+                    connectedThread.write(jsonMessage);
+
                 } catch (JSONException e1) {
                     e1.printStackTrace();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
-                connectedThread.write(jsonMessage);
             }
         });
-
     }
-
 
     @Override
     public void onBackPressed() {
         if (operating) {
-            myToasts.show(OptionRandom.this, "Wait please, it is an operation underway.");
+            myToasts.show(OptionRandom.this, "Wait please, there is an operation underway.");
         } else {
             JSONObject jsonMessage = new JSONObject();
             try {
