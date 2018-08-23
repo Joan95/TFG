@@ -25,7 +25,7 @@ public class OptionTAPTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.option_tap_test);
 
-        ConnectedThread.contextTAPTest = OptionTAPTest.this;
+        ConnectedThread.contextOptionTAPTest = OptionTAPTest.this;
 
         final EditText valueTimeMS = findViewById(R.id.value_tap_test_time_ms);
         Button buttonTAPTest = findViewById(R.id.button_begin_tap_test);

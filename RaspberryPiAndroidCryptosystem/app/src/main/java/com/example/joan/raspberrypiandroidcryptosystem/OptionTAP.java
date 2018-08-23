@@ -22,7 +22,7 @@ public class OptionTAP extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.option_tap);
 
-        ConnectedThread.contextTAP = OptionTAP.this;
+        ConnectedThread.contextOptionTAP = OptionTAP.this;
 
         final EditText globalTapSensibilityValue = findViewById(R.id.value_selected_tap_sensibility);
         final EditText valueAxisX = findViewById(R.id.value_axis_x);

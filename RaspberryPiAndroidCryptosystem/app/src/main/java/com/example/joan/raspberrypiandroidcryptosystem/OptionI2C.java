@@ -22,7 +22,7 @@ public class OptionI2C extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.option_i2c);
 
-        ConnectedThread.contextI2C = OptionI2C.this;
+        ConnectedThread.contextOptionI2C = OptionI2C.this;
 
         ListView list30 = findViewById(R.id.list_i2c_0x30);
         ListView list60 = findViewById(R.id.list_i2c_0x60);

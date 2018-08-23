@@ -36,55 +36,73 @@
 
         <activity
             android:name=".OptionRTC"
-            android:label="RTC Option"
+            android:label="@string/option_rtc"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".OptionLed"
-            android:label="LED Option"
+            android:label="@string/option_led"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".OptionEncryptDecrypt"
-            android:label="Encrypt Decrypt Option"
+            android:label="@string/option_encrypt_decrypt"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".OptionRandom"
-            android:label="Random Option"
+            android:label="@string/option_random"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".OptionSignatures"
-            android:label="Signatures Option"
+            android:label="@string/option_signatures"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".OptionSignaturesGenerate"
+            android:label="@string/option_signatures_generate"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".OptionSignaturesCorrupt"
+            android:label="@string/option_signatures_corrupt"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".OptionSignaturesCheck"
+            android:label="@string/option_signatures_check"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".OptionECDSA"
-            android:label="ECDSA Option"
+            android:label="@string/option_ecdsa"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".OptionI2C"
-            android:label="I2C Option"
+            android:label="@string/option_i2c"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".OptionTAP"
-            android:label="TAP Option"
+            android:label="@string/option_tap"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".OptionTAPTest"
-            android:label="TAP TEST Option"
+            android:label="@string/option_tap_test"
             android:screenOrientation="portrait">
         </activity>
 

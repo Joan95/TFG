@@ -25,11 +25,9 @@ public class OptionRTC extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.option_rtc);
 
-        ConnectedThread.contextRTC = OptionRTC.this;
+        ConnectedThread.contextOptionRTC = OptionRTC.this;
 
         final EditText currentDeviceTime = findViewById(R.id.value_device_time);
-        EditText hsmPreciseRTC = findViewById(R.id.value_hsm_precise_rtc);
-        EditText hsmNotPreciseRTC = findViewById(R.id.value_hsm_not_precise_rtc);
         Button buttonRefreshRTC = findViewById(R.id.button_refresh_rtc);
 
         time = System.currentTimeMillis();

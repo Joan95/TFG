@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Handler;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +33,7 @@ public class ConnectedThread extends Thread{
     private StringBuilder recDataString = new StringBuilder();
 
     @SuppressLint("StaticFieldLeak")
-    public static Context contextRTC;
+    public static Context contextOptionRTC;
     @SuppressLint("StaticFieldLeak")
     public static Context contextOptionLED;
     @SuppressLint("StaticFieldLeak")
@@ -40,11 +41,17 @@ public class ConnectedThread extends Thread{
     @SuppressLint("StaticFieldLeak")
     public static Context contextOptionRandom;
     @SuppressLint("StaticFieldLeak")
-    public static Context contextI2C;
+    public static Context contextOptionSignaturesGenerate;
     @SuppressLint("StaticFieldLeak")
-    public static Context contextTAP;
+    public static Context contextSignaturesCorrupt;
     @SuppressLint("StaticFieldLeak")
-    public static Context contextTAPTest;
+    public static Context contextSignaturesCheck;
+    @SuppressLint("StaticFieldLeak")
+    public static Context contextOptionI2C;
+    @SuppressLint("StaticFieldLeak")
+    public static Context contextOptionTAP;
+    @SuppressLint("StaticFieldLeak")
+    public static Context contextOptionTAPTest;
 
     private SystemFile systemFile = SystemFileSingleton.getCurrentSystemFile();
     private InfoFile infoFile = InfoFileSingleton.getInfoFile();
@@ -73,7 +80,7 @@ public class ConnectedThread extends Thread{
 
                         Log.d("RTC operation", jsonMessage.toString());
 
-                        Button buttonRTCRefreshRTC = ((Activity)contextRTC).findViewById(R.id.button_refresh_rtc);
+                        Button buttonRTCRefreshRTC = ((Activity)contextOptionRTC).findViewById(R.id.button_refresh_rtc);
                         if (rtcContent.getString("RTCOperation").equals("started")) {
                             buttonRTCRefreshRTC.setEnabled(false);
                         }
@@ -86,8 +93,8 @@ public class ConnectedThread extends Thread{
                             long rtcNotPrecise = rtcContent.getLong("RTCNotPreciseTime") * 1000;
                             long rtcPrecise = rtcContent.getLong("RTCPreciseTime") * 1000;
 
-                            EditText rtcNotPreciseHSMValue = ((Activity)contextRTC).findViewById(R.id.value_hsm_not_precise_rtc);
-                            EditText rtcPreciseHSMValue = ((Activity)contextRTC).findViewById(R.id.value_hsm_precise_rtc);
+                            EditText rtcNotPreciseHSMValue = ((Activity)contextOptionRTC).findViewById(R.id.value_hsm_not_precise_rtc);
+                            EditText rtcPreciseHSMValue = ((Activity)contextOptionRTC).findViewById(R.id.value_hsm_precise_rtc);
 
                             Calendar calendar = Calendar.getInstance();
 
@@ -103,164 +110,6 @@ public class ConnectedThread extends Thread{
                         Log.d("LED operation", jsonMessage.toString());
                     }
 
-                    if (jsonMessage.has("RANDOM")) {
-                        JSONObject randomContent = jsonMessage.getJSONObject("RANDOM");
-
-                        Log.d("RANDOM message", randomContent.toString());
-
-                        String randomOperation = randomContent.getString("RANDOMOperation");
-
-                        EditText kiloBytes = ((Activity)contextOptionRandom).findViewById(R.id.value_size_random_file);
-                        EditText megaBytes = ((Activity)contextOptionRandom).findViewById(R.id.mbConverter);
-                        EditText nameFile = ((Activity)contextOptionRandom).findViewById(R.id.value_name_random_file);
-                        Button generateRandom = ((Activity)contextOptionRandom).findViewById(R.id.buttonGenerateRandomFile);
-
-                        if (randomOperation.equals("started")) {
-                            OptionRandom.operating = true;
-                            kiloBytes.setEnabled(false);
-                            megaBytes.setEnabled(false);
-                            nameFile.setEnabled(false);
-                            myToasts.show(contextOptionRandom,"Please wait.");
-                            generateRandom.setEnabled(false);
-                        }
-
-                        if (randomOperation.equals("ended")) {
-                            OptionRandom.operating = false;
-                            kiloBytes.setEnabled(true);
-                            megaBytes.setEnabled(true);
-                            nameFile.setEnabled(true);
-                            myToasts.show(contextOptionRandom,"All done!");
-                            generateRandom.setEnabled(true);
-                        }
-
-                    }
-
-                    if (jsonMessage.has("I2C")) {
-                        JSONObject i2cContent = jsonMessage.getJSONObject("I2C");
-
-                        Log.d("I2C message", i2cContent.toString());
-                        String i2cOperation = i2cContent.getString("I2CCurrentAddress");
-                        try {
-                            EditText currentI2CAddress = ((Activity)contextI2C).findViewById(R.id.value_current_i2c_address);
-                            currentI2CAddress.setText(i2cOperation);
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (jsonMessage.has("TAP")) {
-                        JSONObject tapContent = jsonMessage.getJSONObject("TAP");
-
-                        Log.d("TAP message", tapContent.toString());
-
-                        if (tapContent.has("TAPCurrentGlobalSensibility")) {
-                            String currentTAPSensibility = tapContent.getString("TAPCurrentGlobalSensibility");
-                            try {
-                                EditText valueCurrentTAPSensibility = ((Activity)contextTAP).findViewById(R.id.value_current_tap_sensibility);
-                                valueCurrentTAPSensibility.setText(currentTAPSensibility);
-                            } catch (NullPointerException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        if (tapContent.has("TAPCurrentAxisXSensibility")) {
-                            String currentAxisX = tapContent.getString("TAPCurrentAxisXSensibility");
-                            String currentAxisY = tapContent.getString("TAPCurrentAxisYSensibility");
-                            String currentAxisZ = tapContent.getString("TAPCurrentAxisZSensibility");
-                            try {
-                                EditText valueAxisX = ((Activity)contextTAP).findViewById(R.id.value_current_axis_x);
-                                EditText valueAxisY = ((Activity)contextTAP).findViewById(R.id.value_current_axis_y);
-                                EditText valueAxisZ = ((Activity)contextTAP).findViewById(R.id.value_current_axis_z);
-                                valueAxisX.setText(currentAxisX);
-                                valueAxisY.setText(currentAxisY);
-                                valueAxisZ.setText(currentAxisZ);
-                            } catch (NullPointerException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    if (jsonMessage.has("TAPTest")) {
-                        JSONObject tapTestContent = jsonMessage.getJSONObject("TAPTest");
-
-                        Log.d("TAPTest message", tapTestContent.toString());
-
-                        if (tapTestContent.has("TAPTestStatus")) {
-                            String operationTAPTest = tapTestContent.getString("TAPTestStatus");
-
-                            if (operationTAPTest.equals("started")) {
-                                Button buttonStartTAPTest = ((Activity)contextTAPTest).findViewById(R.id.button_begin_tap_test);
-                                buttonStartTAPTest.setEnabled(false);
-                            }
-
-                            if (operationTAPTest.equals("ended")) {
-                                Button buttonStartTAPTest = ((Activity)contextTAPTest).findViewById(R.id.button_begin_tap_test);
-                                buttonStartTAPTest.setEnabled(true);
-                            }
-                        }
-
-                        if (tapTestContent.has("TAPTestValues")) {
-                            String axisTAPValue = tapTestContent.getString("TAPTestValues");
-                            String gForceTAPTest = tapTestContent.getString("TAPTestGForce");
-                            String tapDirectionTAPTest = tapTestContent.getString("TAPTestTAPDirection");
-                            String tapDirectionTAPMeaning = null;
-
-                            if (Integer.parseInt(tapDirectionTAPTest) == -1) {
-                                tapDirectionTAPMeaning = "Axis Down";
-                            }
-
-                            if (Integer.parseInt(tapDirectionTAPTest) == 0) {
-                                tapDirectionTAPMeaning = "No movement";
-                            }
-
-                            if (Integer.parseInt(tapDirectionTAPTest) == 1) {
-                                tapDirectionTAPMeaning = "Axis UP";
-                            }
-
-                            if (axisTAPValue.equals("AxisX")) {
-                                EditText gForceAxisXValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_x_g_force);
-                                EditText tapDirectionValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_x_tap_direction);
-                                EditText tapDirectionValueMeaning = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_x_tap_direction_meaning);
-
-                                try {
-                                    gForceAxisXValue.setText(gForceTAPTest);
-                                    tapDirectionValue.setText(tapDirectionTAPTest);
-                                    tapDirectionValueMeaning.setText(tapDirectionTAPMeaning);
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            if (axisTAPValue.equals("AxisY")) {
-                                EditText gForceAxisYValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_y_g_force);
-                                EditText tapDirectionValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_y_tap_direction);
-                                EditText tapDirectionValueMeaning = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_y_tap_direction_meaning);
-
-                                try {
-                                    gForceAxisYValue.setText(gForceTAPTest);
-                                    tapDirectionValue.setText(tapDirectionTAPTest);
-                                    tapDirectionValueMeaning.setText(tapDirectionTAPMeaning);
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            if (axisTAPValue.equals("AxisZ")) {
-                                EditText gForceAxisZValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_z_g_force);
-                                EditText tapDirectionValue = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_z_tap_direction);
-                                EditText tapDirectionValueMeaning = ((Activity)contextTAPTest).findViewById(R.id.value_tap_test_axis_z_tap_direction_meaning);
-
-                                try {
-                                    gForceAxisZValue.setText(gForceTAPTest);
-                                    tapDirectionValue.setText(tapDirectionTAPTest);
-                                    tapDirectionValueMeaning.setText(tapDirectionTAPMeaning);
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                        }
-                    }
 
                     if (jsonMessage.has("System Files")) {
 
@@ -304,7 +153,7 @@ public class ConnectedThread extends Thread{
                     }
 
                     if (jsonMessage.has("encrypt_decrypt")) {
-                        JSONObject encryptDecryptContent = jsonMessage.getJSONObject("encrypt_decrypt");;
+                        JSONObject encryptDecryptContent = jsonMessage.getJSONObject("encrypt_decrypt");
 
                         Log.d("encrypt_decrypt", encryptDecryptContent.toString());
 
@@ -520,7 +369,193 @@ public class ConnectedThread extends Thread{
                         }
                     }
 
-                    Log.d("Message Operation", "Deleted");
+                    if (jsonMessage.has("RANDOM")) {
+                        JSONObject randomContent = jsonMessage.getJSONObject("RANDOM");
+
+                        Log.d("RANDOM message", randomContent.toString());
+
+                        String randomOperation = randomContent.getString("RANDOMOperation");
+
+                        EditText kiloBytes = ((Activity)contextOptionRandom).findViewById(R.id.value_size_random_file);
+                        EditText megaBytes = ((Activity)contextOptionRandom).findViewById(R.id.mbConverter);
+                        EditText nameFile = ((Activity)contextOptionRandom).findViewById(R.id.value_name_random_file);
+                        Button generateRandom = ((Activity)contextOptionRandom).findViewById(R.id.buttonGenerateRandomFile);
+
+                        if (randomOperation.equals("started")) {
+                            OptionRandom.operating = true;
+                            kiloBytes.setEnabled(false);
+                            megaBytes.setEnabled(false);
+                            nameFile.setEnabled(false);
+                            myToasts.show(contextOptionRandom,"Please wait.");
+                            generateRandom.setEnabled(false);
+                        }
+
+                        if (randomOperation.equals("ended")) {
+                            OptionRandom.operating = false;
+                            kiloBytes.setEnabled(true);
+                            megaBytes.setEnabled(true);
+                            nameFile.setEnabled(true);
+                            myToasts.show(contextOptionRandom,"All done!");
+                            generateRandom.setEnabled(true);
+                        }
+
+                    }
+
+                    if (jsonMessage.has("signatures")) {
+                        JSONObject signaturesContent = jsonMessage.getJSONObject("signatures");
+
+                        Log.d("Signatures message", signaturesContent.toString());
+
+                        if (signaturesContent.has("operationSignaturesGenerateStatus")) {
+                            String statusOperation = signaturesContent.getString("operationSignaturesGenerateStatus");
+
+                            Button buttonSignMessage = ((Activity)contextOptionSignaturesGenerate).findViewById(R.id.button_sign_message);
+                            EditText messageTitle = ((Activity)contextOptionSignaturesGenerate).findViewById(R.id.value_signature_set_title);
+                            TextInputLayout messageContent = ((Activity)contextOptionSignaturesGenerate).findViewById(R.id.value_signature_message);
+
+                            if (statusOperation.equals("started")) {
+                                buttonSignMessage .setEnabled(false);
+                                messageTitle.setEnabled(false);
+                                messageContent.setEnabled(false);
+                            }
+
+                            if (statusOperation.equals("ended")) {
+                                myToasts.show(contextOptionSignaturesGenerate, "Operation has ended");
+                                buttonSignMessage .setEnabled(true);
+                                messageTitle.setText("");
+                                messageTitle.setEnabled(true);
+                                messageContent.getEditText().setText("");
+                                messageContent.setEnabled(true);
+                            }
+                        }
+                    }
+
+                    if (jsonMessage.has("I2C")) {
+                        JSONObject i2cContent = jsonMessage.getJSONObject("I2C");
+
+                        Log.d("I2C message", i2cContent.toString());
+                        String i2cOperation = i2cContent.getString("I2CCurrentAddress");
+                        try {
+                            EditText currentI2CAddress = ((Activity)contextOptionI2C).findViewById(R.id.value_current_i2c_address);
+                            currentI2CAddress.setText(i2cOperation);
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (jsonMessage.has("TAP")) {
+                        JSONObject tapContent = jsonMessage.getJSONObject("TAP");
+
+                        Log.d("TAP message", tapContent.toString());
+
+                        if (tapContent.has("TAPCurrentGlobalSensibility")) {
+                            String currentTAPSensibility = tapContent.getString("TAPCurrentGlobalSensibility");
+                            try {
+                                EditText valueCurrentTAPSensibility = ((Activity)contextOptionTAP).findViewById(R.id.value_current_tap_sensibility);
+                                valueCurrentTAPSensibility.setText(currentTAPSensibility);
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        if (tapContent.has("TAPCurrentAxisXSensibility")) {
+                            String currentAxisX = tapContent.getString("TAPCurrentAxisXSensibility");
+                            String currentAxisY = tapContent.getString("TAPCurrentAxisYSensibility");
+                            String currentAxisZ = tapContent.getString("TAPCurrentAxisZSensibility");
+                            try {
+                                EditText valueAxisX = ((Activity)contextOptionTAP).findViewById(R.id.value_current_axis_x);
+                                EditText valueAxisY = ((Activity)contextOptionTAP).findViewById(R.id.value_current_axis_y);
+                                EditText valueAxisZ = ((Activity)contextOptionTAP).findViewById(R.id.value_current_axis_z);
+                                valueAxisX.setText(currentAxisX);
+                                valueAxisY.setText(currentAxisY);
+                                valueAxisZ.setText(currentAxisZ);
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    if (jsonMessage.has("TAPTest")) {
+                        JSONObject tapTestContent = jsonMessage.getJSONObject("TAPTest");
+
+                        Log.d("TAPTest message", tapTestContent.toString());
+
+                        if (tapTestContent.has("TAPTestStatus")) {
+                            String operationTAPTest = tapTestContent.getString("TAPTestStatus");
+
+                            if (operationTAPTest.equals("started")) {
+                                Button buttonStartTAPTest = ((Activity)contextOptionTAPTest).findViewById(R.id.button_begin_tap_test);
+                                buttonStartTAPTest.setEnabled(false);
+                            }
+
+                            if (operationTAPTest.equals("ended")) {
+                                Button buttonStartTAPTest = ((Activity)contextOptionTAPTest).findViewById(R.id.button_begin_tap_test);
+                                buttonStartTAPTest.setEnabled(true);
+                            }
+                        }
+
+                        if (tapTestContent.has("TAPTestValues")) {
+                            String axisTAPValue = tapTestContent.getString("TAPTestValues");
+                            String gForceTAPTest = tapTestContent.getString("TAPTestGForce");
+                            String tapDirectionTAPTest = tapTestContent.getString("TAPTestTAPDirection");
+                            String tapDirectionTAPMeaning = null;
+
+                            if (Integer.parseInt(tapDirectionTAPTest) == -1) {
+                                tapDirectionTAPMeaning = "Axis Down";
+                            }
+
+                            if (Integer.parseInt(tapDirectionTAPTest) == 0) {
+                                tapDirectionTAPMeaning = "No movement";
+                            }
+
+                            if (Integer.parseInt(tapDirectionTAPTest) == 1) {
+                                tapDirectionTAPMeaning = "Axis UP";
+                            }
+
+                            if (axisTAPValue.equals("AxisX")) {
+                                EditText gForceAxisXValue = ((Activity)contextOptionTAPTest).findViewById(R.id.value_tap_test_axis_x_g_force);
+                                EditText tapDirectionValue = ((Activity)contextOptionTAPTest).findViewById(R.id.value_tap_test_axis_x_tap_direction);
+                                EditText tapDirectionValueMeaning = ((Activity)contextOptionTAPTest).findViewById(R.id.value_tap_test_axis_x_tap_direction_meaning);
+
+                                try {
+                                    gForceAxisXValue.setText(gForceTAPTest);
+                                    tapDirectionValue.setText(tapDirectionTAPTest);
+                                    tapDirectionValueMeaning.setText(tapDirectionTAPMeaning);
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            if (axisTAPValue.equals("AxisY")) {
+                                EditText gForceAxisYValue = ((Activity)contextOptionTAPTest).findViewById(R.id.value_tap_test_axis_y_g_force);
+                                EditText tapDirectionValue = ((Activity)contextOptionTAPTest).findViewById(R.id.value_tap_test_axis_y_tap_direction);
+                                EditText tapDirectionValueMeaning = ((Activity)contextOptionTAPTest).findViewById(R.id.value_tap_test_axis_y_tap_direction_meaning);
+
+                                try {
+                                    gForceAxisYValue.setText(gForceTAPTest);
+                                    tapDirectionValue.setText(tapDirectionTAPTest);
+                                    tapDirectionValueMeaning.setText(tapDirectionTAPMeaning);
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            if (axisTAPValue.equals("AxisZ")) {
+                                EditText gForceAxisZValue = ((Activity)contextOptionTAPTest).findViewById(R.id.value_tap_test_axis_z_g_force);
+                                EditText tapDirectionValue = ((Activity)contextOptionTAPTest).findViewById(R.id.value_tap_test_axis_z_tap_direction);
+                                EditText tapDirectionValueMeaning = ((Activity)contextOptionTAPTest).findViewById(R.id.value_tap_test_axis_z_tap_direction_meaning);
+
+                                try {
+                                    gForceAxisZValue.setText(gForceTAPTest);
+                                    tapDirectionValue.setText(tapDirectionTAPTest);
+                                    tapDirectionValueMeaning.setText(tapDirectionTAPMeaning);
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+
                     deleteMessage();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -528,6 +563,7 @@ public class ConnectedThread extends Thread{
             }
         }
         void deleteMessage() {
+            Log.d("Message Operation", "Deleted");
             recDataString.delete(0, recDataString.length());
         }
     };

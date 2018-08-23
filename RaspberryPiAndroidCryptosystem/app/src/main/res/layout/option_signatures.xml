@@ -13,4 +13,80 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:id="@+id/text_signatures_generate_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:text="@string/text_signatures_generate_signature"
+        android:gravity="center"
+        android:width="150dp"
+        android:layout_marginTop="60dp"
+        android:layout_alignEnd="@id/aux_reference"
+        android:layout_alignRight="@id/aux_reference"/>
+
+    <Button
+        android:id="@+id/button_generate_signature"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_generate_signature"
+        android:layout_alignTop="@id/text_signatures_generate_signature"
+        android:layout_toEndOf="@id/aux_reference"
+        android:layout_toRightOf="@id/aux_reference"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        />
+
+    <TextView
+        android:id="@+id/text_signatures_corrupt_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:width="150dp"
+        android:text="@string/text_signatures_corrupt_signature"
+        android:gravity="center"
+        android:layout_below="@id/text_signatures_generate_signature"
+        android:layout_alignRight="@id/aux_reference"
+        android:layout_alignEnd="@id/aux_reference"
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        android:id="@+id/button_corrupt_signature"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_corrupt_signature"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@id/text_signatures_corrupt_signature"
+        android:layout_alignStart="@id/button_generate_signature"
+        android:layout_alignLeft="@id/button_generate_signature"/>
+
+    <TextView
+        android:id="@+id/text_signatures_check_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:width="150dp"
+        android:text="@string/text_signatures_check_signature"
+        android:gravity="center"
+        android:layout_below="@id/text_signatures_corrupt_signature"
+        android:layout_alignEnd="@id/aux_reference"
+        android:layout_marginTop="30dp"
+        android:layout_alignRight="@id/aux_reference" />
+
+    <Button
+        android:id="@+id/button_check_signature"
+        android:background="@drawable/custom_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_check_signature"
+        android:layout_alignStart="@id/button_generate_signature"
+        android:layout_alignLeft="@id/button_generate_signature"
+        android:layout_alignTop="@id/text_signatures_check_signature"
+        android:layout_marginTop="10dp"/>
+
 </RelativeLayout>

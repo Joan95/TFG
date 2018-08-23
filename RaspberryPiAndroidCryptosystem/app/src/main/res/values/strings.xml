@@ -12,6 +12,7 @@
     <string name="option_ecdsa">ECDSA Option</string>
     <string name="option_i2c">I2C Option</string>
     <string name="option_tap">TAP Option</string>
+    <string name="option_tap_test">TAP Test Option</string>
 
     <!-- Text view's name -->
     <string name="text_brief_explanation">Welcome to this app. Here there is a\nbrief explanation about its functionality.</string>
@@ -82,6 +83,9 @@
     <string name="text_tap_test_axis_x_values">Axis X values</string>
     <string name="text_tap_test_axis_y_values">Axis Y values</string>
     <string name="text_tap_test_axis_z_values">Axis Z values</string>
+    <string name="text_signatures_generate_signature">Generate new Signature</string>
+    <string name="text_signatures_corrupt_signature">Corrupt an existent Signature</string>
+    <string name="text_signatures_check_signature">Check the validity of a Signature</string>
     <string name="text_header_signatures_create_message">Create your message and sign it</string>
     <string name="text_signatures_set_title">Message\'s Title</string>
     <string name="text_signatures_message">Write your message below</string>
@@ -125,6 +129,9 @@
     <string name="button_start_tap_test">Tap Test</string>
     <string name="button_set_new_axis_tap_sensibility">Axis sensibility</string>
     <string name="button_sign_message">Sign message</string>
+    <string name="button_generate_signature">Generate</string>
+    <string name="button_corrupt_signature">Corrupt</string>
+    <string name="button_check_signature">Check</string>
 
     <!-- Spinner's Name -->
     <string name="text_spinner_select_method">Select\ Method</string>
