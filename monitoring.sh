@@ -47,22 +47,65 @@ fi
 
 
 if [ $hsm == 'True' ]; then 
-	while [ ! -f temp.txt ]; do 
-		echo -e "\t'monitoring.sh' - Waiting for start of encryption using Zymbit"
-		sleep 1
-	done
 
-	aux=0
+	if [ $fileRunning == 'encrypter' ]; then 
 
-	while [ -f temp.txt ] && [ $(more temp.txt) == "1" ]; do
-		echo -e "\t'monitoring.sh' - Monitoring the encryption,\n\t\tplease wait, it will take a while - $aux s" 
-		(top -bn 10 -d 0.5 | grep zymbit | grep zkifc ) >> $logsFile
-		aux=$((aux + 5))
-	done 
+		while [ ! -f tempEnc.txt ]; do 
+			echo -e "\t'monitoring.sh' - Waiting for start of encryption using Zymbit"
+			sleep 1
+		done
+	
+		aux=0
+		show='True'
+		result=0
+	
+		while [ -f tempEnc.txt ]; do
+			if [ $show == 'True' ]; then 
+				echo -e "\t'monitoring.sh' - Monitoring the encryption,\n\t\tplease wait, it will take a while - $aux s" 
+				show='False'
+			fi
+			(top -bn 2 -d 0.5 | grep zymbit | grep zkifc ) >> $logsFile
+			aux=$((aux + 1))
+			result=$(( $aux % 5 ))
+			if [ $result == 0 ]; then
+				show='True'
+			fi
+		done 
+	
+		if [ ! -f tempEnc.txt ]; then 
+			echo -e "\n\t'monitoring.sh' - Monitoring has finished\n"
+			exit 0
+		fi
 
-	if [ ! -f temp.txt ]; then 
-		echo -e "\n\t'monitoring.sh' - Monitoring has finished\n"
-		exit 0
+	else 
+
+		while [ ! -f tempDec.txt ]; do 
+			echo -e "\t'monitoring.sh' - Waiting for start of decryption using Zymbit"
+			sleep 1
+		done
+	
+		aux=0
+		show='True'
+		result=0
+	
+		while [ -f tempDec.txt ]; do
+			if [ $show == 'True' ]; then 
+				echo -e "\t'monitoring.sh' - Monitoring the decryption,\n\t\tplease wait, it will take a while - $aux s" 
+				show='False'
+			fi
+			(top -bn 2 -d 0.5 | grep zymbit | grep zkifc ) >> $logsFile
+			aux=$((aux + 1))
+			result=$(( $aux % 5 ))
+			if [ $result == 0 ]; then
+				show='True'
+			fi
+		done 
+	
+		if [ ! -f tempDec.txt ]; then 
+			echo -e "\n\t'monitoring.sh' - Monitoring has finished\n"
+			exit 0
+		fi
+
 	fi
 else 
 	echo -e "\t'monitoring.sh' - Frequency will be of: $frecOfTop seconds for file of $sizeOfFileMB MB\n"

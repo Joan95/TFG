@@ -8,6 +8,8 @@ import sys
 import os
 import os.path
 
+import time
+
 # Flash the LED to indicate the operation is underway
 zymkey.client.__init__
 zymkey.client.led_flash(500, 100)
@@ -38,7 +40,7 @@ if not os.path.exists(directory):
 
 print "\n\t\t---------- Start of decryption using Zymbit ----------"
 
-file = open("temp.txt", "w+")
+file = open("tempDec.txt", "w+")
 file.write("1")
 file.close()
 
@@ -57,8 +59,10 @@ zymbitF.close()
 
 decrypted = zymkey.client.unlock(pathToFile, zymbitFile)
 
-if os.path.isfile("temp.txt"):
-	os.remove("temp.txt")
+time.sleep(1)
+
+if os.path.isfile("tempDec.txt"):
+	os.remove("tempDec.txt")
 
 
 print "\n\t\t---------- End of decryption using Zymbit ----------"

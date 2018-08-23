@@ -66,17 +66,17 @@ optionFile = ""                 # Name File Option to be charged
 optionFunction = ""             # Function has been choosen
 
 noEnd = False                   # Boolean for while's switch menu
+noSignatureEnd = False          # Boolean for Signature Loop
 noTestEnd = False               # Boolean for TAP Test Loop
-
-msOn = 0                        # Amount of miliseconds LED will be ON
-msOff = 0                       # Amount of miliseconds LED will be OFF
-numFlashes = 0                  # Number of Flashes it will do 
 
 pathToResources = str("%s/%s" % (device_directory, "Resources"))
 pathToRandomGenerated = str("%s/%s" % (pathToResources, "RandomGenerated"))
 pathToEncrypt = str("%s/%s" % (device_directory, "Encrypt"))
 pathToDecrypt = str("%s/%s" % (device_directory, "Decrypt"))
 pathToLogs = str("%s/%s" % (base_directory, "Logs"))
+pathToSignature = str("%s/%s" % (device_directory, "Signature"))
+pathToSignedMessages = str("%s/%s" % (pathToSignature, "Messages"))
+pathToSignatures = str("%s/%s" % (pathToSignature, "Signatures"))
 
 cipher = ""
 typeFile = ""
@@ -93,7 +93,12 @@ logsFile = ""
 
 fileRunning = ""
 
-# ------------- ------------- Recommended Variables ------------- -------------#
+num_signatures = 0
+
+# ------------- ------------- Recommended Variables HSM ------------- -------------#
+msOn = 0                                        # Amount of miliseconds LED will be ON
+msOff = 0                                       # Amount of miliseconds LED will be OFF
+numFlashes = 0                                  # Number of Flashes it will do
 i2cAddress = '0x30'                             # I2C default address
 tapSensibility = 50                             # TAP's default sensibility
 tapSensibilityAxisX = 0                         # TAP's Axis X sensibility
@@ -214,11 +219,12 @@ try:
 					
 			client_sock.send(SendMessage)
 
+                        # Enable loop boolean
                         noEnd = True
+                        noSignatureEnd = True
                         noTestEnd = True
                         
                         ############# Enormous Switch Case #############
-
 
                         if optionFunction == 'RTC':
                                 print "Option RTC has been choosen"
@@ -423,8 +429,6 @@ try:
                                 
                                                         me = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.size, newMessage.hsm])
                                 
-                                                        time.sleep(1)
-                                
                                                         #ARGS: (nameFile, typeFile, password, HSM, cipher, pathToFile)
                                                         #print newMessage.nameFile
                                                         #print newMessage.typeFile
@@ -470,8 +474,6 @@ try:
                                                                 md = subprocess.Popen(["./monitoring.sh", logsFile, fileRunning, newMessage.size, newMessage.hsm])
                                                                 #print "Here is where its Log will be saved: ", logsFile
                                 
-                                                                time.sleep(1)
-                                
                                                                 SendMessage = {}
                                                                 SendMessage["operationDecryption"] = "started"
                                                                 SendMessage = json.dumps(SendMessage)
@@ -481,8 +483,6 @@ try:
                                 
                                                                 client_sock.send(SendMessage)
                                 
-                                                                
-                                                                
 
                                                                 if (newMessage.hsm == "True"):
                                                                         pathToFile = str("%s/%s/zymbit/%s" % (pathToEncrypt, newMessage.typeFile, newMessage.nameFile))
@@ -655,7 +655,8 @@ try:
                                                         print "File already exists, deleting it..."
 
                                                         if os.path.isfile(pathToNewRandomGenerated):
-                                                                                os.remove(pathToNewRandomGenerated)
+                                                                os.remove(pathToNewRandomGenerated)
+                                                                
                                                 randomFileSize = randomFileSize * 1024
                                                 print "Generating the file with %s bytes, please wait..." % (randomFileSize)
 
@@ -697,6 +698,113 @@ try:
                                                 print "End of Function has been selected"
                                                 noEnd = False
 
+                                        if jsonMessage.get("Signatures") == 'Generate':
+                                                while(noSignatureEnd):
+                                                        noSignatureEnd = True
+
+                                                        print "Waiting to recieve information in order to generate signature from device ", client_info
+                                                        print "\n"
+
+                                                        data = client_sock.recv(1024)
+                                                        if len(data) == 0: break
+
+                                                        #Data to JSON
+                                                        jsonMessage = json.loads(data)
+                                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                                        if jsonMessage.get("message") == 'endFunction':
+                                                                print "End of Function has been selected"
+                                                                noSignatureEnd = False
+
+                                                        if jsonMessage.get("SignaturesGenerate") == 'Generate':
+
+                                                                SendMessage = {}
+                                                                SendMessage["operationSignaturesGenerateStatus"] = "started"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'signatures': %s}" % (SendMessage))
+                                                                print SendMessage
+                                                                print "\n"
+                                                                client_sock.send(SendMessage)
+                                                                
+                                                                signatureTitle = str("%s" % (jsonMessage.get("Title")))
+                                                                signatureMessage = str("%s" % (jsonMessage.get("Message")))
+                                                                auxPathToMessage = str("%s/%s.txt" % (pathToSignedMessages,signatureTitle))
+                                                                auxPathToSignature = str("%s/%s.txt" % (pathToSignatures,signatureTitle))
+
+                                                                print auxPathToMessage
+                                                                print auxPathToSignature
+                                                                
+                                                                if (os.path.isfile(auxPathToMessage)):
+                                                                        try:
+                                                                                print "WARNING! Message and Signature already exist"
+                                                                                print "Removing the message..."
+                                                                                os.remove(auxPathToMessage)
+                                                                                print "Done"
+                                                                                print "Removing its signature..."
+                                                                                os.remove(auxPathToSignature)
+                                                                                print "Done"
+
+                                                                        except OSError:
+                                                                                print "Some files didn't exist, but no problem it carries on"
+                                                                        
+                                                                print "Creating message and signing it"
+                                                                messageSignature = open(auxPathToMessage, "w+")
+                                                                messageSignature.write(signatureMessage)
+                                                                messageSignature.close()
+
+                                                                newSignature = zymkey.client.sign(auxPathToMessage)
+
+                                                                signatureOfMessage = open(auxPathToSignature, "w+")
+                                                                signatureOfMessage.write(newSignature)
+                                                                signatureOfMessage.close()
+                                                                
+                                                                print "Message created and signed successfully"
+
+                                                                SendMessage = {}
+                                                                SendMessage["operationSignaturesGenerateStatus"] = "ended"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'signatures': %s}" % (SendMessage))
+                                                                print SendMessage
+                                                                print "\n"
+                                                                client_sock.send(SendMessage)
+
+                                                                                       
+                                        elif jsonMessage.get("Signatures") == 'Corrupt':
+                                                while(noSignatureEnd):
+                                                        noSignatureEnd = True
+
+                                                        print "Waiting to recieve the information in order to corrupt signature from device ", client_info
+                                                        print "\n"
+
+                                                        data = client_sock.recv(1024)
+                                                        if len(data) == 0: break
+
+                                                        #Data to JSON
+                                                        jsonMessage = json.loads(data)
+                                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                                        if jsonMessage.get("message") == 'endFunction':
+                                                                print "End of Function has been selected"
+                                                                noSignatureEnd = False
+
+
+                                        elif jsonMessage.get("Signatures") == 'Check':
+                                                while(noSignatureEnd):
+                                                        noSignatureEnd = True
+
+                                                        print "Waiting to recieve information in order to check signature from device ", client_info
+                                                        print "\n"
+
+                                                        data = client_sock.recv(1024)
+                                                        if len(data) == 0: break
+
+                                                        #Data to JSON
+                                                        jsonMessage = json.loads(data)
+                                                        print "jsonMessage:\n%s" % jsonMessage
+
+                                                        if jsonMessage.get("message") == 'endFunction':
+                                                                print "End of Function has been selected"
+                                                                noSignatureEnd = False
 
 
                         elif optionFunction == 'ecdsa':
