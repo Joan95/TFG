@@ -883,8 +883,6 @@ try:
 
                                                                 newSignature = zymkey.client.sign(signatureMessage)
 
-                                                                
-
                                                                 value = zymkey.client.verify(signatureMessage, newSignature)
                                                                 print "Verifing message %s\n\twith signature %s\n\tstatus: %s" % (signatureMessage, newSignature, value)
 
