@@ -278,16 +278,18 @@ def sendSignatures(pathToSignatures, pathToSignedMessages):
                 if signedMessagesDirectories != None:
                         for message in signedMessagesDirectories:
                                 SendMessage = {}
-                                print str("%s/%s" % (pathToSignedMessages,message))
+                                #print str("%s/%s" % (pathToSignedMessages,message))
                                 content = open(str("%s/%s" % (pathToSignedMessages,message)), "r")
-                                SendMessage[message] = content.read()
+                                SendMessage["content"] = content.read()
+                                SendMessage["title"] = message
                                 SendMessage["OperationStatus"] = "Sending resources"
                                 SendMessage = json.dumps(SendMessage)
                                 SendMessage = str("{'Signatures Files': %s}" % (SendMessage))
                                 content.close()
                                 print "Message sent to target:\n\t%s" % SendMessage
-                
-                
+                                print "\n"
+                                client_sock.send(SendMessage)
+                                time.sleep(0.5)
 
 
 # ------------- ------------- Main ------------- ------------- #
@@ -454,11 +456,12 @@ try:
                                 print "Option encrypt_decrypt has been choosen"
 
                                 showMenu(optionNumber)
+                                FDevice = {}
+                                SFDevice = {}
+                                sendSF(pathToResources,FDevice,SFDevice)
                                 
                                 while (noEnd):
                                         noEnd = True
-                                        
-                                        sendSF(pathToResources,FDevice,SFDevice)
                                                 
                                         print "\tThe whole System File information has sent to: ", client_info
                                         print "\n"
@@ -869,7 +872,6 @@ try:
                                                                                 print "Removing its signature..."
                                                                                 os.remove(auxPathToSignature)
                                                                                 print "Done"
-                                                                                num_signatures = num_signatures - 1
 
                                                                         except OSError:
                                                                                 print "Some files didn't exist, but no problem it carries on"
@@ -879,13 +881,16 @@ try:
                                                                 messageSignature.write(signatureMessage)
                                                                 messageSignature.close()
 
-                                                                newSignature = zymkey.client.sign(auxPathToMessage)
+                                                                newSignature = zymkey.client.sign(signatureMessage)
+
+                                                                
+
+                                                                value = zymkey.client.verify(signatureMessage, newSignature)
+                                                                print "Verifing message %s\n\twith signature %s\n\tstatus: %s" % (signatureMessage, newSignature, value)
 
                                                                 signatureOfMessage = open(auxPathToSignature, "w+")
                                                                 signatureOfMessage.write(newSignature)
                                                                 signatureOfMessage.close()
-
-                                                                num_signatures = num_signatures + 1
                                                                 
                                                                 print "Message created and signed successfully"
 
@@ -918,10 +923,11 @@ try:
 
 
                                         elif jsonMessage.get("Signatures") == 'Check':
+
+                                                sendSignatures(pathToSignatures, pathToSignedMessages)
+                                                
                                                 while(noSignatureEnd):
                                                         noSignatureEnd = True
-
-                                                        sendSignatures(pathToSignatures, pathToSignedMessages)
 
                                                         print "Waiting to recieve information in order to check signature from device ", client_info
                                                         print "\n"
@@ -936,6 +942,47 @@ try:
                                                         if jsonMessage.get("message") == 'endFunction':
                                                                 print "End of Function has been selected"
                                                                 noSignatureEnd = False
+
+                                                        if jsonMessage.get("signatures") == 'refresh':
+                                                                SendMessage = {}
+                                                                SendMessage["refreshOperation"] = "started"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'signatures': %s}" % (SendMessage))
+                                                                print "Message sent to target:\n\t%s" % SendMessage
+                                                                print "\n"
+                                                                client_sock.send(SendMessage)
+                                                                
+                                                                sendSignatures(pathToSignatures, pathToSignedMessages)
+
+                                                                SendMessage = {}
+                                                                SendMessage["refreshOperationCheck"] = "ended"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'signatures': %s}" % (SendMessage))
+                                                                print "Message sent to target:\n\t%s" % SendMessage
+                                                                print "\n"
+                                                                client_sock.send(SendMessage)
+
+                                                        if jsonMessage.get("signatures") == 'check':
+                                                                title = jsonMessage.get("title")
+                                                                print "Checking the status of %s signature" % title
+
+                                                                situationOfFile = str("%s/%s" % (pathToSignedMessages,title))
+                                                                situationOfSignature = str("%s/%s" % (pathToSignatures,title))
+
+                                                                situationOfFile = open(situationOfFile, "r")
+                                                                situationOfFisicFile = situationOfFile.read()
+                                                                print "Content of file: '%s'" % situationOfFisicFile
+                                                                situationOfFile.close()
+                                                                
+                                                                situationOfSignature = open(situationOfSignature, "r")
+                                                                situationOfFisicSignature = bytearray(situationOfSignature.read())
+                                                                print "Signature: '%s'" % situationOfFisicSignature
+                                                                situationOfSignature.close()
+                                                                
+                                                                result = zymkey.client.verify(situationOfFisicFile, situationOfFisicSignature)
+
+                                                                print "\nStatus: %s" % result
+                                                                
 
 
                         elif optionFunction == 'ecdsa':
