@@ -978,12 +978,22 @@ try:
                                                                 situationOfFisicSignature = bytearray(situationOfSignature.read())
                                                                 print "Signature: '%s'" % situationOfFisicSignature
                                                                 situationOfSignature.close()
-                                                                
-                                                                result = zymkey.client.verify(situationOfFisicFile, situationOfFisicSignature)
 
+                                                                try:
+                                                                        result = zymkey.client.verify(situationOfFisicFile, situationOfFisicSignature)
+                                                                except VerificationError:
+                                                                        result = False
+                                                                        
                                                                 print "\nStatus: %s" % result
-                                                                
 
+                                                                SendMessage = {}
+                                                                SendMessage["statusSignature"] = result
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'signatures': %s}" % (SendMessage))
+                                                                print "Message sent to target:\n\t%s" % SendMessage
+                                                                print "\n"
+                                                                client_sock.send(SendMessage)
+                                                                
 
                         elif optionFunction == 'ecdsa':
                                 print "Option ECDSA has been choosen"
