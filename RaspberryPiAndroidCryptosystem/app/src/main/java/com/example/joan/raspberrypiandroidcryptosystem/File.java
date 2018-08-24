@@ -5,7 +5,7 @@ public class File {
     private String name = null;
     private int size = 0;
 
-    public File(String name, int size) {
+    File(String name, int size) {
         this.name = name;
         this.size = size;
     }

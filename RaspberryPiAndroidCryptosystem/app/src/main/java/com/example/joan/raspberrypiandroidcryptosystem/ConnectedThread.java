@@ -43,9 +43,9 @@ public class ConnectedThread extends Thread{
     @SuppressLint("StaticFieldLeak")
     public static Context contextOptionSignaturesGenerate;
     @SuppressLint("StaticFieldLeak")
-    public static Context contextSignaturesCorrupt;
+    public static Context contextOptionSignaturesCorrupt;
     @SuppressLint("StaticFieldLeak")
-    public static Context contextSignaturesCheck;
+    public static Context contextOptionSignaturesCheck;
     @SuppressLint("StaticFieldLeak")
     public static Context contextOptionI2C;
     @SuppressLint("StaticFieldLeak")
@@ -376,6 +376,7 @@ public class ConnectedThread extends Thread{
 
                         String randomOperation = randomContent.getString("RANDOMOperation");
 
+                        EditText bytes = ((Activity)contextOptionRandom).findViewById(R.id.bytesConverter);
                         EditText kiloBytes = ((Activity)contextOptionRandom).findViewById(R.id.value_size_random_file);
                         EditText megaBytes = ((Activity)contextOptionRandom).findViewById(R.id.mbConverter);
                         EditText nameFile = ((Activity)contextOptionRandom).findViewById(R.id.value_name_random_file);
@@ -383,6 +384,7 @@ public class ConnectedThread extends Thread{
 
                         if (randomOperation.equals("started")) {
                             OptionRandom.operating = true;
+                            bytes.setEnabled(false);
                             kiloBytes.setEnabled(false);
                             megaBytes.setEnabled(false);
                             nameFile.setEnabled(false);
@@ -392,8 +394,11 @@ public class ConnectedThread extends Thread{
 
                         if (randomOperation.equals("ended")) {
                             OptionRandom.operating = false;
+                            bytes.setEnabled(true);
+                            kiloBytes.setText("");
                             kiloBytes.setEnabled(true);
                             megaBytes.setEnabled(true);
+                            nameFile.setText("");
                             nameFile.setEnabled(true);
                             myToasts.show(contextOptionRandom,"All done!");
                             generateRandom.setEnabled(true);
@@ -426,6 +431,39 @@ public class ConnectedThread extends Thread{
                                 messageTitle.setEnabled(true);
                                 messageContent.getEditText().setText("");
                                 messageContent.setEnabled(true);
+                            }
+                        }
+                    }
+
+                    if (jsonMessage.has("Signatures Files")) {
+                        JSONObject signaturesFilesContent = jsonMessage.getJSONObject("Signatures Files");
+
+                        Log.d("SignaturesFiles message", signaturesFilesContent.toString());
+                        String numberOfFiles = signaturesFilesContent.getString("NumberOfFiles");
+                        if (Integer.parseInt(numberOfFiles) == 0) {
+                            try {
+                                EditText numberOfSignatures = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.value_number_of_singatures);
+                                Spinner spinnerSelectSignature = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.spinner_select_signature);
+
+                                numberOfSignatures.setText(String.valueOf(0));
+                                spinnerSelectSignature.setEnabled(false);
+
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
+                            }
+                            myToasts.show(contextOptionSignaturesCheck,"Sorry, 0 signatures, should create one first");
+                        } else {
+                            try {
+                                EditText numberOfSignatures = ((Activity) contextOptionSignaturesCheck).findViewById(R.id.value_number_of_singatures);
+                                numberOfSignatures.setText(String.valueOf(Integer.parseInt(numberOfFiles)));
+
+                                JSONObject listOfSignatures = signaturesFilesContent.getJSONObject("ListOfSign");
+                                for (int i = 0; i < listOfSignatures.length(); i++) {
+                                    
+                                }
+
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
                             }
                         }
                     }

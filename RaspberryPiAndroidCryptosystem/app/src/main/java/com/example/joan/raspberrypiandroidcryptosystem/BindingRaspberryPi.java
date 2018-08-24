@@ -95,6 +95,7 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
                         try {
                             jsonMessage.put("Function","RTC");
+                            jsonMessage.put("Number", position);
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -108,6 +109,7 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
                         try {
                             jsonMessage.put("Function","LED");
+                            jsonMessage.put("Number", position);
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -120,6 +122,7 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
                         try {
                             jsonMessage.put("Function","encrypt_decrypt");
+                            jsonMessage.put("Number", position);
 
                         } catch (JSONException e1) {
                             e1.printStackTrace();
@@ -133,6 +136,7 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
                         try {
                             jsonMessage.put("Function", "random");
+                            jsonMessage.put("Number", position);
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -145,6 +149,7 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
                         try {
                             jsonMessage.put("Function", "signatures");
+                            jsonMessage.put("Number", position);
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -157,6 +162,7 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
                         try {
                             jsonMessage.put("Function", "ecdsa");
+                            jsonMessage.put("Number", position);
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -169,6 +175,7 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
                         try {
                             jsonMessage.put("Function", "i2c");
+                            jsonMessage.put("Number", position);
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -180,7 +187,8 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                     case "TAP":
                         myToasts.show(BindingRaspberryPi.this, "Option: "+position);
                         try {
-                            jsonMessage.put("Function",selectOptionFunction);
+                            jsonMessage.put("Function", "TAP");
+                            jsonMessage.put("Number", position);
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }

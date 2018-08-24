@@ -17,6 +17,8 @@ public class OptionSignaturesCheck extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.option_signatures_check);
+
+        ConnectedThread.contextOptionSignaturesCheck = OptionSignaturesCheck.this;
     }
 
 
