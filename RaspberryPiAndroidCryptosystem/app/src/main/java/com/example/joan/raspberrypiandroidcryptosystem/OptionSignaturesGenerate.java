@@ -15,7 +15,6 @@ import org.json.JSONObject;
 public class OptionSignaturesGenerate extends AppCompatActivity {
 
     private ConnectedThread connectedThread = ConnectedThreadSingleton.getConnectedThread(null);
-    private SignatureSystems signatureSystems = SignatureSystemsSingleton.getCurrentSignatureSystems();
     private ShowToasts myToasts = ShowToasts.getInstance();
 
     public static Boolean operating = false;
@@ -51,9 +50,6 @@ public class OptionSignaturesGenerate extends AppCompatActivity {
                         jsonMessage.put("SignaturesGenerate", "Generate");
                         jsonMessage.put("Title",messageTitle.getText().toString());
                         jsonMessage.put("Message", valueMessage.getEditText().getText().toString());
-
-                        SignatureFile signatureFile = new SignatureFile(messageTitle.getText().toString(), valueMessage.getEditText().getText().toString());
-                        signatureSystems.addFile(signatureFile);
 
                     } catch (JSONException e1) {
                         e1.printStackTrace();

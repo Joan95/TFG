@@ -136,4 +136,13 @@
         android:text="@string/button_check_signature"
         android:enabled="false"/>
 
+    <Button
+        android:id="@+id/button_check_signature_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/text_signature_message_content"
+        android:layout_alignLeft="@id/text_signature_message_content"
+        android:layout_alignBaseline="@id/button_check_signature"
+        android:text="@string/button_refresh" />
+
 </RelativeLayout>

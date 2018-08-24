@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -54,6 +55,7 @@ public class ConnectedThread extends Thread{
     public static Context contextOptionTAPTest;
 
     private SystemFile systemFile = SystemFileSingleton.getCurrentSystemFile();
+    private SignatureSystems signatureSystems = SignatureSystemsSingleton.getCurrentSignatureSystems();
     private InfoFile infoFile = InfoFileSingleton.getInfoFile();
 
     private final InputStream receivingFromRaspberry;
@@ -433,37 +435,82 @@ public class ConnectedThread extends Thread{
                                 messageContent.setEnabled(true);
                             }
                         }
+
+                        if (signaturesContent.has("refreshOperationCheck")) {
+                            String operationStatus = signaturesContent.getString("refreshOperationCheck");
+
+                            if (operationStatus.equals("started")) {
+                                Spinner spinnerSelectSignature = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.spinner_select_signature);
+                                Button checkButton = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.button_check_signature);
+                                Button refreshButton = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.button_check_signature_refresh);
+                                spinnerSelectSignature.setEnabled(false);
+                                checkButton.setEnabled(false);
+                                refreshButton.setEnabled(false);
+                            }
+
+                            if (operationStatus.equals("ended")) {
+                                Spinner spinnerSelectSignature = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.spinner_select_signature);
+                                Button checkButton = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.button_check_signature);
+                                Button refreshButton = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.button_check_signature_refresh);
+                                spinnerSelectSignature.setEnabled(true);
+                                checkButton.setEnabled(true);
+                                refreshButton.setEnabled(true);
+
+                                ArrayAdapter<String> auxAdapter;
+
+                                auxAdapter = new ArrayAdapter<>(contextOptionSignaturesCheck, android.R.layout.simple_spinner_item, signatureSystems.getListKeys());
+                                auxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerSelectSignature.setAdapter(auxAdapter);
+                            }
+                        }
+
+                        if (signaturesContent.has("statusSignature")) {
+                            String statusSignature = signaturesContent.getString("statusSignature");
+
+                            EditText valueStatusSignature = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.value_signature_status);
+                            valueStatusSignature.setText(statusSignature);
+                        }
                     }
 
                     if (jsonMessage.has("Signatures Files")) {
                         JSONObject signaturesFilesContent = jsonMessage.getJSONObject("Signatures Files");
 
                         Log.d("SignaturesFiles message", signaturesFilesContent.toString());
-                        String numberOfFiles = signaturesFilesContent.getString("NumberOfFiles");
-                        if (Integer.parseInt(numberOfFiles) == 0) {
-                            try {
-                                EditText numberOfSignatures = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.value_number_of_singatures);
-                                Spinner spinnerSelectSignature = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.spinner_select_signature);
 
-                                numberOfSignatures.setText(String.valueOf(0));
-                                spinnerSelectSignature.setEnabled(false);
+                        if (signaturesFilesContent.has("NumberOfFiles")) {
+                            int numberOfFiles = signaturesFilesContent.getInt("NumberOfFiles");
+                            if (numberOfFiles == 0) {
+                                try {
+                                    EditText numberOfSignatures = ((Activity) contextOptionSignaturesCheck).findViewById(R.id.value_number_of_singatures);
+                                    Spinner spinnerSelectSignature = ((Activity) contextOptionSignaturesCheck).findViewById(R.id.spinner_select_signature);
 
-                            } catch (NullPointerException e) {
-                                e.printStackTrace();
-                            }
-                            myToasts.show(contextOptionSignaturesCheck,"Sorry, 0 signatures, should create one first");
-                        } else {
-                            try {
-                                EditText numberOfSignatures = ((Activity) contextOptionSignaturesCheck).findViewById(R.id.value_number_of_singatures);
-                                numberOfSignatures.setText(String.valueOf(Integer.parseInt(numberOfFiles)));
+                                    numberOfSignatures.setText(String.valueOf(0));
+                                    spinnerSelectSignature.setEnabled(false);
 
-                                JSONObject listOfSignatures = signaturesFilesContent.getJSONObject("ListOfSign");
-                                for (int i = 0; i < listOfSignatures.length(); i++) {
-                                    
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
                                 }
+                                myToasts.show(contextOptionSignaturesCheck, "Sorry, 0 signatures, should create one first");
+                            } else {
+                                try {
+                                    EditText numberOfSignatures = ((Activity) contextOptionSignaturesCheck).findViewById(R.id.value_number_of_singatures);
+                                    Spinner spinnerSelectSignature = ((Activity)contextOptionSignaturesCheck).findViewById(R.id.spinner_select_signature);
 
-                            } catch (NullPointerException e) {
-                                e.printStackTrace();
+                                    numberOfSignatures.setText(String.valueOf(numberOfFiles));
+                                    spinnerSelectSignature.setEnabled(true);
+
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        if (signaturesFilesContent.has("OperationStatus")) {
+                            if (signaturesFilesContent.getString("OperationStatus").equals("Sending resources")) {
+                                String titleSignatureFile = signaturesFilesContent.getString("title");
+                                String contentSignatureFile = signaturesFilesContent.getString("content");
+
+                                signatureSystems.putValues(titleSignatureFile, contentSignatureFile);
                             }
                         }
                     }
