@@ -249,28 +249,45 @@ def sendSF(pathToResources,FDevice,SFDevice):
 		SFDevice = {}
 
                 ########## Send Signatures Files to target ##########
-def sendSignatures(pathToSignatures):
+def sendSignatures(pathToSignatures, pathToSignedMessages):
         signaturesDirectories = os.listdir(pathToSignatures)
+        signedMessagesDirectories = os.listdir(pathToSignedMessages)
 
-        listOfSignatures = []
-        
-        print "\n\tSending all Signatures configuration..."
-        print "\tSignatures:\n\t\t%s" % (signaturesDirectories)
-                                        
-        if signaturesDirectories != None:
-                for signature in signaturesDirectories:
-                        print signature
-                        listOfSignatures.append(signature)
+        if (len(signaturesDirectories) != len(signedMessagesDirectories)):
+                print "ERROR! Mismatch between number of files in\n\t%s\n\t%s" % (signaturesDirectories, signedMessagesDirectories)
+                print "It could happen due to fail when creating a new Signature"
+                print "Please check it"
+        else:
+                listOfSignatures = []
+                contentOfMessage = {}
 
-        
-        SendMessage = {}
-        SendMessage["NumberOfFiles"] = num_signatures
-        SendMessage["ListOfSign"] = listOfSignatures
-        SendMessage = json.dumps(SendMessage)
-        SendMessage = str("{'Signatures Files': %s}" % (SendMessage))
-        print "Message sent to target:\n\t%s" % SendMessage
-        print "\n"        
-        client_sock.send(SendMessage)
+                global num_signatures
+                num_signatures = len(signaturesDirectories)
+                
+                print "\n\tSending all Signatures configuration..."
+                print "\tSignatures[%s]:\n\t\t%s" % (num_signatures,signaturesDirectories)
+
+                SendMessage = {}
+                SendMessage["NumberOfFiles"] = num_signatures
+                SendMessage = json.dumps(SendMessage)
+                SendMessage = str("{'Signatures Files': %s}" % (SendMessage))
+                print "Message sent to target:\n\t%s" % SendMessage
+                print "\n"        
+                client_sock.send(SendMessage)
+                                                
+                if signedMessagesDirectories != None:
+                        for message in signedMessagesDirectories:
+                                SendMessage = {}
+                                print str("%s/%s" % (pathToSignedMessages,message))
+                                content = open(str("%s/%s" % (pathToSignedMessages,message)), "r")
+                                SendMessage[message] = content.read()
+                                SendMessage["OperationStatus"] = "Sending resources"
+                                SendMessage = json.dumps(SendMessage)
+                                SendMessage = str("{'Signatures Files': %s}" % (SendMessage))
+                                content.close()
+                                print "Message sent to target:\n\t%s" % SendMessage
+                
+                
 
 
 # ------------- ------------- Main ------------- ------------- #
@@ -791,6 +808,7 @@ try:
                                 
                                 while(noEnd):
                                         noEnd = True
+                                        noSignatureEnd = True
                                         
                                         print "Waiting to recieve the message from device ", client_info
                                         print "\n"
@@ -903,7 +921,7 @@ try:
                                                 while(noSignatureEnd):
                                                         noSignatureEnd = True
 
-                                                        sendSignatures(pathToSignatures)
+                                                        sendSignatures(pathToSignatures, pathToSignedMessages)
 
                                                         print "Waiting to recieve information in order to check signature from device ", client_info
                                                         print "\n"
