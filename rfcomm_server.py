@@ -902,6 +902,9 @@ try:
 
                                                                                        
                                         elif jsonMessage.get("Signatures") == 'Corrupt':
+
+                                                sendSignatures(pathToSignatures, pathToSignedMessages)
+                                                
                                                 while(noSignatureEnd):
                                                         noSignatureEnd = True
 
@@ -918,6 +921,27 @@ try:
                                                         if jsonMessage.get("message") == 'endFunction':
                                                                 print "End of Function has been selected"
                                                                 noSignatureEnd = False
+
+
+                                                        if jsonMessage.get("signatures") == 'refresh':
+                                                                SendMessage = {}
+                                                                SendMessage["refreshOperationCorrupt"] = "started"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'signatures': %s}" % (SendMessage))
+                                                                print "Message sent to target:\n\t%s" % SendMessage
+                                                                print "\n"
+                                                                client_sock.send(SendMessage)
+                                                                
+                                                                sendSignatures(pathToSignatures, pathToSignedMessages)
+
+                                                                SendMessage = {}
+                                                                SendMessage["refreshOperationCorrupt"] = "ended"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'signatures': %s}" % (SendMessage))
+                                                                print "Message sent to target:\n\t%s" % SendMessage
+                                                                print "\n"
+                                                                client_sock.send(SendMessage)
+
 
 
                                         elif jsonMessage.get("Signatures") == 'Check':
@@ -943,7 +967,7 @@ try:
 
                                                         if jsonMessage.get("signatures") == 'refresh':
                                                                 SendMessage = {}
-                                                                SendMessage["refreshOperation"] = "started"
+                                                                SendMessage["refreshOperationCheck"] = "started"
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'signatures': %s}" % (SendMessage))
                                                                 print "Message sent to target:\n\t%s" % SendMessage
