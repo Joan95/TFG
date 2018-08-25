@@ -13,4 +13,136 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:id="@+id/text_header_corrupt_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/aux_reference"
+        android:text="@string/text_header_signatures_corrupt"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:height="30dp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/text_signatures_corrupt_number_of_signatures"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/text_signatures_number_of_signatures"
+        android:layout_below="@id/text_header_corrupt_signature"
+        android:layout_toStartOf="@id/aux_reference"
+        android:layout_toLeftOf="@id/aux_reference"/>
+
+    <EditText
+        android:id="@+id/value_number_of_signatures_corrupt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/aux_reference"
+        android:layout_toRightOf="@id/aux_reference"
+        android:layout_alignBaseline="@id/text_signatures_corrupt_number_of_signatures"
+        android:inputType="number"
+        android:gravity="center"
+        android:focusable="false"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:hint="@string/hint_signatures_done"
+        />
+
+    <TextView
+        android:id="@+id/text_signatures_spinner_select_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_signatures_spinner_select_signature"
+        android:layout_below="@id/text_signatures_corrupt_number_of_signatures"
+        android:layout_alignStart="@id/text_signatures_corrupt_number_of_signatures"
+        android:layout_alignLeft="@id/text_signatures_corrupt_number_of_signatures"
+        android:layout_marginTop="15dp"
+        />
+
+    <Spinner
+        android:id="@+id/spinner_select_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_signatures_corrupt_number_of_signatures"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@id/aux_reference"
+        android:layout_toRightOf="@id/aux_reference">
+    </Spinner>
+
+    <TextView
+        android:id="@+id/text_signature_message_content_corrupted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/text_signature_message_content_corrupted"
+        android:layout_below="@id/text_signatures_spinner_select_signature"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/value_signature_message_corrupted"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_below="@id/text_signature_message_content_corrupted"
+        android:layout_alignStart="@id/text_signatures_corrupt_number_of_signatures"
+        android:layout_alignLeft="@id/text_signatures_corrupt_number_of_signatures"
+        android:layout_alignEnd="@id/text_signature_message_content_corrupted"
+        android:layout_alignRight="@id/text_signature_message_content_corrupted">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_signatures_message"
+            android:inputType="textMultiLine"
+            android:isScrollContainer="true"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/text_signature_message_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/text_signature_message_content"
+        android:layout_below="@id/value_signature_message_corrupted"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/value_signature_message"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_below="@id/text_signature_message_content"
+        android:layout_alignStart="@id/text_signatures_corrupt_number_of_signatures"
+        android:layout_alignLeft="@id/text_signatures_corrupt_number_of_signatures"
+        android:layout_alignEnd="@id/text_signature_message_content_corrupted"
+        android:layout_alignRight="@id/text_signature_message_content_corrupted">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_signatures_message"
+            android:inputType="textMultiLine"
+            android:isScrollContainer="true"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_corrupt_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@id/text_signature_message_content"
+        android:layout_alignRight="@id/text_signature_message_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/button_corrupt_signature"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/button_signature_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/text_signature_message_content"
+        android:layout_alignLeft="@id/text_signature_message_content"
+        android:layout_alignBaseline="@id/button_corrupt_signature"
+        android:text="@string/button_refresh" />
+
 </RelativeLayout>

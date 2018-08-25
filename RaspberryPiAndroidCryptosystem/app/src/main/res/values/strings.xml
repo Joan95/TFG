@@ -90,10 +90,12 @@
     <string name="text_signatures_set_title">Message\'s Title</string>
     <string name="text_signatures_message">Write your message below</string>
     <string name="text_header_signatures_check">Check your Signatures</string>
-    <string name="text_signatures_check_number_of_signatures">Number of Signatures done</string>
+    <string name="text_signatures_number_of_signatures">Number of Signatures done</string>
     <string name="text_signatures_spinner_select_signature">Select a Signature</string>
     <string name="text_signature_status">Status of the Signature</string>
     <string name="text_signature_message_content">The content of the message was the following</string>
+    <string name="text_header_signatures_corrupt">Corrupt your Signatures</string>
+    <string name="text_signature_message_content_corrupted">Write a new content to corrupt the current Signature</string>
 
     <!-- Hint's Name -->
     <string name="hint_password">Password</string>

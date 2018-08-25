@@ -2,11 +2,11 @@ package com.example.joan.raspberrypiandroidcryptosystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class SignatureSystems {
+    private int numOfSignatures;
     private Map<String, String> signatureFileMap = new HashMap<>();
 
     public void putValues(String title, String content) {
@@ -23,8 +23,15 @@ public class SignatureSystems {
     }
 
     public String getValueFromKey(String title) {
-        String aux = signatureFileMap.get(title);
-        return aux;
+        return signatureFileMap.get(title);
+    }
+
+    public int getNumOfSignatures() {
+        return numOfSignatures;
+    }
+
+    public void setNumOfSignatures(int numOfSignatures) {
+        this.numOfSignatures = numOfSignatures;
     }
 
     @Override

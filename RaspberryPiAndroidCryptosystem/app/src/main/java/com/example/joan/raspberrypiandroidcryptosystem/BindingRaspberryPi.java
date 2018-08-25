@@ -57,7 +57,6 @@ public class BindingRaspberryPi  extends AppCompatActivity {
         setContentView(R.layout.binding_raspberry_pi);
 
         ListView listFunctionOption = findViewById(R.id.listFunction);
-        Button sendButton = findViewById(R.id.buttonBluetooth);
 
         Intent lastInt = getIntent();
         raspberryMac = lastInt.getStringExtra(ShowDevices.BLUETOOTH_MAC_DEVICE);
@@ -71,7 +70,6 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         "Encrypt/Decrypt Files",
                         "Generate RANDOM",
                         "Signatures",
-                        "ECDSA",
                         "I2C Options",
                         "TAP"
                 };
@@ -198,21 +196,6 @@ public class BindingRaspberryPi  extends AppCompatActivity {
                         startActivity(intent);
                         break;
                 }
-            }
-        });
-
-        sendButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                JSONObject jsonMessage = new JSONObject();
-                try {
-                    jsonMessage.put("message","I'm ALIVE!");
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
-                }
-                connectedThread.write(jsonMessage);
             }
         });
 

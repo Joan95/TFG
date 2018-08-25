@@ -5,7 +5,7 @@ public class MessageEncDec {
     private String typeFile;
     private String nameFile;
     private String password;
-    private Boolean hsm = true;
+    private Boolean hsm;
 
 
     public MessageEncDec(){

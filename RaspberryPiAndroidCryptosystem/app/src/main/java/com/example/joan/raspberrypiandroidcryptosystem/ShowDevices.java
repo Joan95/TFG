@@ -46,7 +46,7 @@ public class ShowDevices extends AppCompatActivity
         Button buttonBack = findViewById(R.id.buttonBack);
         Button buttonReScann = findViewById(R.id.buttonReScan);
         ListView showPairedDevicesList = findViewById(R.id.pairedDevicesList);
-        ListView showNewDevicesList = findViewById(R.id.newDevicesList);
+        //ListView showNewDevicesList = findViewById(R.id.newDevicesList);
 
         buttonBack.setOnClickListener(new View.OnClickListener()
         {
@@ -88,8 +88,8 @@ public class ShowDevices extends AppCompatActivity
         }
 
         /*Declaration of Adapters for both lists which will show the results. **/
-        newDevicesListAdapter = new ArrayAdapter<>(ShowDevices.this, android.R.layout.activity_list_item, newDevicesList);
-        showNewDevicesList.setAdapter(newDevicesListAdapter);
+        //newDevicesListAdapter = new ArrayAdapter<>(ShowDevices.this, android.R.layout.activity_list_item, newDevicesList);
+        //showNewDevicesList.setAdapter(newDevicesListAdapter);
 
         ArrayAdapter pairedDevicesListAdapter = new ArrayAdapter<>(ShowDevices.this, android.R.layout.simple_list_item_1, pairedDevicesList);
         showPairedDevicesList.setAdapter(pairedDevicesListAdapter);

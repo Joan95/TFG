@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,7 +18,6 @@ public class OptionSignaturesCheck extends AppCompatActivity {
 
     private SignatureSystems signatureSystems = SignatureSystemsSingleton.getCurrentSignatureSystems();
     private ConnectedThread connectedThread = ConnectedThreadSingleton.getConnectedThread(null);
-    private ShowToasts myToasts = ShowToasts.getInstance();
 
     private String title;
 
@@ -29,13 +27,13 @@ public class OptionSignaturesCheck extends AppCompatActivity {
         ConnectedThread.contextOptionSignaturesCheck = OptionSignaturesCheck.this;
         setContentView(R.layout.option_signatures_check);
 
-        final Spinner spinnerChoosenSignature = findViewById(R.id.spinner_select_signature);
+        final Spinner spinnerChooseSignature = findViewById(R.id.spinner_select_signature);
         final TextInputLayout contentFileSignature = findViewById(R.id.value_signature_message);
         final EditText statusSignature = findViewById(R.id.value_signature_status);
         Button refreshButton = findViewById(R.id.button_check_signature_refresh);
         Button checkButton = findViewById(R.id.button_check_signature);
 
-        spinnerChoosenSignature.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerChooseSignature.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 title = parent.getItemAtPosition(position).toString();

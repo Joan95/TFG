@@ -30,13 +30,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="@string/text_signatures_check_number_of_signatures"
+        android:text="@string/text_signatures_number_of_signatures"
         android:layout_below="@id/text_header_check_signature"
         android:layout_toStartOf="@id/aux_reference"
         android:layout_toLeftOf="@id/aux_reference"/>
 
     <EditText
-        android:id="@+id/value_number_of_singatures"
+        android:id="@+id/value_number_of_signatures_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/aux_reference"
