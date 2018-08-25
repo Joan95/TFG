@@ -144,10 +144,10 @@ def createMenu():
         signaturesGenerate = Tree(4.1, "Generate new Signature", signatures)
         signaturesCorrupt = Tree(4.2, "Corrupt a Signature", signatures)
         signaturesCheck = Tree(4.3, "Check a Signature", signatures)
-        ecdsa = Tree(5, "ECDSA", mainMenu)
-        i2c = Tree(6, "Change configuration of I2A bus", mainMenu)
-        tap = Tree(7, "Configure TAP sensibility", mainMenu, hasChildren = True)
-        tapTest = Tree(7.1, "Begin TAP Test", tap)
+        #ecdsa = Tree(5, "ECDSA", mainMenu)
+        i2c = Tree(5, "Change configuration of I2A bus", mainMenu)
+        tap = Tree(6, "Configure TAP sensibility", mainMenu, hasChildren = True)
+        tapTest = Tree(6.1, "Begin TAP Test", tap)
 
         
         LED.children.append(LEDOn)
@@ -167,7 +167,7 @@ def createMenu():
         mainMenu.children.append(encryptDecrypt)
         mainMenu.children.append(random)
         mainMenu.children.append(signatures)
-        mainMenu.children.append(ecdsa)
+        #mainMenu.children.append(ecdsa)
         mainMenu.children.append(i2c)
         mainMenu.children.append(tap)
 
@@ -936,6 +936,40 @@ try:
 
                                                                 SendMessage = {}
                                                                 SendMessage["refreshOperationCorrupt"] = "ended"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'signatures': %s}" % (SendMessage))
+                                                                print "Message sent to target:\n\t%s" % SendMessage
+                                                                print "\n"
+                                                                client_sock.send(SendMessage)
+
+                                                        if jsonMessage.get("signatures") == 'corrupt':
+                                                                SendMessage = {}
+                                                                SendMessage["operationCorrupt"] = "started"
+                                                                SendMessage = json.dumps(SendMessage)
+                                                                SendMessage = str("{'signatures': %s}" % (SendMessage))
+                                                                print "Message sent to target:\n\t%s" % SendMessage
+                                                                print "\n"
+                                                                client_sock.send(SendMessage)
+                                                                
+                                                                signatureTitle = str("%s" % (jsonMessage.get("title")))
+                                                                
+                                                                newSignatureMessage = str("%s" % (jsonMessage.get("newContent")))
+                                                                auxPathToMessage = str("%s/%s" % (pathToSignedMessages,signatureTitle))
+
+                                                                print "Path to file:\n\t%s" % auxPathToMessage
+                                                                print "New content:\n\t%s" % newSignatureMessage
+                                                                
+                                                                if (os.path.isfile(auxPathToMessage)):
+                                                                         print "Replacing the message..."
+                                                                         os.remove(auxPathToMessage)
+                                                                         print "Done"
+
+                                                                messageSigned = open(auxPathToMessage, "w+")
+                                                                messageSigned.write(newSignatureMessage)
+                                                                messageSigned.close()
+
+                                                                SendMessage = {}
+                                                                SendMessage["operationCorrupt"] = "ended"
                                                                 SendMessage = json.dumps(SendMessage)
                                                                 SendMessage = str("{'signatures': %s}" % (SendMessage))
                                                                 print "Message sent to target:\n\t%s" % SendMessage
